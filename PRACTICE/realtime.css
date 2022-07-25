@@ -32,8 +32,8 @@ li{
     flex-direction: column;
     align-items: center;
     gap:1rem;
-    padding:1rem;
     background: #094416;
+    padding:0;
     width:100%;
     height: 100%;
     max-width: 250px;
@@ -46,6 +46,7 @@ li{
     justify-content: center;
     text-align: center;
     gap:1rem;
+    padding:1rem;
 }
 .side>.logo>h2{
     font-size:1.1rem;
@@ -55,6 +56,7 @@ li{
 .side>.logo>img{
     border-radius:100%;
 }
+/*
 .side>ul{
     display: flex;
     flex-direction: column;
@@ -95,6 +97,92 @@ svg{
     border: none;
     cursor: pointer;
 }
+*/
+svg{
+    fill:#FFFFFF; 
+    width: 50px;
+    height: 50px;
+    
+    
+ }
+.side-button{
+    padding:0;
+    margin:0;
+    display: flex;
+    flex-direction: column;
+    gap:.5rem;
+ }
+
+.button{
+    width: 100%;
+}
+.buttn{
+    width: 100%;
+    padding:.8rem;
+    background-color:#094416;
+    color:#FFFFFF;
+    border: 1px black solid;
+    display:flex;
+    align-items: center;
+    box-shadow: 0 2px 3px 0 #000;
+    transition: .5s;
+    
+}
+.button>.side-button>a{
+    text-decoration: none;
+}
+.button>.side-button>a>.buttn{
+    display: flex;
+    align-items: center;
+    gap:1rem;
+    font-size: 1.1rem;
+    text-align:center;
+}
+.button>.side-button>a>.buttn>p{
+    padding:0;
+    margin:0;
+}
+.button>.side-button>a>.buttn:hover{
+    background-color: #FFFDE4;
+    color:#094416;
+    border:none
+}
+.button>.side-button>a>.buttn:hover>svg{
+    fill: #094416;
+}
+
+.buttn{
+    display: flex;
+    align-items: center;
+    gap:1rem;
+    font-size: 1.1rem;
+    text-align:center;
+}
+.buttn>p{
+    margin:0;
+    padding:0;  
+}
+.buttn:hover{
+    color:#094416;
+    background-color:#FFFDE4;
+    border:none;
+}
+.buttn:hover>svg{
+    fill: #094416;
+}
+.button>.side-button>.drop{
+    width:100%;
+    max-width: 250px;
+    background-color: #FFFDE4;
+    text-align: left;
+    padding-left:4rem;
+    display: none;
+}
+.button>.side-button>.drop>li>.dropdown-item:hover{
+    background-color: #F1EBC8;
+}
+
+
 
 .top{
     grid-area:head;
@@ -152,14 +240,13 @@ svg{
     width: 100%;
     height: 100%;
     border-radius: 20px;
-    padding:1rem;
     gap:2rem;
     background-color:#CCFFC3;
 }
-.body>.container>.input>{
-    display: flex;
-    flex-direction: row;
+.body>.container>.input{
+    
     gap:5rem;
+    padding:1rem;
 }
 label{
     display: flex;
@@ -193,7 +280,13 @@ input{
     width: 100%;
     max-width: 200px;
     min-height:30px;
+    border-radius: 20px;
+    padding-left:1rem;
 }
+input::placeholder{
+    font-size:.7rem;
+}
+
 .other{
     min-height: 70px;
 }
@@ -202,7 +295,7 @@ input{
     height: 100%;
     max-width: 80px;
     max-height: 30px;
-    margin-left:1rem;
+    margin-left:2.2rem;
     background-color: #4F36EB;
     color: white;
     border: none;
@@ -221,7 +314,7 @@ input{
     width: 100%;
     border: 1px black solid;
     background-color: #FFFFFF;
-    padding:1rem;
+    padding:1.5rem;
 }
 table,thead,tbody{
     vertical-align: middle;
