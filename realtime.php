@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <!-------- DATA-TABLE-CDN---------->
+    <!-------------------------------------DATA-TABLE-CDN-------------------------------------------->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css"/>
  
@@ -94,7 +94,7 @@
          ?>
     </div>
     <?php endif ?>
-    <!-------DELETE-MODAL------->
+    <!------------------------------------------DELETE-MODAL-------------------------------------->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -113,47 +113,58 @@
             </div>
         </div>
         </div>
-    <!-------------------------------->
-    <!------------UPDATE-MODAL-------->
-    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--------------------------------------------------------------------------------------------->
+    <!------------------------------------------UPDATE-MODAL--------------------------------------->
+    <?php
+                            $query="SELECT*FROM vtion";
+                            $result=mysqli_query($conn, $query);
+                            if(mysqli_num_rows($result)>0){
+                            while($row=mysqli_fetch_assoc($result)){
+                            
+                         ?>
+    <div class="modal fade" id="updateModal<?php echo $row['ViolationID']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="exampleModalLabel">Violation Record</h3>
                     </div>
                 <div class="modal-body">
-                  <form class="form" action="" method="">
+                  <form class="form" id="form1" action="process.php" method="post">
                     <div class="type-update">
                         <label  class="form-label">Violation No.</label>
-                        <input type="email" class="form-control" placeholder="name@example.com">
+                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row['ViolationNo']?>" style="color:red;">
+                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row['ViolationID']?>" style="color:red;" hidden>
                     </div>
                     <div class="type-update">
                         <label class="form-label">Violation Name</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row['ViolationName']?>" required>
                     </div>
                     <div class="type-update">
                     <label for="category">Category :</label>
-                        <select name="Category"  required>
-                            <option value="">Select Category--</option>
+                        <select name="category" required>
+                            <option value="<?php echo $row['Category']?>">Select Category--</option>
                             <option value="Minor">Minor</option>
                             <option value="Major">Major</option>
                         </select>
                     </div>
                     <div class="type-update">
                         <label  class="form-label">Punishment</label>
-                        <textarea  type="text" class="col-12" id="exampleFormControlInput1" placeholder=""></textarea>
+                        <textarea  class="col-12" name="punishment" required><?php echo $row['Punishment']?></textarea>
                     </div>
                   </form>
-                </div>
+                </div>  
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    
-                    <button type="button" class="btn btn-success">Update</button>
+                    <button type="submit" form="form1"  name="update" class="btn btn-success">Update</button>
                 </div>
             </div>
         </div>
         </div>
-    <!--------------------------------->
+        <?php
+                            }
+                        } 
+        ?>
+    <!------------------------------------------------------------------------------------------------>
         <div class="container">
             <div class="input">
                 <h2>Create Violation</h2>
@@ -162,6 +173,7 @@
                     <div class="box">
                         <label>Violation No. :</label>
                         <input type="text" name="ViolationNo" value="<?php echo $number ?>" style="color:red;" readonly required>
+
                     </div>
                     <div class="box">
                         <label>Violation Name :</label>
@@ -181,7 +193,6 @@
                         <label>Punishment :</label>
                         <input name="Punishment" type="text" class="other" placeholder="Enter The Punisment of Violation" required>
                     </div>
-                    
                     <button name="submit" type="submit" class="add">Add</button>
                 </div>
                 </form>
@@ -214,13 +225,16 @@
                         <td><?php echo $row['Punishment'] ?></td>
                         <td class="action">
                             
-                            <button class="update"  data-bs-toggle="modal" data-bs-target="#updateModal" >Edit</button>
+                            <button class="update" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['ViolationID']?>">Edit</button>
                             <button class="delete" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
                         </td>
                       </tr>
                       <?php
+                            
                             }     
+                            
                         }
+                        
                       ?>
                     </tbody>
                   </table>

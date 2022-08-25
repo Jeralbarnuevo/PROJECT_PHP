@@ -49,8 +49,7 @@
                 }   
                 
             }        
-               
-
+            
     if(isset($_GET['delete'])){
         $id=$_GET['delete'];
         $mysqli="DELETE FROM vtion WHERE ViolationID=$id";
@@ -59,4 +58,24 @@
         $_SESSION['msg_type']="danger";
         header("location:realtime.php");
     }
+
+
+    if(isset($_POST['update'])){
+        $VtionID=$_POST['VtionID'];
+        $VtionName=$_POST['VtionName'];
+        $category=$_POST['category'];
+        $punishment=$_POST['punishment'];
+        $update="UPDATE vtion SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID='$VtionID'";
+        $test=mysqli_query($conn, $update); 
+        if($test){
+        $_SESSION['message']="Record has been updated!";
+        $_SESSION['msg_type']="success";
+        header("location:realtime.php");
+        }else{
+            $_SESSION['message']="Update Failed";
+            $_SESSION['msg_type']="danger";
+            header("location:realtime.php");
+        }
+    }
 ?>
+
