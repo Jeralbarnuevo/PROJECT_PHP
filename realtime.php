@@ -94,6 +94,66 @@
          ?>
     </div>
     <?php endif ?>
+    <!-------DELETE-MODAL------->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Do you want to delete this record?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                <div class="modal-body">
+                    Are You Sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="process.php?delete=<?php echo $row['ViolationID'];?>">
+                    <button type="button" class="btn btn-danger">Yes! Delete</button></a>
+                </div>
+            </div>
+        </div>
+        </div>
+    <!-------------------------------->
+    <!------------UPDATE-MODAL-------->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Violation Record</h3>
+                    </div>
+                <div class="modal-body">
+                  <form class="form" action="" method="">
+                    <div class="type-update">
+                        <label  class="form-label">Violation No.</label>
+                        <input type="email" class="form-control" placeholder="name@example.com">
+                    </div>
+                    <div class="type-update">
+                        <label class="form-label">Violation Name</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                    <div class="type-update">
+                    <label for="category">Category :</label>
+                        <select name="Category"  required>
+                            <option value="">Select Category--</option>
+                            <option value="Minor">Minor</option>
+                            <option value="Major">Major</option>
+                        </select>
+                    </div>
+                    <div class="type-update">
+                        <label  class="form-label">Punishment</label>
+                        <textarea  type="text" class="col-12" id="exampleFormControlInput1" placeholder=""></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    
+                    <button type="button" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    <!--------------------------------->
         <div class="container">
             <div class="input">
                 <h2>Create Violation</h2>
@@ -101,7 +161,7 @@
                     <div class="one">
                     <div class="box">
                         <label>Violation No. :</label>
-                        <input name="ViolationNo"type="text" placeholder="Enter the Violation No." readonly required>
+                        <input type="text" name="ViolationNo" value="<?php echo $number ?>" style="color:red;" readonly required>
                     </div>
                     <div class="box">
                         <label>Violation Name :</label>
@@ -109,7 +169,7 @@
                     </div>
                     <div class="box">
                         <label for="category">Category :</label>
-                        <select name="Category" required>
+                        <select name="Category"  required>
                             <option value="">Select Category</option>
                             <option value="Minor">Minor</option>
                             <option value="Major">Major</option>
@@ -121,6 +181,7 @@
                         <label>Punishment :</label>
                         <input name="Punishment" type="text" class="other" placeholder="Enter The Punisment of Violation" required>
                     </div>
+                    
                     <button name="submit" type="submit" class="add">Add</button>
                 </div>
                 </form>
@@ -152,10 +213,9 @@
                         <td><?php echo $row['Category'] ?></td>
                         <td><?php echo $row['Punishment'] ?></td>
                         <td class="action">
-                            <a href="realtime.php?update=<?php echo $row['ViolationID'];?>">
-                            <button class="update">Update</button></a>
-                            <a href="process.php?delete=<?php echo $row['ViolationID'];?>">
-                            <button class="delete">Delete</button></a>
+                            
+                            <button class="update"  data-bs-toggle="modal" data-bs-target="#updateModal" >Edit</button>
+                            <button class="delete" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
                         </td>
                       </tr>
                       <?php
@@ -170,7 +230,8 @@
     </div>
 </div>
 <script type="text/javascript" src="slide.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>    
 </body>
 </html>

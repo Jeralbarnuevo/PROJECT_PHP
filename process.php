@@ -1,40 +1,56 @@
 <?php
     session_start();
     require("connection.php");
+    $query = "SELECT ViolationID from vtion order by ViolationID desc";
+    $run = mysqli_query($conn, $query);
+    $row=mysqli_fetch_array($run);
+    $last_id=$row['ViolationID'];
+    if(empty($last_id)){
+        $code="VIOLATION-00001";
+    }else{
+        $id=str_replace("E", "",$last_id);
+        $id1=str_pad($id + 1, 5,0, STR_PAD_LEFT);
+        $number='VIOLATION-' .$id1;
+    }
     if(isset($_POST['submit'])){
+        $ViolationNo=$_POST['ViolationNo'];
         $violationName=$_POST['ViolationName'];
         $Category=$_POST['Category'];
         $Punishment=$_POST['Punishment'];
         $duplicate=mysqli_query($conn, "SELECT*FROM vtion WHERE ViolationName='$violationName'");
         if(mysqli_num_rows($duplicate)>0){
-            echo "<script>alert('Record Has Already Exist')</script>";
+            $_SESSION['message']="Record has already saved";
+            $_SESSION['msg_type']="warning";
             header("location:realtime.php");
         }   
         else{
-            $query="INSERT INTO vtion (ViolationName,Category,Punishment) VALUES('$violationName','$Category','$Punishment')";
+            $query="INSERT INTO vtion (ViolationNo,ViolationName,Category,Punishment) VALUES('$ViolationNo','$violationName','$Category','$Punishment')";
             $run=mysqli_query($conn,$query);
-            if($run){
-                $last_id=mysqli_insert_id($conn);
-                if($last_id){
-                    $code=rand(1,999);
-                    $violation_no="VIOLATION-" .$code. "" .$last_id;
-                    $query1="UPDATE vtion SET ViolationNo='".$violation_no."' WHERE ViolationID='".$last_id."'";
-                    $res=mysqli_query($conn,$query1);
                     $_SESSION['message']="Record has been saved!";
                     $_SESSION['msg_type']="success";
                     header("location:realtime.php");
-                    
-                }
-                else{
-                    echo "<script>alert('Failed')</script>";
-                }
+                    if(mysqli_query($conn, $run)){
+                        $query = "SELECT ViolationID from vtion order by ViolationID desc";
+                        $run = mysqli_query($conn, $query);
+                        $row=mysqli_fetch_array($run);
+                        $last_id=$row['ViolationID'];
+                        if(empty($last_id)){
+                        $code="VIOLATION-00001";
+                        }else{
+                        $id=str_replace("E", "",$last_id);
+                        $id1=str_pad($id + 1, 5,0, STR_PAD_LEFT);
+                        $number='VIOLATION-' .$id1;
+                        $_SESSION['message']="Record has been saved!";
+                        $_SESSION['msg_type']="success";
+                        header("location:realtime.php");
+                        }
+                    }
+            
+                }   
+                
+            }        
+               
 
-            }   
-            else{
-                echo "<script>alert('Try Again')</script>";
-            }
-        }   
-    }
     if(isset($_GET['delete'])){
         $id=$_GET['delete'];
         $mysqli="DELETE FROM vtion WHERE ViolationID=$id";

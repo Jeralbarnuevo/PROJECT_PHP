@@ -210,6 +210,7 @@ svg{
     height: 90px;
     padding-left:260px;
     
+    
 }
 .burger{
     display: flex;
@@ -269,7 +270,7 @@ svg{
     border-radius: 20px;
     gap:1rem;
     background-color:#CCFFC3;
-    position: relative;
+   
     
 }
 .body>.container>.input{
@@ -359,22 +360,12 @@ thead{
 }
 
 
-
-table{
-    width:100%;
-    height:100%;
-    
-}
 .row{ 
-    padding:1rem 1rem;
-    width: 100%;
-    margin:0;
+    padding-top:1rem;
 }
 tbody{
     vertical-align: middle;
     text-align: center;
-    width: 100%;
-    height: 100%;
 }
 .table-responsive{
     padding:0;
@@ -389,8 +380,7 @@ tbody{
 tr{
     padding:0;
     vertical-align: middle;
-    width: 100%;
-    height: 100%;
+   
 }
 
 
@@ -429,7 +419,29 @@ tr{
     width: 75%;
 }
 .alert{
-    z-index: 999999;
+    z-index: 999;
     width:100%;
     font-weight:600;
+}
+#exampleModal{
+    z-index: 99999;
+}
+.form{
+   display: flex;
+   align-items: flex-start;
+   gap:2rem;
+   width: 100%;
+}
+.type-update{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+}
+.form-control{
+    width: 100%;
+}
+#mytable_wrapper:nth-child(3){
+    padding-top:2rem;
 }
