@@ -22,7 +22,7 @@ html,body{
     display: flex;
     height: 100%;
     max-height: 600px;
-    max-width: 950px;
+    max-width: 960px;
     border-radius:2rem;
     padding:0;
     margin:0;
@@ -54,57 +54,85 @@ html,body{
     text-shadow: 6px 3px 13px  black;
 }
 .main>.container>.register{
-    padding:2rem 1.5rem;
+    padding:2rem 3rem;
     width: 100%;
     height: 100%; 
     font-family: 'Roboto', sans-serif; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     
      
 }
 .main>.container>.register>h1{
-    margin-left:1rem;
     font-weight:700; 
     letter-spacing:.3rem; 
     text-transform: uppercase;
+    text-align: center;
 
 }
 .main>.container>.register>form{
     width: 100%;
     display:flex;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
     padding:0 1rem;
 }
 .box1{
     width: 100%;
-    padding-right:1rem;
     padding-top:.3rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .box1>a{
     width: 100%;   
     border:1px solid black;
 }
-input[type="text"],input[type="email"],input[type="date"],input[type="password"],input[type="number"]{
+input[type=email],input[type=password]{
     border: 2px solid #319052;
+    width: 85%;
+    float:right;
+    padding-left:40px;
 }
 
 
+svg{
+    position: absolute;
+    width:30px;
+    height: 37px;
+    top:14%;
+    left:8%;
+    background-color: #319052;
+}
+.forgot{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.forgot>p{
+    margin:0;
+}
 .button{
     width:100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap:.5rem;
 }
 .btn{
-    width: 100%;
+    width: 50%;
 }
 
 #select{
     color: #888888;
-    
 }
 #select option{
     color:black;
-    border: 2px solid #319052;
 }
 #date::placeholder{
     color:#888888;
