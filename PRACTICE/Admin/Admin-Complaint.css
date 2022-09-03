@@ -21,18 +21,23 @@
 }
 #Mytable{
     padding:1rem;
-    border: 1px solid black;
+    
 }
 .table-complaint{
     padding:1rem;
-    height: 100%;
-    max-height: 560px;
     overflow-y: scroll;
 }
-#Mytable>thead{
+#Mytable>thead>{
     text-align: center;
-    width: 100%;
 }
 #Mytable>tbody{
-    text-align: left;
+    text-align: center;
 }
+.success{
+    background-color: #319052;
+    color:white;
+    padding:.3rem;
+}
+
+
+

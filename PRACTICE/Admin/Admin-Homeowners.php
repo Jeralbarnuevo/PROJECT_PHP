@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="Admin-Complaint.css">
 
     <!-------------------------------------DATA-TABLE-CDN-------------------------------------------->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"/>
@@ -23,10 +24,10 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
     <script type="text/javascript">
         $(document).ready( function () {
-            $('#mytable').DataTable();
+            $('#Mytable').DataTable();
         } );
     </script>
-    <title>Violations</title>
+    <title>List of Homeowners</title>
 </head>
 <body>
     <div class="main">
@@ -71,10 +72,10 @@
     <div class="top">
         <div class="burger">
             <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
-            <p>Violations</p>
+            <p>Manage Accounts</p>
         </div>
         <div class="profile">
-        <div class="welcome"><p>Welcome, Jeral Barnuevo</p></div>
+            <div class="welcome"><p>Welcome, Jeral Barnuevo</p></div>
         <div class="image" onclick="Dropmenu();">
                 <img src="../Assets/example.jpg" alt="" width="50px">
             </div>
@@ -98,168 +99,87 @@
         </div>
     </div>
     <div class="body">
-
-    <?php
-    if(isset($_SESSION['message'])):
-    ?>
-    <div class="alert alert-<?=$_SESSION['msg_type']?> alert-dismissible fade show" style="width:100%;">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <?php
-            echo $_SESSION['message'];
-            unset($_SESSION['message']);
-         ?>
-    </div>
-    <?php endif ?>
-    <!------------------------------------------DELETE-MODAL-------------------------------------->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Do you want to delete this record?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                <div class="modal-body">
-                    Are You Sure?
+    <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
+    <div class="modal fade" id="viewdetails" tabindex="-1">
+        <div class="modal-dialog" style="width:100%; max-width:800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Homeowners Details</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="process.php?delete=<?php echo $row['ViolationID'];?>">
-                    <button type="button" class="btn btn-danger">Yes! Delete</button></a>
-                </div>
-            </div>
-        </div>
-        </div>
-    <!--------------------------------------------------------------------------------------------->
-    <!------------------------------------------UPDATE-MODAL--------------------------------------->
-    <?php
-                            $query="SELECT*FROM vtion";
-                            $result=mysqli_query($conn, $query);
-                            if(mysqli_num_rows($result)>0){
-                            while($row=mysqli_fetch_assoc($result)){
-                            
-                         ?>
-    <div class="modal fade" id="updateModal<?php echo $row['ViolationID']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="exampleModalLabel">Violation Record</h3>
+                    <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th><img src="../Assets/example.jpg" alt="" width="100px"></th>
+                                <td colspan="5"><h2 style="color:green;">Active</h2></td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-2">Account No.</th>
+                                <td style="color:red;">ST-CE-001</td>
+                                <th>First Name:</th>
+                                <td>JERAL</td>
+                                <th>Last Name</th>
+                                <td>BARNUEVO</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>Male</td>
+                                <th>Birthdate</th>
+                                <td>07/13/2000</td>
+                                <th>Age:</th>
+                                <td>22</td>
+                            </tr>
+                            <tr>
+                                <th>Contact#:</th>
+                                <td colspan="3">09512341015</td>
+                                <th>Registered Date</th>
+                                <td style="color:green;">9/2/22</td>
+                            </tr>
+                            <tr>
+                                <th>Address:</th>
+                                <td colspan="5" style="height:40px;">Blk 191 Lot 13 St. Cecilia Deca Homes Brgy Loma De Gato Marilao, Bulacan</td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
                     </div>
-                <div class="modal-body">
-                  <form class="form" id="form1" action="process.php" method="post">
-                    <div class="type-update">
-                        <label  class="form-label">Violation No.</label>
-                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row['ViolationNo']?>" style="color:red;">
-                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row['ViolationID']?>" style="color:red;" hidden>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
-                    <div class="type-update">
-                        <label class="form-label">Violation Name</label>
-                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row['ViolationName']?>" required>
-                    </div>
-                    <div class="type-update">
-                    <label for="category">Category :</label>
-                        <select name="category" required>
-                            <option value="<?php echo $row['Category']?>">Select Category--</option>
-                            <option value="Minor">Minor</option>
-                            <option value="Major">Major</option>
-                        </select>
-                    </div>
-                    <div class="type-update">
-                        <label  class="form-label">Punishment</label>
-                        <textarea  class="col-12" name="punishment" required><?php echo $row['Punishment']?></textarea>
-                    </div>
-                  </form>
-                </div>  
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" form="form1"  name="update" class="btn btn-success">Update</button>
                 </div>
             </div>
-        </div>
-        </div>
-        <?php
-                            }
-                        } 
-        ?>
     <!------------------------------------------------------------------------------------------------>
-        <div class="container">
-            <div class="input">
-                <h2>Create Violation</h2>
-                <form action="process.php" method="post">
-                    <div class="one">
-                    <div class="box">
-                        <label>Violation No. :</label>
-                        <input type="text" name="ViolationNo" value="<?php echo $number ?>" style="color:red;" readonly required>
-
-                    </div>
-                    <div class="box">
-                        <label>Violation Name :</label>
-                        <input name="ViolationName" type="text" placeholder="Enter The Violation Name" required>
-                    </div>
-                    <div class="box">
-                        <label for="category">Category :</label>
-                        <select name="Category"  required>
-                            <option value="">Select Category</option>
-                            <option value="Minor">Minor</option>
-                            <option value="Major">Major</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div class="two">
-                    <div class="box">
-                        <label>Punishment :</label>
-                        <input name="Punishment" type="text" class="other" placeholder="Enter The Punisment of Violation" required>
-                    </div>
-                    <button name="submit" type="submit" class="add">Add</button>
-                </div>
-                </form>
-            </div>
-
-            <div class="table" >
-                <h4>Lists of Violations</h4>
-                <table class="table table-responsive table-hover" id="mytable" >
-                    <thead class="table-dark">
-                      <tr>
-                        <th class="mid text-center">Violation No.</th>
-                        <th class="mid text-center">Violation Name</th>
-                        <th class="mid text-center">Category</th>
-                        <th class="mid text-center">Punishment</th>
-                        <th class="mid text-center  ">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-success">
-                        <?php
-                            $query="SELECT*FROM vtion";
-                            $result=mysqli_query($conn, $query);
-                            if(mysqli_num_rows($result)>0){
-                            while($row=mysqli_fetch_assoc($result)){
-                            
-                         ?>
-                      <tr>      
-                        <td><?php echo $row['ViolationNo'] ?></td>
-                        <td><?php echo $row['ViolationName'] ?></td>
-                        <td><?php echo $row['Category'] ?></td>
-                        <td><?php echo $row['Punishment'] ?></td>
-                        <td class="action">
-                            
-                            <button class="update" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['ViolationID']?>">Edit</button>
-                            <button class="delete" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                        </td>
-                      </tr>
-                      <?php
-                            
-                            }     
-                            
-                        }
-                        
-                      ?>
-                    </tbody>
-                  </table>
-                  
+        <div class="container1">
+            <div class="title"><h1>Registered Homeowners</h1></div>
+            <div class="table-complaint">
+            <table class="table table-bordered table-hover table-responsive" id="Mytable" style="padding:0;">
+                <thead class="table-dark head">
+                    <tr class="height">
+                    <th class="text-center">Account No.</th>
+                    <th class="text-center">First Name</th>
+                    <th class="text-center">Last Name</th>
+                    <th class="text-center">Registered Date</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="height">
+                    <td>ST-CE-001</td>
+                    <td>JERAL</td>
+                    <td>BARNUEVO</td>
+                    <td>9/2/22</td>
+                    <td><div class="success">Active</div></td>
+                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View More  </button></td>
+                    </tr>
+                </tbody>
+            </table>
             </div>
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');

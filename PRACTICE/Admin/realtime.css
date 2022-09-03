@@ -63,51 +63,10 @@ li{
 .side>.logo>img{
     border-radius:100%;
 }
-/*
-.side>ul{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding:1rem;
-    gap:1rem;
-}
-.side>ul>li{
-    display: flex;
-    align-items: center;
-    border: 1px black solid;
-    width: 250px;
-    padding:1rem 1.5rem;
-    gap:2.2rem;
-    color: white;
-    box-shadow: 0 2px 3px 0 #000;
-    transition: .5s;
-    text-align: center;
-}
-.side>ul>li>p{
-    margin:0;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
 
 svg{
-   fill:#FFFFFF; 
-   width: 50px;
-   height: 50px;
-   transition: .5s;
-}
-.side>ul>li:hover>svg{
-    fill: #094416;
-}
-.side>ul>li:hover{
-    background-color: #FFFDE4;
-    color:#094416;
-    border: none;
-    cursor: pointer;
-}
-*/
-svg{
     fill:#FFFFFF; 
-    width: 50px;
+    width: 40px;
     height: 50px;
     
     
@@ -144,9 +103,11 @@ svg{
 .button>.side-button>a>.buttn{
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap:1rem;
     font-size: 1rem;
     text-align:center;
+    padding-left:1rem;
 }
 .button>.side-button>a>.buttn>p{
     padding:0;
@@ -165,6 +126,7 @@ svg{
 .buttn{
     display: flex;
     align-items: center;
+    padding-left:1rem;
     gap:1rem;
     font-size: 1rem;
     text-align:center;
@@ -207,11 +169,12 @@ svg{
     position: fixed;
     top:0;
     left:0;
-    height:100px;
+    height:80px;
     z-index:90;
     width:100%;
-    height: 90px;
+    height: 70px;
     padding-left:260px;
+    padding-right:50px;
     
     
 }
@@ -241,12 +204,135 @@ svg{
 .text>p{
     margin:0;
 }
+.top>.profile>.welcome{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.top>.profile>.welcome>p{
+    margin:0;
+}
 .top>.profile>.image{
     border: 1px black solid;
     width: 50px;
     height: 50px;
     border-radius: 100%;
+    position: relative;
+    overflow: hidden;
+    cursor:pointer;
+    transition:1s;
 }
+.top>.profile>.image:hover{
+    box-shadow:0 2px 18px 2px #094416;
+}
+.top>.profile>.image>img{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+}
+/* DROPMENU-PROFILE */
+.top>.profile>.menu{
+    position:absolute;
+    background-color:#FFFFFF;
+    top:120px;
+    right:40px;
+    width: 100%;
+    max-width:200px;
+    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+    border-radius: 1rem;
+    transition:.5s;
+    visibility: hidden;
+    opacity:0;
+}
+.top>.profile>.menu.active{
+    visibility: visible;
+    opacity: 1;
+    top:90px;
+    box-shadow: 0 5px 13px 1px black;
+}
+.top>.profile>.menu>h4{
+    width: 100%;
+    text-align: center;
+    font-size:1.2rem;
+    padding:1rem 0;
+
+}
+.top>.profile>.menu>h4>span{    
+    font-size:1.2rem;
+    color:gray;
+}
+.top>.profile>.menu>ul{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+}
+.top>.profile>.menu>ul{
+    padding:0;
+}
+.top>.profile>.menu>ul>li{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-top:1px solid rgb(0,0,0,0.2);
+    padding:0 1rem;
+    gap:.5rem;
+    width: 100%;
+}
+.top>.profile>.menu>ul>li>a{
+    display: flex;
+    align-items: center;
+    gap:.5rem;
+}
+.top>.profile>.menu>ul>li>a>p{
+    color:#000;
+    margin:0;
+    opacity:.5;
+    transition:.5s;
+}
+
+.link{
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+    transition: .5s;
+   
+}
+
+.top>.profile>.menu>ul>li>a:hover>svg{
+    color:#000;
+    opacity:1;
+}
+.top>.profile>.menu>ul>li>a:hover>p{
+    opacity: 1;
+}
+.top>.profile>.menu>ul>li>a:hover{
+    color: #000;
+}
+.top>.profile>.menu>ul>li>a>svg{
+    width:30px;
+    fill:#000;
+    opacity: 0.5;
+    transition: .5s;
+
+}
+.top>.profile>.menu>ul>li>:hover.icon>svg{
+    opacity: 1;
+}
+.top>.profile>.menu::before{
+    content:"";
+    position:absolute;
+    top:-7px;
+    right:25px;
+    width: 20px;
+    height: 20px;
+    background-color: #FFFFFF;
+    transform: rotate(45deg);
+}
+/*----------------------*/
+
 .body{
     display: flex;
     align-items: center;
@@ -272,9 +358,12 @@ svg{
     max-height: 900px;
     border-radius: 20px;
     gap:1rem;
-    background-color:#CCFFC3;
+    background-color:#319052;
    
     
+}
+.body>.container>.input>h2{
+    color:#FFFFFF;
 }
 .body>.container>.input{
     gap:5rem;
@@ -301,12 +390,14 @@ form{
     align-items: center;
     flex-direction: row;
     padding:1rem;
+    color:#FFFFFF;
 }
 .body>.container>.input>form>.two>.box{
     display: flex;
     align-items: flex-start;
     flex-direction: row;
     padding:1rem;
+    color:#FFFFFF;
 }
 input{
     width: 100%;
