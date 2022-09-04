@@ -27,7 +27,7 @@
             $('#Mytable').DataTable();
         } );
     </script>
-    <title>Forward Complaint</title>
+    <title>Officer Manage Account</title>
 </head>
 <body>
     <div class="main">
@@ -72,10 +72,10 @@
     <div class="top">
         <div class="burger">
             <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
-            <p>Complaints</p>
+            <p>Manage Accounts</p>
         </div>
         <div class="profile">
-        <div class="welcome"><p>Welcome, Jeral Barnuevo</p></div>
+            <div class="welcome"><p>Welcome, Jeral Barnuevo</p></div>
         <div class="image" onclick="Dropmenu();">
                 <img src="../Assets/example.jpg" alt="" width="50px">
             </div>
@@ -104,52 +104,43 @@
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title">Complaint Details</h2>
+                    <h2 class="modal-title">Homeowners Details</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                     <div class="modal-body">
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <th class="col-md-2">Complaint No.:</th>
-                                <td>COM-001</td>
-                                <th>Complainant:</th>
-                                <td>JERAL BARNUEVO</td>
-                                <th>Complaint Name:</th>
-                                <td>Illegal Parking</td>
+                                <th><img src="../Assets/example.jpg" alt="" width="100px"></th>
+                                <td colspan="5"><h2 style="color:green;">Active</h2></td>
                             </tr>
                             <tr>
-                                <th>Complaint Details</th>
-                                <td colspan="3">May nakaharang na motor</td>
-                                <th>Attachment:</th>
-                                <td>Files</td>
+                                <th class="col-md-2">Account No.</th>
+                                <td style="color:red;">ST-CE-001</td>
+                                <th>First Name:</th>
+                                <td>JERAL</td>
+                                <th>Last Name</th>
+                                <td>BARNUEVO</td>
                             </tr>
                             <tr>
-                                <th>Category:</th>
-                                <td>Major</td>
-                                <th>Date:</th>
-                                <td>9/2/22</td>
-                                <th>Status:</th>
-                                <td style="color:green;">Success</td>
+                                <th>Gender</th>
+                                <td>Male</td>
+                                <th>Birthdate</th>
+                                <td>07/13/2000</td>
+                                <th>Age:</th>
+                                <td>22</td>
                             </tr>
                             <tr>
-                                <td colspan="6" style="height:40px;"></td>
+                                <th>Contact#:</th>
+                                <td colspan="3">09512341015</td>
+                                <th>Registered Date</th>
+                                <td style="color:green;">9/2/22</td>
                             </tr>
                             <tr>
-                                <th>Remark By:</th>
-                                <td colspan="5">Admin: Alvin Capili</td>
+                                <th>Address:</th>
+                                <td colspan="5" style="height:40px;">Blk 191 Lot 13 St. Cecilia Deca Homes Brgy Loma De Gato Marilao, Bulacan</td>
                             </tr>
-                            <tr>
-                                <th>Status:</th>
-                                <td style="color:blue;" colspan="3">Closed</td>
-                
-                                <th>Remark Date:</th>
-                                <td colspan="3">9/2/22</td>
-                            </tr>
-                            <tr>
-                                <th>Action:</th>
-                                <td colspan="3"></td>
-                            </tr>
+                           
                         </tbody>
                     </table>
                     </div>
@@ -161,43 +152,28 @@
             </div>
     <!------------------------------------------------------------------------------------------------>
         <div class="container1">
-            <div class="title"><h1>Forward Complaints</h1></div>
+            <div class="title"><h1>Officer Accounts</h1></div>
             <div class="table-complaint">
+            <div class="button"><button class="hello"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48"><path fill="none" d="M0 0h48v48H0z"/><path d="M26 14h-4v8h-8v4h8v8h4v-8h8v-4h-8v-8zM24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"/></svg>Add Officer</button></div>
             <table class="table table-bordered table-hover table-responsive" id="Mytable" style="padding:0;">
                 <thead class="table-dark head">
                     <tr class="height">
-                    <th class="text-center">Complaint No.</th>
-                    <th class="text-center">Complainant</th>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Forwarded To</th>
+                    <th class="text-center">Account No.</th>
+                    <th class="text-center">First Name</th>
+                    <th class="text-center">Last Name</th>
+                    <th class="text-center">Registered Date</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Details</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="height">
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>11/11/22</td>
-                    <td>Admin</td>
-                    <td style="color:green;">Success</td>
-                    <td class="col-md-2"><button style="padding:.5rem; border:none;">View Details</button></td>
-                    </tr>
-                    <tr class="height">
-                    <td>2</td>
+                    <td>ST-CE-001</td>
                     <td>JERAL</td>
+                    <td>BARNUEVO</td>
                     <td>9/2/22</td>
-                    <td>Admin</td>
-                    <td style="color:green;">Success</td>
-                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
-                    </tr>
-                    <tr class="height">
-                    <td>2</td>
-                    <td>JERAL</td>
-                    <td>9/2/22</td>
-                    <td>Admin</td>
-                    <td style="color:green;">Success</td>
-                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
+                    <td><div class="success">Active</div></td>
+                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View More  </button></td>
                     </tr>
                 </tbody>
             </table>
@@ -210,6 +186,7 @@
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
+    
 </script>
 <script type="text/javascript" src="slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

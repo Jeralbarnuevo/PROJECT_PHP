@@ -21,14 +21,14 @@
         if(mysqli_num_rows($duplicate)>0){
             $_SESSION['message']="Record has already saved";
             $_SESSION['msg_type']="warning";
-            header("location:realtime.php");
+            header("location:Admin-Violations.php");
         }   
         else{
             $query="INSERT INTO vtion (ViolationNo,ViolationName,Category,Punishment) VALUES('$ViolationNo','$violationName','$Category','$Punishment')";
             $run=mysqli_query($conn,$query);
                     $_SESSION['message']="Record has been saved!";
                     $_SESSION['msg_type']="success";
-                    header("location:realtime.php");
+                    header("location:Admin-Violations.php");
                     if(mysqli_query($conn, $run)){
                         $query = "SELECT ViolationID from vtion order by ViolationID desc";
                         $run = mysqli_query($conn, $query);
@@ -42,7 +42,7 @@
                         $number='VIOLATION-' .$id1;
                         $_SESSION['message']="Record has been saved!";
                         $_SESSION['msg_type']="success";
-                        header("location:realtime.php");
+                        header("location:Admin-Violations.php");
                         }
                     }
             
@@ -56,7 +56,7 @@
         $run=mysqli_query($conn,$mysqli);
         $_SESSION['message']="Record has been deleted!";
         $_SESSION['msg_type']="danger";
-        header("location:realtime.php");
+        header("location:Admin-Violations.php");
     }
 
 
@@ -70,11 +70,11 @@
         if($test){
         $_SESSION['message']="Record has been updated!";
         $_SESSION['msg_type']="success";
-        header("location:realtime.php");
+        header("location:Admin-Violations.php");
         }else{
             $_SESSION['message']="Update Failed";
             $_SESSION['msg_type']="danger";
-            header("location:realtime.php");
+            header("location:Admin-Violations.php");
         }
     }
 ?>

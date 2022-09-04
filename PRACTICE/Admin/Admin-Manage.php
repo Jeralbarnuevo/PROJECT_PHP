@@ -58,12 +58,12 @@
                 <ul class="drop">
                     <li><a class="dropdown-item" href="Admin-Homeowners.php">Homeowners</a></li>
                     <li><a class="dropdown-item" href="Admin-Manage.php">Admin</a></li>
-                    <li><a class="dropdown-item" href="">Officer</a></li>
+                    <li><a class="dropdown-item" href="Admin-Officer.php">Officer</a></li>
                 </ul>
-                <a href=""><button class="buttn">
+                <a href="Violation-Entry.php"><button class="buttn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,6a1,1,0,0,0-1,1V17a3,3,0,0,1-3,3H7a1,1,0,0,0,0,2H17a5,5,0,0,0,5-5V7A1,1,0,0,0,21,6Zm-3,9V5a3,3,0,0,0-3-3H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H15A3,3,0,0,0,18,15ZM10,4h2V8.86l-.36-.3a1,1,0,0,0-1.28,0l-.36.3ZM4,15V5A1,1,0,0,1,5,4H8v7a1,1,0,0,0,1.65.76L11,10.63l1.35,1.13A1,1,0,0,0,13,12a1.06,1.06,0,0,0,.42-.09A1,1,0,0,0,14,11V4h1a1,1,0,0,1,1,1V15a1,1,0,0,1-1,1H5A1,1,0,0,1,4,15Z"/></svg><p>Violations Entry</p>
                 </button></a>
-                <a href=""><button class="buttn">
+                <a href="Admin-Records.php"><button class="buttn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#fffff" d="M4 9h4v2H4V9z"/><path fill="#fffff" d="M16 2h-1V0H5v2H3v1.25L2.4 4H1v1.75L0 7v9h12l4-5V2zM2 5h8v2H2V5zm9 10H1V8h10v7zm1-8h-1V4H4V3h8v4zm2-2.5l-1 1.25V2H6V1h8v3.5z"/></svg><p>Records</p>
                 </button></a>
             </ul>
@@ -154,6 +154,7 @@
         <div class="container1">
             <div class="title"><h1>Admin Accounts</h1></div>
             <div class="table-complaint">
+            <div class="button"><button class="hello"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48"><path fill="none" d="M0 0h48v48H0z"/><path d="M26 14h-4v8h-8v4h8v8h4v-8h8v-4h-8v-8zM24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"/></svg>Add Admin</button></div>
             <table class="table table-bordered table-hover table-responsive" id="Mytable" style="padding:0;">
                 <thead class="table-dark head">
                     <tr class="height">

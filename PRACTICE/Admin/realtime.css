@@ -354,8 +354,8 @@ svg{
     flex-direction: column;
     border: 1px black solid;  
     width:100%; 
-    height: 100%;
     max-height: 900px;
+    max-width: 800px;
     border-radius: 20px;
     gap:1rem;
     background-color:#319052;
@@ -369,20 +369,26 @@ svg{
     gap:5rem;
     padding:1rem;
 }
-label{
+.body>.container>.input>form>.one>.box>label{
     display: flex;
     width:160px;
     height: 100%;
     font-weight: 600;
-    
+}
+.body>.container>.input>form>.two>.box>label{
+    display: flex;
+    width:150px;
+    height: 100%;
+    font-weight: 600;
 }
 
-form{
+
+.body>.container>.input>form{
     display: flex;
     flex-wrap: wrap;
     justify-content:space-around;
     align-items: flex-start;
-    height: 100%;
+    
 }
 
 .body>.container>.input>form>.one>.box{
@@ -399,12 +405,20 @@ form{
     padding:1rem;
     color:#FFFFFF;
 }
-input{
+
+.body>.container>.input>form>.one>.box>input{
     width: 100%;
     max-width: 200px;
     min-height:30px;
     border-radius: 20px;
     padding-left:1rem;
+}
+.body>.container>.input>form>.two>.box>input{
+    width: 100%;
+    max-width: 200px;
+    min-height:60px;
+    border-radius: 20px;
+    padding-left:1rem; 
 }
 input::placeholder{
     font-size:.7rem;
@@ -439,9 +453,10 @@ select{
 
 .table{
     width: 100%;
+    height: 100%;
+    max-height: 400px;
     background-color: #FFFFFF;
     padding:1.5rem;
-    height:100%;
     margin:0;
     overflow: scroll;
     
@@ -527,7 +542,7 @@ tr{
 #exampleModal{
     z-index: 99999;
 }
-.form{
+.modal>.form{
    display: flex;
    align-items: center;
    justify-content: flex-end;

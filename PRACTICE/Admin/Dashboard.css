@@ -2,19 +2,23 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content:center;
     gap:2rem;
-    
+    border:1px solid black;
 }
-.container{
+.container2{
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
     background: none;
     border:none;
+    width:100%;
+    height: 100%;
+    max-height: 1000px;
+    max-width: 1200px;
 }
-.first{
+.container2>.first{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,7 +30,7 @@
     gap:3rem;
     
 }
-.first>.calendar{
+.container2>.first>.calendar{
     width:100%;
     max-width:600px;
     height: 100%;
@@ -34,7 +38,7 @@
     background-color: #F4F4F4;
     border-radius: 1rem;
 }
-.first>.forum{
+.container2>.first>.forum{
     width: 100%;
     height: 100%;
     max-width: 600px;
@@ -42,7 +46,7 @@
     border-radius: 1rem;
     background-color: #F4F4F4;
 }
-.first>.calendar>.head{
+.container2>.first>.calendar>.head{
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
     background-color: #319052;
@@ -51,7 +55,7 @@
     max-height: 50px;
     color:white;
 }
-.first>.forum>.head{
+.container2>.first>.forum>.head{
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
     background-color: #319052;
@@ -60,21 +64,21 @@
     max-height: 50px;
     color:white;
 }
-.second{
+.container2>.second{
     padding:1rem;
     width: 100%;
     height: 100%;
-    max-width:300px;
+    max-width:350px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap:3rem;
 
 }
-.second>.box{
+.container2>.second>.box{
     width:100%;
     height: 100%;
-    max-width:300px;
+    max-width:500px;
     max-height:300px;
     background-color: #319052;
     color:#FFFFFF;
@@ -84,6 +88,7 @@
     padding:1rem;
     box-shadow: 5px 10px 5px  #888888;
     border-radius: 1rem;
+    
 
 }
 .second>.box>.text{
@@ -110,20 +115,4 @@
     max-width: 80px;
     max-height: 80px;
 }
-.top>.profile>.image{
-    border: 1px black solid;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    position: relative;
-    overflow: hidden;
-    cursor:pointer;
-}
-.top>.profile>.image>img{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    object-fit:cover;
-}
+
