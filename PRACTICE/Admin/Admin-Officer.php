@@ -181,11 +181,17 @@
         </div>
     </div>
 </div>
+<?php
+        include('loading.php');
+    ?>
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
+$(window).on("load", function(){
+        $(".rotate").fadeOut(2000);
+    })
     
 </script>
 <script type="text/javascript" src="slide.js"></script>
