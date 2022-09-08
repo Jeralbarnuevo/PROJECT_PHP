@@ -3,7 +3,16 @@
     box-sizing: border-box;
     margin:0;
     padding:0;
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'Poppins', sans-serif;
+}
+:root{
+    --side:#191919;
+    --top:#ffffff;
+    --body:#ffffff;
+    --font-text:#000000;
+    --main-color:#59CE8F;
+    --secondary:#319052;
+    --hover:#65C18C;
 }
 html,body{
     height: 100%;
@@ -34,7 +43,7 @@ li{
     flex-direction: column;
     align-items: center;
     gap:1rem;
-    background: #094416;
+    background:var(--side);
     padding:0;
     width:100%;
     height: 100%;
@@ -76,7 +85,7 @@ svg{
     margin:0;
     display: flex;
     flex-direction: column;
-    gap:.5rem;
+
  }
 
 .button{
@@ -85,7 +94,7 @@ svg{
 .buttn{
     width: 100%;
     padding:.6rem;
-    background-color:#094416;
+    background-color:var(--side);
     color:#FFFFFF;
     border-top:1px solid black;
     border-left:none;
@@ -93,7 +102,6 @@ svg{
     border-bottom: none;
     display:flex;
     align-items: center;
-    box-shadow: 0 2px 3px 0 #000 ;
     transition: .5s;
     
 }
@@ -114,13 +122,20 @@ svg{
     margin:0;
 }
 .button>.side-button>a>.buttn:hover{
-    background-color: #FFFDE4;
-    color:#094416;
+    background-color: var(--body);
+    color:var(--side);
     border:none;
     box-shadow:none;
 }
+.button>.side-button>a>.buttn.active{
+    background:var(--body);
+    color:var(--side);
+}
+.button>.side-button>a>.buttn>svg.active{
+    fill:var(--side);
+}
 .button>.side-button>a>.buttn:hover>svg{
-    fill: #094416;
+    fill:var(--side);
 }
 
 .buttn{
@@ -136,27 +151,34 @@ svg{
     padding:0;  
 }
 .buttn:hover{
-    color:#094416;
-    background-color:#FFFDE4;
+    color:var(--side);
+    background-color:var(--body);
     border:none;
     box-shadow: none;
 }
 .buttn:hover>svg{
-    fill: #094416;
+    fill: var(--side);
 }
 .button>.side-button>.drop{
     width:100%;
     max-width: 250px;
-    background-color: #FFFDE4;
+    background-color: var(--body);
     text-align: left;
-    padding-left:4rem;
     display: none;
+    
+}
+.button>.side-button>.drop>li>a{
+    padding-left:0;
+}
+    
+.button>.side-button>.drop>li>.dropdown-item{
+    transition: .5s;
 }
 .button>.side-button>.drop>li>.dropdown-item:hover{
-    background-color: #F1EBC8;
+    width: 100%;
+    background-color: var(--hover);
+    padding-left: 50px;
 }
-
-
 
 .top{
     grid-area:head;
@@ -164,7 +186,7 @@ svg{
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1rem;
-    background-color:#FFFFFF;
+    background:var(--top);
     box-shadow:0 3px 10px black ;
     position: fixed;
     top:0;
@@ -335,11 +357,11 @@ svg{
 
 .body{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     flex-direction: column;
     padding:4rem;
-    background-color: #FFFDE4;
+    background-color: #ffffff;
     height:100%;
     width: 100%;
     padding-left:320px;

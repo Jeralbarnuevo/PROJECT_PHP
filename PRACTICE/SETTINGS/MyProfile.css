@@ -1,0 +1,88 @@
+:root{
+    --side:#191919;
+    --top:#ffffff;
+    --body:#ffffff;
+    --font-text:#000000;
+    --main-color:#59CE8F;
+    --secondary:#319052;
+    --hover:#65C18C;
+}
+.container4{
+    width: 100%;
+    background-color:#ffffff;
+    padding:1rem;
+    border-top:10px solid var(--secondary);
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-bottom:1px solid black;
+    border-radius:1rem;
+}
+.container4>h3{
+    font-weight: 700;
+}
+.container4>.info1{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+    
+}
+.container4>.info1>.boxA{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    padding:1rem;
+    border-radius: 1rem;
+}
+.container4>.info1>.boxA>.photo{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    border:1px solid black;
+    gap:1rem;
+    padding:1rem;
+}
+.container4>.info1>.boxA>.photo>.name{
+    text-align: center;
+
+}
+.container4>.info1>.boxA>.photo>.name>p{
+    margin:0;
+}
+.container4>.info1>.boxA>.photo>p{
+    margin:0;
+}
+.container4>.info1>.boxA>.photo>.profile-pic{
+    width:100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 50%;
+    position:relative;
+    overflow: hidden;
+    
+}
+.container4>.info1>.boxA>.photo>.profile-pic>img{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.container4>.info1>.boxA>.name{
+    display: flex;
+    align-items: center;
+    gap:5rem;
+    border:1px solid black;
+    width: 100%;
+ 
+
+}
+.container4>.info1>.boxA>form{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top:2rem;
+}
+.container4>.info1>.boxA>form>.info{
+  padding-right: 1rem;
+}
