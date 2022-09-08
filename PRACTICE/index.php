@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="icon" href="Assets/noBG.jpg">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>St Cecilia Homeowner Association</title>
     <link rel="stylesheet" href="index.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,8 +23,8 @@
                 <li><a href="">CONTACTS</a></li>
                 <li><a href="">ABOUT US</a></li>
                 <div class="button">
-                    <a href="Account-Menu/Account-Menu.html"><button class="btn btn-outline-success">Login</button></a>
-                    <a href="Register/Register.html"><button class="btn btn-outline-success">Register</button></a>
+                    <a href="Account-Menu/Account-Menu.php"><button class="btn btn-outline-success">Login</button></a>
+                    <a href="Register/Register.php"><button class="btn btn-outline-success">Register</button></a>
                 </div>
                 
             </ul>
