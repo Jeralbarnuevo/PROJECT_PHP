@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -99,87 +98,7 @@
         </div>
     </div>
     <div class="body content">
-    <?php
-    if(isset($_SESSION['message'])):
-    ?>
-    <div class="alert alert-<?=$_SESSION['msg_type']?> alert-dismissible fade show" style="width:100%;">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <?php
-            echo $_SESSION['message'];
-            unset($_SESSION['message']);
-         ?>
-    </div>
-    <?php endif ?>
-    <!------------------------------------------DELETE-MODAL-------------------------------------->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Do you want to delete this record?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                <div class="modal-body">
-                    Are You Sure?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="process.php?delete=<?php echo $row['ViolationID'];?>">
-                    <button type="button" class="btn btn-danger">Yes! Delete</button></a>
-                </div>
-            </div>
-        </div>
-        </div>
-    <!--------------------------------------------------------------------------------------------->
-    <!------------------------------------------UPDATE-MODAL--------------------------------------->
-    <?php
-                            $query="SELECT*FROM vtion";
-                            $result=mysqli_query($conn, $query);
-                            if(mysqli_num_rows($result)>0){
-                            while($row=mysqli_fetch_assoc($result)){
-                            
-                         ?>
-    <div class="modal fade" id="updateModal<?php echo $row['ViolationID']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="exampleModalLabel">Violation Record</h3>
-                    </div>
-                <div class="modal-body">
-                  <form class="form" id="form1" action="process.php" method="post">
-                    <div class="type-update">
-                        <label  class="form-label">Violation No.</label>
-                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row['ViolationNo']?>" style="color:red;">
-                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row['ViolationID']?>" style="color:red;" hidden>
-                    </div>
-                    <div class="type-update">
-                        <label class="form-label">Violation Name</label>
-                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row['ViolationName']?>" required>
-                    </div>
-                    <div class="type-update">
-                    <label for="category">Category :</label>
-                        <select name="category" required>
-                            <option value="<?php echo $row['Category']?>">Select Category--</option>
-                            <option value="Minor">Minor</option>
-                            <option value="Major">Major</option>
-                        </select>
-                    </div>
-                    <div class="type-update">
-                        <label  class="form-label">Punishment</label>
-                        <textarea  class="col-12" name="punishment" required><?php echo $row['Punishment']?></textarea>
-                    </div>
-                  </form>
-                </div>  
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" form="form1"  name="update" class="btn btn-success">Update</button>
-                </div>
-            </div>
-        </div>
-        </div>
-        <?php
-                            }
-                        } 
-        ?>
+   
     <!------------------------------------------------------------------------------------------------>
         <div class="container2">
         <div class="first">

@@ -78,7 +78,7 @@
 .container2>.second>.box{
     width:100%;
     height: 100%;
-    max-width:500px;
+    min-width:300px;
     max-height:300px;
     background-color: #319052;
     color:#FFFFFF;

@@ -19,6 +19,9 @@
         top:0;
         left:0;
         z-index: 9999;
+        animation: load-effects 3s;
+        animation-fill-mode: forwards;
+
     }
     .rotate>img{
         max-width: 350px;
@@ -32,9 +35,19 @@
         }
         
     }
+    .rotate.hide{
+        animation: load-effects 1s;
+        animation-fill-mode: forwards;
+    }
+    @keyframes load-effects{
+        100%{
+            opacity:0;
+            visibility: hidden;
+        }
+    }
 </style>
 <body>
-    <div class="rotate">
+    <div class="rotate hide">
         <img src="../Assets/logo.jpg" alt="">
         <h3>Loading...</h3>
     </div>
