@@ -34,13 +34,15 @@
                 <h1>Register</h1>
                 <form action="RegBack-end.php" method="POST" class="need-validate">
                     <div class="col-md-12 mb-2 box1">
-                        <input type="text" class="form-control" name="FirstName" autocomplete="0" placeholder="First Name" required >
-                        
+                        <input type="text" class="form-control" name="FirstName" autocomplete="0" placeholder="First Name"  >
+                        <div class="invalid-feedback">
+                          Please Fill 
+                        </div>
                       </div>
                       <div class="col-md-12 mb-2 box1">
                         <input type="text" class="form-control is valid" name="LastName" autocomplete="0" placeholder="Last Name" required >
-              
                       </div>
+                      
                       <div class="col-sm-4   mb-2 box1">
                         <select class="form-select" name="Gender" id="select" value="Gender" style="border:2px solid #319052;" required>
                             <option selected style="color: gray;">Gender--</option>
