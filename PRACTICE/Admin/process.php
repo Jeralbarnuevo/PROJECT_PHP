@@ -1,7 +1,7 @@
 <?php
     session_start();
     require("../connection.php");
-    $query = "SELECT ViolationID from vtion order by ViolationID desc";
+    $query = "SELECT ViolationID from violations order by ViolationID desc";
     $run = mysqli_query($conn, $query);
     $row=mysqli_fetch_array($run);
     $last_id=$row['ViolationID'];
@@ -17,7 +17,7 @@
         $violationName=$_POST['ViolationName'];
         $Category=$_POST['Category'];
         $Punishment=$_POST['Punishment'];
-        $duplicate=mysqli_query($conn, "SELECT*FROM vtion WHERE ViolationName='$violationName'");
+        $duplicate=mysqli_query($conn, "SELECT*FROM violations WHERE ViolationName='$violationName'");
         if(mysqli_num_rows($duplicate)>0){
             $_SESSION['message']="Record has already saved";
             $_SESSION['msg_type']="warning";
@@ -30,7 +30,7 @@
                     $_SESSION['msg_type']="success";
                     header("location:Admin-Violations.php");
                     if(mysqli_query($conn, $run)){
-                        $query = "SELECT ViolationID from vtion order by ViolationID desc";
+                        $query = "SELECT ViolationID from violations order by ViolationID desc";
                         $run = mysqli_query($conn, $query);
                         $row=mysqli_fetch_array($run);
                         $last_id=$row['ViolationID'];
@@ -52,7 +52,7 @@
             
     if(isset($_GET['delete'])){
         $id=$_GET['delete'];
-        $mysqli="DELETE FROM vtion WHERE ViolationID=$id";
+        $mysqli="DELETE FROM violations WHERE ViolationID=$id";
         $run=mysqli_query($conn,$mysqli);
         $_SESSION['message']="Record has been deleted!";
         $_SESSION['msg_type']="danger";
@@ -65,7 +65,7 @@
         $VtionName=$_POST['VtionName'];
         $category=$_POST['category'];
         $punishment=$_POST['punishment'];
-        $update="UPDATE vtion SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID='$VtionID'";
+        $update="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID='$VtionID'";
         $test=mysqli_query($conn, $update); 
         if($test){
         $_SESSION['message']="Record has been updated!";

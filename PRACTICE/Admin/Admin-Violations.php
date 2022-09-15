@@ -132,7 +132,7 @@
     <!--------------------------------------------------------------------------------------------->
     <!------------------------------------------UPDATE-MODAL--------------------------------------->
     <?php
-                            $query="SELECT*FROM vtion";
+                            $query="SELECT*FROM violations";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
                             while($row=mysqli_fetch_assoc($result)){
@@ -227,7 +227,7 @@
                     </thead>
                     <tbody class="table-success">
                         <?php
-                            $query="SELECT*FROM vtion";
+                            $query="SELECT*FROM violations";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
                             while($row=mysqli_fetch_assoc($result)){
@@ -239,7 +239,6 @@
                         <td><?php echo $row['Category'] ?></td>
                         <td><?php echo $row['Punishment'] ?></td>
                         <td class="action">
-                            <button class="btn btn-dark">Print</button>
                             <button class="update" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['ViolationID']?>">Edit</button>
                             <button class="delete" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
                         </td>

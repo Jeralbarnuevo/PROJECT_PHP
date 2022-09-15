@@ -126,11 +126,6 @@
             </div>
         </div>
         </div>
-        <div class="forum">
-        <div class="head">
-        <center><h1>Forum</h1></center>
-        </div>
-        </div>
         </div>
         <div class="second">
             <div class="box">

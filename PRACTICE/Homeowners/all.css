@@ -352,3 +352,29 @@ svg{
     background-color: #FFFFFF;
     transform: rotate(45deg);
 }
+
+/* MY VIOLATIONS */
+.container11{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+.container11>.table-violations{
+    border: 1px solid black;
+    max-width:1300px;
+    margin:2rem 5rem;
+    width: 100%;
+
+}
+.container11>.table-violations>h1{
+    background-color: var(--secondary);
+    padding:1rem;
+    text-align: center;
+    color:var(--body);
+    
+}
+.container11>.table-violations>.table-1{
+    padding:1rem;
+}
+

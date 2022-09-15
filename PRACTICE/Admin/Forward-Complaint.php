@@ -130,7 +130,7 @@
                                 <th>Date:</th>
                                 <td>9/2/22</td>
                                 <th>Status:</th>
-                                <td style="color:green;">Success</td>
+                                <td style="color:green;">Pending</td>
                             </tr>
                             <tr>
                                 <td colspan="6" style="height:40px;"></td>
@@ -180,23 +180,16 @@
                     <td>Mark</td>
                     <td>11/11/22</td>
                     <td>Admin</td>
-                    <td style="color:green;">Success</td>
+                    <td style="color:red;">Pending</td>
                     <td class="col-md-2"><button style="padding:.5rem; border:none;">View Details</button></td>
                     </tr>
+                   
                     <tr class="height">
                     <td>2</td>
                     <td>JERAL</td>
                     <td>9/2/22</td>
                     <td>Admin</td>
-                    <td style="color:green;">Success</td>
-                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
-                    </tr>
-                    <tr class="height">
-                    <td>2</td>
-                    <td>JERAL</td>
-                    <td>9/2/22</td>
-                    <td>Admin</td>
-                    <td style="color:green;">Success</td>
+                    <td style="color:red;">Pending</td>
                     <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
                     </tr>
                 </tbody>
