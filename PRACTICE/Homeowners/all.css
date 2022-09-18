@@ -378,3 +378,27 @@ svg{
     padding:1rem;
 }
 
+/* CREATE COMPLAINTS */
+
+.container11>.form-container{
+    border: 1px solid black;
+    width: 100%;
+    max-width: 900px;
+}
+.container11>.form-container>form{
+    padding:2rem;
+}
+.container11>.form-container>h3{
+    text-align: center;
+    background-color: var(--secondary);
+    padding: 1rem;
+    color: white;
+}
+.container11>.form-container>form>.button{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    
+}
+
+

@@ -11,8 +11,9 @@
 </head>
 <body>
 <?php
-  require("RegBack-end.php");
-?>
+      require("RegBack-end.php");
+      ?>
+
     <div class="main">
     <?php
     if(isset($_SESSION['message'])):
@@ -32,54 +33,54 @@
             </div>
             <div class="register">
                 <h1>Register</h1>
-                <form action="RegBack-end.php" method="POST" class="need-validate">
+                <form action=""  method="POST">
                     <div class="col-md-12 mb-2 box1">
-                        <input type="text" class="form-control" name="FirstName" autocomplete="0" placeholder="First Name"  >
-                        <div class="invalid-feedback">
-                          Please Fill 
-                        </div>
+                        <input type="text" class="form-control" id="validationTooltip01" name="FirstName" autocomplete="0" placeholder="First Name">
+                        <div class="error"><p style="margin:0;"><?php echo $error ?></p></div>
                       </div>
                       <div class="col-md-12 mb-2 box1">
-                        <input type="text" class="form-control is valid" name="LastName" autocomplete="0" placeholder="Last Name" required >
+                        <input type="text" class="form-control is valid" name="LastName" autocomplete="0" placeholder="Last Name" >
+                        <div class="error"><p style="margin:0;"><?php echo $errorLastName ?></p></div>
                       </div>
                       
-                      <div class="col-sm-4   mb-2 box1">
-                        <select class="form-select" name="Gender" id="select" value="Gender" style="border:2px solid #319052;" required>
+                      <div class="col-sm-4 mb-2 box1">
+                        <select class="form-select" name="Gender" id="select" value="Gender" style="border:2px solid #319052;">
                             <option selected style="color: gray;">Gender--</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
+                        <div class="error"><p style="margin:0;"><?php echo $errorGender ?></p></div>
                         
                       </div>
                       <div class="col-sm-3 mb-2 box1">
-                        <input type="number" class="form-control" name="Age" autocomplete="0" placeholder="Age" required >
-                        
+                        <input type="number" class="form-control" name="Age" autocomplete="0" placeholder="Age" >
+                        <div class="error"><p style="margin:0;"><?php echo $errorAge ?></p></div>
                       </div>
                       <div class="col-md-5 mb-2 box1">
-                        <input type="text" class="form-control" name="Contact#" autocomplete="0" placeholder="Contact No." required >
-                       
+                        <input type="text" class="form-control" name="Contact#" autocomplete="0" placeholder="Contact No.">
+                        <div class="error"><p style="margin:0;"><?php echo $errorContact ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="text" class="form-control" name="Address" autocomplete="0" placeholder="Address">
+                        <div class="error"><p style="margin:0;"><?php echo $errorAddress ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="text" id="date" class="form-control" name="Birthday" autocomplete="0" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')">
+                        <div class="error"><p style="margin:0;"><?php echo $errorBirthday ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="email" class="form-control" name="Email" autocomplete="0" placeholder="Email">
+                        <div class="error"><p style="margin:0;"><?php echo $errorEmail ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="password" class="form-control" name="Password" autocomplete="0" placeholder="Password">
+                        <div class="error"><p style="margin:0;"><?php echo $errorPass ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2 box1">
-                        <input type="text" class="form-control" name="Address" autocomplete="0" placeholder="Address" required >
-                        
+                        <input type="password" class="form-control" name="Confirm_Password" autocomplete="0" placeholder="Confirm Password" >
+                        <div class="error"><p style="margin:0;"><?php echo $errorConfirm ?></p></div>
                       </div>
-                      <div class="col-lg-12 mb-2 box1">
-                        <input type="text" id="date" class="form-control" name="Birthday" autocomplete="0" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" required >
-                        
-                      </div>
-                      <div class="col-lg-12 mb-2 box1">
-                        <input type="email" class="form-control" name="Email" autocomplete="0" placeholder="Email" required  >
-                        
-                      </div>
-                      <div class="col-lg-12 mb-2 box1">
-                        <input type="password" class="form-control" name="Password" autocomplete="0" placeholder="Password"  required>
-                        
-                      </div>
-                      <div class="col-lg-12 mb-2 box1">
-                        <input type="password" class="form-control" name="Confirm-Password" autocomplete="0" placeholder="Confirm Password" required >
-                        
-                      </div>
-                      <div class="col-lg-12 mb-3 box1">
+                      <div class="col-lg-12 mb-2  box1">
                         <label for="formFile" class="form-label">Upload Your Image</label>
                         <input class="form-control" type="file" id="formFile">
                       </div>
