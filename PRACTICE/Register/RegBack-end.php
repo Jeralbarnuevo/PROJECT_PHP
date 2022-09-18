@@ -54,7 +54,7 @@
             $error="Firstname is required!";
         }else{
             $Firstname=$_POST['FirstName'];
-            if(!preg_match("/^[a-zA-z]*$/", $Firstname)){
+            if(!preg_match("/^[a-zA-Z].*[\s\.]*$/", $Firstname)){
                 $error="Only Letters are allowed*";
             }
             
@@ -62,7 +62,7 @@
             $errorLastName="Lastname is required*";
         }else{
             $Lastname=$_POST['LastName'];
-            if(!preg_match("/^[a-zA-z]*$/", $Lastname)){
+            if(!preg_match("/^[a-zA-Z].*[\s\.]*$/", $Lastname)){
                 $errorLastName="Only Letters are allowed*";
             }
         }if(empty($_POST['Gender'])){
@@ -100,32 +100,48 @@
         }else{
             $Password=$_POST['Password'];
             if(strlen($Password)<=12){
-                $errorPass="Password Maximum 12*";
+                $errorPass="Your Password Must Contain At Least 12 Characters!*";
             }
+            
         }if(empty($_POST['Confirm_Password'])){
             $errorConfirm="Confirm Password is Required*";
         }else{
             $Confirm_Password=$_POST['Confirm_Password'];
         }
+        }else{
+            $_SESSION['message']="Remember! Fill out the form correctly to register ";
+            $_SESSION['msg_status']="info";
         }
-        if($_POST['register']){
-        $double=mysqli_query($conn, "SELECT*FROM homeowners WHERE Email='$Email'");
-        if(mysqli_num_rows($doubleN)>0){
-            $_SESSION['message']="Records Has Already Exist";
-            $_SESSION['msg_type']="warning";
-            header("location:Register.php");
+        
+        if($error||$errorLastName||$errorGender||$errorAge||$errorContact||$errorAddress||$errorBirthday||
+        $errorEmail||$errorPass||$errorConfirm){
+            $_SESSION['message']="Fill out the forms to register";
+            $_SESSION['msg_status']="error";
+        }else if($Firstname||$Lastname||$Gender||$Age||$Contacts||$Address||$Birthday||$Email||$Password||$Confirm_Password){
+            $doubleN=mysqli_query($conn, "SELECT*FROM homeowners WHERE First_Name='$Firstname'");
+            if(mysqli_num_rows($doubleN)>0){
+                $_SESSION['message']="Records Has Already Exist";
+                $_SESSION['msg_status']="warning";        
         }else{
             if($Password==$Confirm_Password){
                 $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
                 $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
                 $query="INSERT INTO homeowners (First_Name,Last_Name,Gender,Age,ContactNo,Address,Birthdate,Email,Password,Confirm_Password) 
-                VALUES ('$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthdate','$Email','$Encrypt','$EncryptConfirm')";
+                VALUES ('$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Encrypt','$EncryptConfirm')";
                 $run=mysqli_query($conn, $query);
                 $_SESSION['message']="Registration Sucessful";
-                $_SESSION['msg_type']="success";
-                header("location:Register.php");
+                $_SESSION['msg_status']="success";
+                
+            }else{
+                $_SESSION['message']="Please Match the Password";
+                $_SESSION['msg_type']="error";
+                
+                
             }
         }
-    }
+      }
+    
+
+  
 
  ?>

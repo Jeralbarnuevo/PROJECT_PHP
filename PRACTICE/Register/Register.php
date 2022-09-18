@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="Register.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Register</title>
 </head>
 <body>
@@ -15,17 +16,20 @@
       ?>
 
     <div class="main">
-    <?php
-    if(isset($_SESSION['message'])):
+    <?php 
+    if(isset($_SESSION['message'])&& $_SESSION['msg_status'] !=''){
+      ?>
+      <script>
+        swal({
+            title: "<?php echo $_SESSION['message']; ?>",
+            icon: "<?php echo $_SESSION['msg_status']; ?>",
+            button: "Ok",
+            });
+      </script>
+      <?php
+      unset($_SESSION['status']);
+    }
     ?>
-    <div class="alert alert-<?=$_SESSION['msg_type']?> alert-dismissible fade show" style="width:100%; max-width:700px;">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <?php
-            echo $_SESSION['message'];
-            unset($_SESSION['message']);
-         ?>
-    </div>
-    <?php endif ?>
         <div class="container">
             <div class="logo">
                 <img src="../Assets/logo.jpg" alt="">
@@ -85,7 +89,7 @@
                         <input class="form-control" type="file" id="formFile">
                       </div>
                       <div class="col-lg-12 button box1">
-                        <a href="../Account-Menu/Account-Menu.html" class="btn btn-dark">Back to login</a>
+                        <a href="../Account-Menu/Account-Menu.php" class="btn btn-dark">Back to login</a>
                         <button type="submit" name="register" class="btn btn-success">Register</button>
                       </div>
                 </form>
@@ -93,6 +97,11 @@
         </div>
 
     </div>
+    <script>
+      if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
