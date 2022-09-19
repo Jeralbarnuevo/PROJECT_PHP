@@ -27,6 +27,7 @@
               if (password_verify($Password,$Encrypt)){
                   $_SESSION["login"]=true;
                   $_SESSION["Homeowners_ID"]=$row["Homeowners_ID"];
+                  $_SESSION['Email']=$row['Email'];
                   header("location: ../../Homeowners/Homeowners-dash.php");
               }
               else{
@@ -38,6 +39,8 @@
               echo "<script> alert('Username Not Registered');</script>";
           }
       }
+
+     
      ?>
     <div class="main">
         <div class="container">
