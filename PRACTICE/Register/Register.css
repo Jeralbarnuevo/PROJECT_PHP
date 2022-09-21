@@ -4,6 +4,7 @@
     padding:0;
     margin:0;
 }
+
 :root{
     --side:#191919;
     --top:#ffffff;
@@ -14,6 +15,7 @@
     --hover:#65C18C;
 }
 
+
 .main{
     display: flex;
     align-items: center;
@@ -21,8 +23,8 @@
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    background-color:var(--side);
     padding:1rem;
+    background:var(--side);
     
 }
 .main>.container{
@@ -64,7 +66,7 @@
 .main>.container>.register{
     padding:2rem 1.5rem;
     width: 100%;
-    height: 100%; 
+  
     font-family: 'Roboto', sans-serif; 
     
      

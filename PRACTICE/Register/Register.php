@@ -37,7 +37,7 @@
             </div>
             <div class="register">
                 <h1>Register</h1>
-                <form action=""  method="POST">
+                <form action=""  method="POST" enctype="multipart/form-data">
                     <div class="col-md-12 mb-2 box1">
                         <input type="text" class="form-control" id="validationTooltip01" name="FirstName" autocomplete="0" placeholder="First Name">
                         <div class="error"><p style="margin:0;"><?php echo $error ?></p></div>
@@ -49,7 +49,7 @@
                       
                       <div class="col-sm-4 mb-2 box1">
                         <select class="form-select" name="Gender" id="select" value="Gender" style="border:2px solid #319052;">
-                            <option selected style="color: gray;">Gender--</option>
+                            <option style="color:gray;" value="" disabled selected hidden>Gender--</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
@@ -85,8 +85,9 @@
                         <div class="error"><p style="margin:0;"><?php echo $errorConfirm ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2  box1">
-                        <label for="formFile" class="form-label">Upload Your Image</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <label for="profile-pic" class="form-label">Upload Your Image</label>
+                        <input class="form-control" name="profile-pic" id="profile-pic" accept=".jpg, .jpeg, .png"  type="file">
+                        <div class="error"><p style="margin:0;"><?php echo $errorFile ?></p></div>
                       </div>
                       <div class="col-lg-12 button box1">
                         <a href="../Account-Menu/Account-Menu.php" class="btn btn-dark">Back to login</a>

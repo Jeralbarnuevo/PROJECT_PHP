@@ -7,6 +7,12 @@
         header('location: ../Accounts/Homeowners/Homeowner.php');
         die();
     }
+    if(!empty($_SESSION['Homeowners_ID'])){
+        $HomeownersID=$_SESSION['Homeowners_ID'];
+        $result=mysqli_query($conn, "SELECT*FROM homeowners WHERE Homeowners_ID='$HomeownersID'");
+        $row=mysqli_fetch_assoc($result);
+
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,9 +80,9 @@
             <p>Dashboard</p>
         </div>
         <div class="profile">
-        <div class="welcome"><p>Welcome, <?php echo $_SESSION['Email']; ?></p></div>
+        <div class="welcome"><p>Welcome, <?php echo $row['First_Name'], "&nbsp;&nbsp;",$row['Last_Name']; ?></p></div>
         <div class="image" onclick="Dropmenu();">
-                <img src="../Assets/example.jpg" alt="" width="50px">
+                <img src="../Register/imgs/<?php echo $row['Image']; ?>" alt="" width="50px">
             </div>
             <div class="menu">
                 <h4>JERAL BARNUEVO<br><span>Homeowners</span></h4>
