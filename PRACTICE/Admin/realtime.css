@@ -362,7 +362,7 @@ svg{
     width: 100%;
     padding-left:320px;
     padding-top: 110px;
-    overflow: hidden;
+    overflow: scroll;
     position:absolute;
 
     

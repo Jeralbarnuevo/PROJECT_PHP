@@ -140,21 +140,74 @@
 
 
 /* ADMIN-RECORDS */
-.container3{
+.con{
     width: 100%;
-    border-top:6px solid #319052;
-    border-left:1px solid black;
-    border-right:1px solid black;
-    border-bottom:1px solid black;
-    background-color: #ffffff;
-    border-radius: 1rem;
-    padding:1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
-.container3>table{
-    border: 1px solid black;
+.register{
+    display:none;
+    padding:2rem 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    font-family: 'Roboto', sans-serif; 
+    border:1px solid black;
+    
+     
+}
+
+.main>.container>.register>h1{
+    margin-left:1rem;
+    font-weight:700; 
+    letter-spacing:.3rem; 
+    text-transform: uppercase;
+
+}
+.main>.container>.register>form{
+    width: 100%;
+    display:flex;
+    flex-wrap: wrap;
+    padding:0 1rem;
+}
+.box1{
+    width: 100%;
+    padding-right:1rem;
+    padding-top:.3rem;
+}
+.box1>a{
+    width: 100%;   
+    border:1px solid black;
+}
+input[type="text"],input[type="email"],input[type="date"],input[type="password"],input[type="number"]{
+    border: 2px solid #319052;
+}
+input#formFile{
+    border: 2px solid #3190 52;
+}
+input[type=file]::file-selector-button{
+    background-color: #319052;
+    color:white;
+}
+
+.con>.register>form>.button{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap:.5rem;
 }
 
 
 
-
-
+#select option{
+    color:black;
+}
+#date::placeholder{
+    color:#888888;
+}
+.error{
+    color:red;
+    font-size:0.9rem;
+}

@@ -30,6 +30,19 @@
     <title>Admin Manage Account</title>
 </head>
 <body>
+<?php
+    
+    if(!isset($_SESSION['Admin_ID'])){
+        header('location: ../Accounts/Admin/Admin.php');
+        die();
+    }
+    if(!empty($_SESSION['Admin_ID'])){
+        $AdminID=$_SESSION['Admin_ID'];
+        $result=mysqli_query($conn, "SELECT*FROM admin WHERE Admin_ID='$AdminID'");
+        $row=mysqli_fetch_assoc($result);
+
+    }
+?>
     <div class="main">
     <div class="side">
         <div class="logo">
@@ -75,12 +88,12 @@
             <p>Manage Accounts</p>
         </div>
         <div class="profile">
-            <div class="welcome"><p>Welcome, Jeral Barnuevo</p></div>
+            <div class="welcome"><p>Welcome, <?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?></p></div>
         <div class="image" onclick="Dropmenu();">
-                <img src="../Assets/example.jpg" alt="" width="50px">
+                <img src="admin-imgs/<?php echo $row['Image_Profile']; ?>" alt="" width="50px">
             </div>
             <div class="menu">
-                <h4>JERAL BARNUEVO<br><span>Admin</span></h4>
+                <h4><?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?><br><span>Admin</span></h4>
                 <ul>
                     <li>
                         <a href="../SETTINGS/MyProfile.php" class="link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M5.84846399,13.5498221 C7.28813318,13.433801 8.73442297,13.433801 10.1740922,13.5498221 C10.9580697,13.5955225 11.7383286,13.6935941 12.5099314,13.8434164 C14.1796238,14.1814947 15.2696821,14.7330961 15.73685,15.6227758 C16.0877167,16.317132 16.0877167,17.1437221 15.73685,17.8380783 C15.2696821,18.727758 14.2228801,19.3149466 12.4926289,19.6174377 C11.7216312,19.7729078 10.9411975,19.873974 10.1567896,19.9199288 C9.43008411,20 8.70337858,20 7.96802179,20 L6.64437958,20 C6.36753937,19.9644128 6.09935043,19.9466192 5.83981274,19.9466192 C5.05537891,19.9062698 4.27476595,19.8081536 3.50397353,19.6530249 C1.83428106,19.3327402 0.744222763,18.7633452 0.277054922,17.8736655 C0.0967111971,17.5290284 0.00163408158,17.144037 0.000104217816,16.752669 C-0.00354430942,16.3589158 0.0886574605,15.9704652 0.268403665,15.6227758 C0.72692025,14.7330961 1.81697855,14.1548043 3.50397353,13.8434164 C4.27816255,13.6914539 5.06143714,13.5933665 5.84846399,13.5498221 Z M8.00262682,-1.16351373e-13 C10.9028467,-1.16351373e-13 13.2539394,2.41782168 13.2539394,5.40035587 C13.2539394,8.38289006 10.9028467,10.8007117 8.00262682,10.8007117 C5.10240696,10.8007117 2.75131423,8.38289006 2.75131423,5.40035587 C2.75131423,2.41782168 5.10240696,-1.16351373e-13 8.00262682,-1.16351373e-13 Z" transform="translate(4 2)"/></svg>
@@ -91,7 +104,7 @@
                         <p>Notifications</p></a>
                     </li>
                     <li>
-                        <a href="" class="link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.9 11.6c-.1-.1-.1-.2-.2-.3l-3-3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l1.3 1.3H13c-.6 0-1 .4-1 1s.4 1 1 1h4.6l-1.3 1.3c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3l3-3c.1-.1.2-.2.2-.3.1-.3.1-.5 0-.8z"/><path d="M15.5 18.1c-1.1.6-2.3.9-3.5.9-3.9 0-7-3.1-7-7s3.1-7 7-7c1.2 0 2.4.3 3.5.9.5.3 1.1.1 1.4-.4.3-.5.1-1.1-.4-1.4C15.1 3.4 13.6 3 12 3c-5 0-9 4-9 9s4 9 9 9c1.6 0 3.1-.4 4.5-1.2.5-.3.6-.9.4-1.4-.3-.4-.9-.6-1.4-.3z"/></svg>
+                        <a href="../SETTINGS/logout.php" class="link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.9 11.6c-.1-.1-.1-.2-.2-.3l-3-3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l1.3 1.3H13c-.6 0-1 .4-1 1s.4 1 1 1h4.6l-1.3 1.3c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3l3-3c.1-.1.2-.2.2-.3.1-.3.1-.5 0-.8z"/><path d="M15.5 18.1c-1.1.6-2.3.9-3.5.9-3.9 0-7-3.1-7-7s3.1-7 7-7c1.2 0 2.4.3 3.5.9.5.3 1.1.1 1.4-.4.3-.5.1-1.1-.4-1.4C15.1 3.4 13.6 3 12 3c-5 0-9 4-9 9s4 9 9 9c1.6 0 3.1-.4 4.5-1.2.5-.3.6-.9.4-1.4-.3-.4-.9-.6-1.4-.3z"/></svg>
                         <p>Logout</p></a>
                     </li>
                 </ul>
@@ -100,7 +113,14 @@
     </div>
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
-    <div class="modal fade" id="viewdetails" tabindex="-1">
+    <?php                   
+                            $query="SELECT*FROM admin";
+                            $result=mysqli_query($conn, $query);
+                            if(mysqli_num_rows($result)>0){
+                            while($row=mysqli_fetch_assoc($result)){
+                            
+                         ?>
+    <div class="modal fade" id="viewdetails<?php echo $row['Admin_ID']?>" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -111,36 +131,35 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <th><img src="../Assets/example.jpg" alt="" width="100px"></th>
+                                <th><img src="admin-imgs/<?php echo $row['Image_Profile']; ?>  " alt="" width="100px"></th>
                                 <td colspan="5"><h2 style="color:green;">Active</h2></td>
                             </tr>
                             <tr>
                                 <th class="col-md-2">Account No.</th>
                                 <td style="color:red;">ST-CE-001</td>
                                 <th>First Name:</th>
-                                <td>JERAL</td>
+                                <td><?php echo $row['FirstName']; ?></td>
                                 <th>Last Name</th>
-                                <td>BARNUEVO</td>
+                                <td><?php echo $row['FirstName']; ?></td>
                             </tr>
                             <tr>
                                 <th>Gender</th>
-                                <td>Male</td>
+                                <td><?php echo $row['Gender']; ?></td>
                                 <th>Birthdate</th>
-                                <td>07/13/2000</td>
+                                <td><?php echo $row['Birthdate']; ?></td>
                                 <th>Age:</th>
-                                <td>22</td>
+                                <td><?php echo $row['Age']; ?></td>
                             </tr>
                             <tr>
                                 <th>Contact#:</th>
-                                <td colspan="3">09512341015</td>
+                                <td colspan="3"><?php echo $row['ContactNo']; ?></td>
                                 <th>Registered Date</th>
-                                <td style="color:green;">9/2/22</td>
+                                <td style="color:green;"><?php echo $row['date_registered']; ?></td>
                             </tr>
                             <tr>
                                 <th>Address:</th>
-                                <td colspan="5" style="height:40px;">Blk 191 Lot 13 St. Cecilia Deca Homes Brgy Loma De Gato Marilao, Bulacan</td>
+                                <td colspan="5" style="height:40px;"><?php echo $row['Address']; ?></td>
                             </tr>
-                           
                         </tbody>
                     </table>
                     </div>
@@ -150,11 +169,15 @@
                     </div>
                 </div>
             </div>
+            <?php
+                }
+                }
+            ?>
     <!------------------------------------------------------------------------------------------------>
         <div class="container1">
             <div class="title"><h1>Admin Accounts</h1></div>
             <div class="table-complaint">
-            <div class="button"><button class="hello"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48"><path fill="none" d="M0 0h48v48H0z"/><path d="M26 14h-4v8h-8v4h8v8h4v-8h8v-4h-8v-8zM24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"/></svg>Add Admin</button></div>
+            <div class="button"><button class="hello" id="add"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48"><path fill="none" d="M0 0h48v48H0z"/><path d="M26 14h-4v8h-8v4h8v8h4v-8h8v-4h-8v-8zM24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z"/></svg>Add Admin</button></div>
             <table class="table table-bordered table-hover table-responsive" id="Mytable" style="padding:0;">
                 <thead class="table-dark head">
                     <tr class="height">
@@ -166,24 +189,204 @@
                     <th class="text-center">Details</th>
                     </tr>
                 </thead>
+                <?php
+                            $query="SELECT*FROM admin";
+                            $result=mysqli_query($conn, $query);
+                            if(mysqli_num_rows($result)>0){
+                            while($row=mysqli_fetch_assoc($result)){
+                            
+                         ?>
                 <tbody>
                     <tr class="height">
                     <td style="color:red;">ST-AD-001</td>
-                    <td>JERAL</td>
-                    <td>BARNUEVO</td>
-                    <td>9/2/22</td>
-                    <td><div class="success">Active</div></td>
-                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View More  </button></td>
+                    <td><?php echo $row['FirstName']; ?></td>
+                    <td><?php echo $row['LastName']; ?></td>
+                    <td><?php echo $row['date_registered']; ?></td>
+                    <td><div class="success" hidden>Active</div></td>
+                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Admin_ID']?>">View More  </button></td>
                     </tr>
                 </tbody>
+                <?php
+                }
+                }
+            ?>
             </table>
+           
+            </div>
+        </div>
+        
+
+        <!-------------ADD ADMIN------------------>
+        <?php
+        $error="";$errorLastName="";$errorGender="";$errorAge="";$errorContact="";$errorAddress="";$errorBirthday="";
+        $errorEmail="";$errorPass="";$errorConfirm="";$errorFile="";
+    
+        $Firstname="";$Lastname="";$Gender="";$Age="";$Contacts="";$Address="";$Birthday="";$Email="";$Password="";$Confirm_Password="";$Image="";
+        if(isset($_POST['add'])){      
+            if(empty($_POST['FirstName'])){
+                $error="Firstname is required!";
+            }else{
+                $Firstname=$_POST['FirstName'];
+                if(!preg_match("/^[a-zA-Z].*[\s\.]*$/", $Firstname)){
+                    $error="Only Letters are allowed*";
+                }
+                
+            }if(empty($_POST['LastName'])){
+                $errorLastName="Lastname is required*";
+            }else{
+                $Lastname=$_POST['LastName'];
+                if(!preg_match("/^[a-zA-Z].*[\s\.]*$/", $Lastname)){
+                    $errorLastName="Only Letters are allowed*";
+                }
+            }if(empty($_POST['Gender'])){
+                $errorGender="Please Fill the blank!*";
+            }else{
+                $Gender=$_POST['Gender'];
+            }if(empty($_POST['Age'])){
+                $errorAge="Please Fill the blank!*";
+            }else{
+                $Age=$_POST['Age'];
+            }if(empty($_POST['Contact#'])){
+                $errorContact="Please Fill the blank!*";
+            }else{
+                $Contacts=$_POST['Contact#'];
+                 if(!preg_match("/^[0-9]*$/", $Contacts)){
+                    $errorContact="Only numbers are allowed*";
+                }
+            }if(empty($_POST['Address'])){
+                $errorAddress="Please Fill the blank!*";
+            }else{
+                $Address=$_POST['Address'];
+            }if(empty($_POST['Birthday'])){
+                $errorBirthday="Please Fill the blank!*";
+            }else{
+                $Birthday=$_POST['Birthday'];
+            }if(empty($_POST['Email'])){
+                $errorEmail="Email is Required*";
+            }else{
+                $Email=$_POST['Email'];
+                if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {  
+                    $errorEmail = "Invalid email format*";  
+                }  
+            }if(empty($_POST['Password'])){
+                $errorPass="Password is required*";
+            }else{
+                $Password=$_POST['Password'];
+                if(strlen($Password)<=12){  
+                    $errorPass="Your Password Must Contain At Least 12 Characters!*";
+                }
+                
+            }if(empty($_POST['Confirm_Password'])){
+                $errorConfirm="Confirm Password is Required*";
+            }else{
+                $Confirm_Password=$_POST['Confirm_Password'];
+            }if(empty($_FILES['profile-pic'])){
+                $errorFile="Your Image is Required*";
+            }else{
+                $Image=$_FILES['profile-pic']['name'];
+                $folder ='admin-imgs/' . $Image;
+                move_uploaded_file($_FILES['profile-pic']['tmp_name'], $folder);
+       
+            }
+            
+            }else{
+                $_SESSION['message']="Remember! Fill out the form correctly to register ";
+                $_SESSION['msg_status']="info";
+            }
+            
+            if($error||$errorLastName||$errorGender||$errorAge||$errorContact||$errorAddress||$errorBirthday||
+            $errorEmail||$errorPass||$errorConfirm||$errorFile){
+                $_SESSION['message']="Fill out the forms to register";
+                $_SESSION['msg_status']="error";
+            }else if($Firstname||$Lastname||$Gender||$Age||$Contacts||$Address||$Birthday||$Email||$Password||$Confirm_Password||$Image){
+                $doubleN=mysqli_query($conn, "SELECT*FROM admin WHERE FirstName='$Firstname'");
+                if(mysqli_num_rows($doubleN)>0){
+                    $_SESSION['message']="Records Has Already Exist";
+                    $_SESSION['msg_status']="warning";        
+            }else{
+                if($Password==$Confirm_Password){
+                    $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
+                    $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
+                    $query="INSERT INTO admin (FirstName,LastName,Gender,Age,ContactNo,Address,Birthdate,Email,Image_Profile,Password,Confirm_Password) 
+                    VALUES ('$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Image','$Encrypt','$EncryptConfirm')";
+                    $run=mysqli_query($conn, $query);
+                    $_SESSION['message']="Registration Sucessful";
+                    $_SESSION['msg_status']="success";
+                    
+                }else{
+                    $_SESSION['message']="Please Match the Password";
+                    $_SESSION['msg_type']="error";
+                    
+                    
+                }
+            }
+          }
+         ?>
+        <div class="con">
+        <div class="register">
+                <h1>ADD ADMIN</h1>
+                <form action=""  method="POST" enctype="multipart/form-data">
+                    <div class="col-md-12 mb-2 box1">
+                        <input type="text" class="form-control" id="validationTooltip01" name="FirstName" autocomplete="0" placeholder="First Name">
+                        <div class="error" ><p style="margin:0;"><?php echo $error ?></p></div>
+                      </div>
+                      <div class="col-md-12 mb-2 box1">
+                        <input type="text" class="form-control is valid" name="LastName" autocomplete="0" placeholder="Last Name" >
+                        <div class="error" ><p style="margin:0;"><?php echo $errorLastName ?></p></div>
+                      </div>
+                      
+                      <div class="col-sm-12 mb-2 box1">
+                        <select class="form-select" name="Gender" id="select" value="Gender" style="border:2px solid #319052;">
+                            <option style="color:gray;" value="" disabled selected hidden>Gender--</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <div class="error"><p style="margin:0;"><?php echo $errorGender ?></p></div>
+                        
+                      </div>
+                      <div class="col-sm-12 mb-2 box1">
+                        <input type="number" class="form-control" name="Age" autocomplete="0" placeholder="Age" >
+                        <div class="error"><p style="margin:0;"><?php echo $errorAge ?></p></div>
+                      </div>
+                      <div class="col-md-12 mb-2 box1">
+                        <input type="text" class="form-control" name="Contact#" autocomplete="0" placeholder="Contact No.">
+                        <div class="error"><p style="margin:0;"><?php echo $errorContact ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="text" class="form-control" name="Address" autocomplete="0" placeholder="Address">
+                        <div class="error"><p style="margin:0;"><?php echo $errorAddress ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="text" id="date" class="form-control" name="Birthday" autocomplete="0" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')">
+                        <div class="error"><p style="margin:0;"><?php echo $errorBirthday ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="email" class="form-control" name="Email" autocomplete="0" placeholder="Email">
+                        <div class="error"><p style="margin:0;"><?php echo $errorEmail ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <input type="password" class="form-control" name="Password" autocomplete="0" placeholder="Password">
+                        <div class="error"><p style="margin:0;"><?php echo $errorPass ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2 box1">
+                        <input type="password" class="form-control" name="Confirm_Password" autocomplete="0" placeholder="Confirm Password" >
+                        <div class="error"><p style="margin:0;"><?php echo $errorConfirm ?></p></div>
+                      </div>
+                      <div class="col-lg-12 mb-2  box1">
+                        <label for="profile-pic" class="form-label">Upload Your Image</label>
+                        <input class="form-control" name="profile-pic" id="profile-pic" accept=".jpg, .jpeg, .png"  type="file">
+                        <div class="error"><p style="margin:0;"><?php echo $errorFile ?></p></div>
+                      </div>
+                      <div class="col-lg-12 button box1">
+                        <button type="button" class="btn btn-dark" id="back">Back to login</button>
+                        <button type="submit" name="add" id="reg" class="btn btn-success">Register</button>
+                      </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<?php
-        include('loading.php');
-    ?>
+
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
@@ -192,6 +395,26 @@
 $(window).on("load", function(){
         $(".rotate").fadeOut(2000);
     })
+</script>
+<!-------JQUERY-SHOW/HIDE------>
+<script>
+    $(document).ready(function(){
+        $("#add").click(function(){
+            $(".register").show(300);
+            $(".container1").hide();
+        });
+        $("#back").click(function(){
+            $(".container1").show(300);
+            $(".register").hide(); 
+        })
+        $("#reg").click(function(){
+            $(".container1").hide(300);
+            $(".register").show(); 
+        })
+    })
+    if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
 </script>
 <script type="text/javascript" src="slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

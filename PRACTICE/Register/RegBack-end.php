@@ -113,8 +113,7 @@
             $Image=$_FILES['profile-pic']['name'];
             $folder ='imgs/' . $Image;
             move_uploaded_file($_FILES['profile-pic']['tmp_name'], $folder);
-                
-            
+   
         }
         
         }else{
