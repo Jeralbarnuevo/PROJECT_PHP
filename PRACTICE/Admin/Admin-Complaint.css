@@ -211,3 +211,16 @@ input[type=file]::file-selector-button{
     color:red;
     font-size:0.9rem;
 }
+/* ADMIN--RECORDS */
+.container3{
+    border: 1px solid black;
+}
+.container3>h3{
+    background-color: #319052;
+    text-align: center;
+    padding:1rem;
+    color:#ffffff;
+}
+.container3>.table1{
+   padding:1rem;
+}

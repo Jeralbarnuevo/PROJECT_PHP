@@ -24,12 +24,6 @@
                     $_SESSION['messages']="Record has been saved!";
                     $_SESSION['msg_type']="success";
                     header("location:Admin-Violations.php");
-                    $last_id=rand(0,9999);
-                    if($last_id==true){
-                    $id=str_replace("VIOLATION", "",$last_id);
-                    $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
-                    $code='VIOLATION-' .$id1;
-                    }
             
                 }   
                 

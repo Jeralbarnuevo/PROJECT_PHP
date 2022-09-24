@@ -166,7 +166,7 @@
     <!------------------------------------------------------------------------------------------------>
         <div class="container3">
             <h3>List of Violators</h3>
-            <hr>
+            <div class="table1">
             <table class="table table-bordered table-hover" id="Mytable1">
                 <thead class="table-dark">
                     <th class="text-center">Ticket No.</th>
@@ -187,6 +187,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

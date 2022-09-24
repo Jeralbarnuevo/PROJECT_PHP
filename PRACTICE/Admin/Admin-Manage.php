@@ -325,7 +325,7 @@
         <div class="con">
         <div class="register">
                 <h1>ADD ADMIN</h1>
-                <form action=""  method="POST" enctype="multipart/form-data">
+                <form action="" id="form" method="POST" enctype="multipart/form-data">
                     <div class="col-md-12 mb-2 box1">
                         <input type="text" class="form-control" id="validationTooltip01" name="FirstName" autocomplete="0" placeholder="First Name">
                         <div class="error" ><p style="margin:0;"><?php echo $error ?></p></div>
@@ -412,6 +412,8 @@ $(window).on("load", function(){
             $(".register").show(); 
         })
     })
+   
+
     if(window.history.replaceState){
         window.history.replaceState(null,null,window.location.href);
       }

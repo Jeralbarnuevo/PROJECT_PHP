@@ -40,8 +40,9 @@
         $AdminID=$_SESSION['Admin_ID'];
         $result=mysqli_query($conn, "SELECT*FROM admin WHERE Admin_ID='$AdminID'");
         $row=mysqli_fetch_assoc($result);
+    } 
+    
 
-    }
 ?>
     <div class="main">
     <div class="side">
@@ -113,7 +114,13 @@
     </div>
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
-    <div class="modal fade" id="viewdetails" tabindex="-1">
+    <?php
+         $query="SELECT*FROM homeowners";
+         $result=mysqli_query($conn, $query);
+         if(mysqli_num_rows($result)>0){
+         while($row=mysqli_fetch_assoc($result)){
+     ?>
+    <div class="modal fade" id="viewdetails<?php echo $row['Homeowners_ID']; ?>" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -124,34 +131,34 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <th><img src="../Assets/example.jpg" alt="" width="100px"></th>
+                                <th><img src="../Register/imgs/<?php echo $row['Image']; ?>" alt="" width="100px"></th>
                                 <td colspan="5"><h2 style="color:green;">Active</h2></td>
                             </tr>
                             <tr>
                                 <th class="col-md-2">Account No.</th>
                                 <td style="color:red;">ST-CE-001</td>
                                 <th>First Name:</th>
-                                <td>JERAL</td>
+                                <td><?php echo $row['First_Name']; ?></td>
                                 <th>Last Name</th>
-                                <td>BARNUEVO</td>
+                                <td><?php echo $row['Last_Name']; ?></td>
                             </tr>
                             <tr>
                                 <th>Gender</th>
-                                <td>Male</td>
+                                <td><?php echo $row['Gender']; ?></td>
                                 <th>Birthdate</th>
-                                <td>07/13/2000</td>
+                                <td><?php echo $row['Birthdate']; ?></td>
                                 <th>Age:</th>
-                                <td>22</td>
+                                <td><?php echo $row['Age']; ?></td>
                             </tr>
                             <tr>
                                 <th>Contact#:</th>
-                                <td colspan="3">09512341015</td>
+                                <td colspan="3"><?php echo $row['ContactNo']; ?></td>
                                 <th>Registered Date</th>
-                                <td style="color:green;">9/2/22</td>
+                                <td style="color:green;"><?php echo $row['date_registered']; ?></td>
                             </tr>
                             <tr>
                                 <th>Address:</th>
-                                <td colspan="5" style="height:40px;">Blk 191 Lot 13 St. Cecilia Deca Homes Brgy Loma De Gato Marilao, Bulacan</td>
+                                <td colspan="5" style="height:40px;"><?php echo $row['Address']; ?></td>
                             </tr>
                            
                         </tbody>
@@ -163,6 +170,10 @@
                     </div>
                 </div>
             </div>
+            <?php
+              }
+              } 
+            ?>
     <!------------------------------------------------------------------------------------------------>
         <div class="container1">
             <div class="title"><h1>Registered Homeowners</h1></div>
@@ -178,16 +189,26 @@
                     <th class="text-center">Details</th>
                     </tr>
                 </thead>
+                <?php
+                    $query1="SELECT*FROM homeowners";
+                    $result=mysqli_query($conn, $query1);
+                    if(mysqli_num_rows($result)>0){
+                    while($row=mysqli_fetch_assoc($result)){
+                ?>
                 <tbody>
                     <tr class="height">
                     <td>ST-CE-001</td>
-                    <td>JERAL</td>
-                    <td>BARNUEVO</td>
-                    <td>9/2/22</td>
+                    <td><?php echo $row['First_Name']; ?></td>
+                    <td><?php echo $row['Last_Name']; ?></td>
+                    <td><?php echo $row['date_registered']; ?></td>
                     <td><div class="success">Active</div></td>
-                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View More  </button></td>
+                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Homeowners_ID']; ?>">View More  </button></td>
                     </tr>
                 </tbody>
+                <?php
+                    }
+                    } 
+                ?>
             </table>
             </div>
         </div>

@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,6 +41,13 @@
         $row=mysqli_fetch_assoc($result);
 
     }
+    $last_id=rand(0,9999);
+    if($last_id==true){
+        $id=str_replace("STC", "",$last_id);
+        $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
+        $code=strtoupper(chr(rand(65, 90)) . chr(rand(65, 90))) .$id1;
+    }
+
 ?>
     <div class="main">
     <div class="side">
@@ -175,7 +181,7 @@
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Select the Violator</option>
                         <?php
-                            $sqlqry="SELECT*FROM homeowners";
+                            $sqlqry="SELECT*FROM homeowners order by First_Name asc";
                             $sqltest=mysqli_query($conn,$sqlqry);
         
                             while($row=mysqli_fetch_assoc($sqltest)){
@@ -189,18 +195,31 @@
                 </div>
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Process by</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                    <select name="select" id="select" class="form-select">
+                    <option selected>Process By--</option>
+                        <?php
+                            $sqlqry="SELECT*FROM admin order by FirstName asc";
+                            $sqltest=mysqli_query($conn,$sqlqry);
+        
+                            while($row=mysqli_fetch_assoc($sqltest)){
+                                $FirstName=$row['FirstName'];
+                                $LastName=$row['LastName'];
+                                echo "<option value='$FirstName $LastName'>$FirstName $LastName</option>";
+                            }
+                        
+                        ?>
+                    </select>
                 </div>
                 <div class="col-lg-6 mb-2 box" >
                     <label for="exampleFormControlInput1" class="form-label bold">Ticket No.</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo $code ?>" disabled>
                 </div>
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Account Type</label>
-                    <select name="select" id="select" class="form-select">
-                        <option value="">Select</option>
+                    <select name="select" id="select" class="form-select" disabled>
+                
                         <option value="Admin">Admin</option>
-                        <option value="Officer">Officer</option>
+                        
                     </select>
                 </div>
                 <div class="col-lg-6 mb-2 box">
@@ -209,7 +228,11 @@
                 </div>
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Status</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="Pending" readonly>
+                    <select name="select" id="select" class="form-select">
+                        <option value="" disabled selected hidden></option>
+                        <option value="Pending">Pending</option>
+                        <option value="Paid">Paid</option>
+                    </select>
                 </div>
             </div>
                <hr>
@@ -217,12 +240,26 @@
                     <h4 class="mb-3">Violation list</h4>
                     <div class="fill-info1">
                         <div class="group-a">
+                            <form action="" method="POST" id="content">
                             <div class="mb-3 box">
                                 <label for="exampleFormControlInput1" class="form-label bold">Violation</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
-                                <button class="btn btn-dark">Select</button>
-                            </div>
-                            <table class="table table-bordered table-hover table-responsive">
+                                <select class="form-select" name="input" id="input" aria-label="Default select example" onchange="showUser(this.value)">
+                                <option selected>Violations--</option>
+                                    <?php
+                                        $sqlqry="SELECT*FROM violations";
+                                        $sqltest=mysqli_query($conn,$sqlqry);
+                                        while($row=mysqli_fetch_assoc($sqltest)){
+                                        $violationNo=$row['ViolationNo'];
+                                        $violationName=$row['ViolationName'];
+                                        echo "<option value='$violationNo $violationName'>($violationNo) $violationName</option>";
+                                    }
+                                        
+                        ?>
+                    </select>
+                                <!---<button  type="button" class="btn btn-dark" id="select" name="select">Select</button>---->
+                                </div>
+                        <!------ 
+                            <table class="table table-bordered table-hover table-responsive" id="change">
                                 <thead>
                                     <th>Violation Code</th>
                                     <th>Violation Name</th>
@@ -230,14 +267,27 @@
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
+                                <?php
+                                    $test= mysqli_query($conn, "SELECT ViolationNo, ViolationName, Punishment From violations");
+                                    if(mysqli_num_rows($test)>0){
+                                    while($row=mysqli_fetch_assoc($test)){
+
+                                
+                                ?>
+
                                     <tr>
-                                        <td style="color:red;">VIOLATION-001</td>
-                                        <td>ILLEGAL PARKING</td>
-                                        <td>200 Pesos</td>
+                                        <td style="color:red;"><?php echo $row['ViolationNo']; ?></td>
+                                        <td><?php echo $row['ViolationName']; ?></td>
+                                        <td><?php echo $row['Punishment'] ?></td>
                                         <td><button class="btn btn-danger">Remove</button></td>
                                     </tr>
                                 </tbody>
-                            </table> 
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </table> ---->
+                            </form>
                         </div>
                         <div class="group-b">
                             <label for="exampleFormControlInput1" class="form-label bold">Comment</label>
@@ -254,6 +304,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');

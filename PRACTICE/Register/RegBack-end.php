@@ -131,23 +131,62 @@
                 $_SESSION['message']="Records Has Already Exist";
                 $_SESSION['msg_status']="warning";        
         }else{
-            if($Password==$Confirm_Password){
-                $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
-                $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
-                $query="INSERT INTO homeowners (First_Name,Last_Name,Gender,Age,ContactNo,Address,Birthdate,Email,Image,Password,Confirm_Password) 
-                VALUES ('$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Image','$Encrypt','$EncryptConfirm')";
-                $run=mysqli_query($conn, $query);
-                $_SESSION['message']="Registration Sucessful";
-                $_SESSION['msg_status']="success";
+            if($Password!=$Confirm_Password){
+                echo "<script>alert('Your Password Not Match')</script>";
+            }
+            
+                else{
+                    $otp=rand(100000,999999); // RANDOM PARA DAMA
+                    $_SESSION['VerificationCode']=$otp; // OTP PARA SA MAMA MO
+                    $_SESSION['mail']=$Email;
+                    require("../phpmailer/PHPMailerAutoload.php");
+                    $mail = new PHPMailer;
+    
+                    $mail->isSMTP();
+                    $mail->Host='smtp.hostinger.com';  //HOSTING NATIN MGA MAHAL
+                    $mail->Port=587;
+                    $mail->SMTPAuth=true;
+                    $mail->SMTPSecure='tls';
+    
+                    $mail->Username='st.ceciliahoawebbased@stceciliahoa.online'; // EMAIL NA GAGAMITIN PARA IPANG SEND SA MGA KUPAL
+                    $mail->Password='Capstone_101822';
+    
+                    $mail->setFrom('st.ceciliahoawebbased@stceciliahoa.online', 'ST-CECILIA-HOA'); //EMAIL NATIN SAKA TITLE
+                    $mail->addAddress($_POST['Email']);
+    
+                    $mail->isHTML(true);
+                    $mail->Subject="Your OTP Verification Code";
+                    $mail->Body="<p>Dear $Email , </p> <h3>Your verify OTP code is $otp <br></h3> 
+                    <br><br>
+                    <p>With regards,</p>
+                    <b>ST CECILIA HOA</b>";
                 
-            }else{
-                $_SESSION['message']="Please Match the Password";
-                $_SESSION['msg_type']="error";
-                
+
+                    if(!$mail->send()){
+                        ?>
+                            <script>
+                                alert("<?php echo "Register Failed, Invalid Email "?>");
+                            </script>
+                        <?php
+                    }else{
+                        $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
+                        $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
+                        $query="INSERT INTO homeowners (First_Name,Last_Name,Gender,Age,ContactNo,Address,Birthdate,Email,Image,Password,Confirm_Password,VerificationCode,Verified) 
+                        VALUES ('$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Image','$Encrypt','$EncryptConfirm','$otp',0)";
+                        $run=mysqli_query($conn, $query);
+                        ?>
+                        <script>
+                            alert("<?php echo "Register Successfully, OTP sent to " . $Email ?>");
+                            window.location.replace('../OTP/verification.php');
+                        </script>
+                        <?php
+                    }
+    
+                }
                 
             }
         }
-      }
+      
     
 
   

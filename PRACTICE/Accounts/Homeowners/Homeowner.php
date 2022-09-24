@@ -24,7 +24,8 @@
           $row=mysqli_fetch_assoc($result);
           if(mysqli_num_rows($result)>0){
             $Encrypt=$row['Password'];
-              if (password_verify($Password,$Encrypt)){
+            $verify=$row['verified'];
+              if (password_verify($Password,$Encrypt) && $verify==1){   
                   $_SESSION["login"]=true;
                   $_SESSION["Homeowners_ID"]=$row["Homeowners_ID"];
                   $_SESSION['Email']=$row['Email'];
@@ -36,7 +37,7 @@
       
           }
           else{
-              echo "<script> alert('Username Not Registered');</script>";
+              echo "<script> alert('The account does not exist please register');</script>";
           }
       }
 

@@ -40,13 +40,7 @@
             </div>
         </div>
         </div>
-        <div class="about-us">
-            <div class="main-about">
-                <div class="img">
-                    <img src="" alt="">
-                </div>
-            </div>
-        </div>
+       
     </main>
 </body>
 </html>
