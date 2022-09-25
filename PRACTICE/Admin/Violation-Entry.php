@@ -30,7 +30,7 @@
 </head>
 <body>
 <?php
-    
+    require("../connection.php");
     if(!isset($_SESSION['Admin_ID'])){
         header('location: ../Accounts/Admin/Admin.php');
         die();
@@ -48,6 +48,28 @@
         $code=strtoupper(chr(rand(65, 90)) . chr(rand(65, 90))) .$id1;
     }
 
+    if(isset($_POST['save'])){
+        $violator=$_POST['Violator']; 
+        $adminName=$_POST['adminName'];
+        $ticket=$_POST['ticket'];   
+        $date=$_POST['dateviolated'];
+        $status=$_POST['status'];
+        $input=$_POST['input'];
+        $comment=$_POST['comment'];
+        $fine=$_POST['fine'];
+        $insert="INSERT INTO records (ViolatorName,admin_name,ticketNo,Fine,status,Comment,date_created)
+                VALUES ('$violator','$adminName','$ticket','$fine','$status','$comment','$date')";
+        $run=mysqli_query($conn,$insert);
+        if($run){
+            echo"<script>alert('Records Insert Success')</script>";
+            
+        }else{
+            echo"<script>alert('Error! Please Try Again')</script>";
+            
+        }
+        
+
+    }
 ?>
     <div class="main">
     <div class="side">
@@ -92,7 +114,7 @@
     <div class="top">
         <div class="burger">
             <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
-            <p>Violation Entry</p>
+            <p>Violators Entry</p>
         </div>
         <div class="profile">
             <div class="welcome"><p>Welcome,<?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?> </p></div>
@@ -172,13 +194,13 @@
             </div>
     <!------------------------------------------------------------------------------------------------>
         <div class="container-entry">
-            <h3>Create New Violator Record</h3>
+            <h3>Create New Violators Record</h3>
             <hr>
-            <form action="" method="">
+            <form action="" method="POST">
                 <div class="group-1">
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Homeowner Name</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" name="Violator"aria-label="Default select example">
                         <option selected>Select the Violator</option>
                         <?php
                             $sqlqry="SELECT*FROM homeowners order by First_Name asc";
@@ -195,7 +217,7 @@
                 </div>
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Process by</label>
-                    <select name="select" id="select" class="form-select">
+                    <select  id="select" class="form-select" name="adminName">
                     <option selected>Process By--</option>
                         <?php
                             $sqlqry="SELECT*FROM admin order by FirstName asc";
@@ -212,108 +234,101 @@
                 </div>
                 <div class="col-lg-6 mb-2 box" >
                     <label for="exampleFormControlInput1" class="form-label bold">Ticket No.</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo $code ?>" disabled>
+                    <input type="text" class="form-control" name="ticket" id="exampleFormControlInput1" style="color:red;" value="<?php echo $code ?>" readonly>
                 </div>
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Account Type</label>
-                    <select name="select" id="select" class="form-select" disabled>
+                    <select  id="select" name="type" class="form-select" readonly>
                 
                         <option value="Admin">Admin</option>
                         
                     </select>
                 </div>
-                <div class="col-lg-6 mb-2 box">
-                    <label for="exampleFormControlInput1" class="form-label bold">Date Violated</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="">
-                </div>
+                <div class="col-lg-6 mb-2 box" id="change">
+                                    <label for="exampleFormControlInput1" class="form-label bold">Date Violated</label>
+                                    <input type="date" class="form-control" name="dateviolated" id="exampleFormControlInput1" placeholder="">
+                                </div>
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Status</label>
-                    <select name="select" id="select" class="form-select">
+                    <select  id="select" class="form-select" name="status">
                         <option value="" disabled selected hidden></option>
                         <option value="Pending">Pending</option>
                         <option value="Paid">Paid</option>
                     </select>
-                </div>
+                </div>  
+                
             </div>
                <hr>
                 <div class="group-2">
                     <h4 class="mb-3">Violation list</h4>
                     <div class="fill-info1">
                         <div class="group-a">
-                            <form action="" method="POST" id="content">
                             <div class="mb-3 box">
                                 <label for="exampleFormControlInput1" class="form-label bold">Violation</label>
-                                <select class="form-select" name="input" id="input" aria-label="Default select example" onchange="showUser(this.value)">
-                                <option selected>Violations--</option>
+                                <select class="form-select" name="input" id="input" aria-label="Default select example">
+                                <option  value="" selected="selected">Violations--</option>
                                     <?php
                                         $sqlqry="SELECT*FROM violations";
                                         $sqltest=mysqli_query($conn,$sqlqry);
-                                        while($row=mysqli_fetch_assoc($sqltest)){
+                                        while($row=mysqli_fetch_assoc($sqltest)):
                                         $violationNo=$row['ViolationNo'];
                                         $violationName=$row['ViolationName'];
-                                        echo "<option value='$violationNo $violationName'>($violationNo) $violationName</option>";
-                                    }
                                         
-                        ?>
-                    </select>
-                                <!---<button  type="button" class="btn btn-dark" id="select" name="select">Select</button>---->
-                                </div>
-                        <!------ 
-                            <table class="table table-bordered table-hover table-responsive" id="change">
-                                <thead>
-                                    <th>Violation Code</th>
-                                    <th>Violation Name</th>
-                                    <th>Fine</th>
-                                    <th>Action</th>
-                                </thead>
-                                <tbody>
-                                <?php
-                                    $test= mysqli_query($conn, "SELECT ViolationNo, ViolationName, Punishment From violations");
-                                    if(mysqli_num_rows($test)>0){
-                                    while($row=mysqli_fetch_assoc($test)){
-
+                                        ?>
+                                        <option value="<?php echo $row['ViolationID'];?>"><?php echo $violationNo, "&nbsp&nbsp" ,$violationName?></option>
+                                        <?php endwhile; ?>
+                                        
+                        
+                                    </select>
                                 
-                                ?>
+                                </div>
+                               
 
-                                    <tr>
-                                        <td style="color:red;"><?php echo $row['ViolationNo']; ?></td>
-                                        <td><?php echo $row['ViolationName']; ?></td>
-                                        <td><?php echo $row['Punishment'] ?></td>
-                                        <td><button class="btn btn-danger">Remove</button></td>
-                                    </tr>
-                                </tbody>
-                                <?php
-                                    }
-                                }
-                                ?>
-                            </table> ---->
-                            </form>
+
+                        <div class="mb-3 box" id="records">
+                        <label for="exampleFormControlInput1" class="form-label bold">Fine</label>
+                            <select name="fine" id="" class="form-select">
+                            <option  value="" selected="selected">Fine--</option>
+                                    <?php
+                                        $sqlqry="SELECT*FROM violations";
+                                        $sqltest=mysqli_query($conn,$sqlqry);
+                                        while($row=mysqli_fetch_assoc($sqltest)):
+                                        
+                                        
+                                        ?>
+                                        <option value="<?php echo $row['ViolationID'];?>"><?php echo $row['Punishment'];?></option>
+                                        <?php endwhile; ?>
+                                        
+                        
+                                    </select>
+                        </div>
+                            
                         </div>
                         <div class="group-b">
                             <label for="exampleFormControlInput1" class="form-label bold">Comment</label>
-                            <textarea name="" id="" cols="20" rows="5">Comment Here</textarea>
+                            <textarea name="comment" id="" cols="20" rows="5">Comment Here</textarea>
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="button">
-                    <button class="btn btn-primary">Save</button>
+                    <button class="btn btn-primary" name="save">Save</button>
                 </div>
                 
             </form>
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
-}
-$(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
+    }
+    if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
 </script>
+<script type="text/javascript" src="ajax.js"></script>
 <script type="text/javascript" src="slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

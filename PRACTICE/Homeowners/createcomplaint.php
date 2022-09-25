@@ -42,6 +42,32 @@
         $row=mysqli_fetch_assoc($result);
 
     }
+    $last_id=rand(0,9999);
+    if($last_id==true){
+        $id=str_replace("STC", "",$last_id);
+        $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
+        $code="COMPLAINT-" .$id1;
+    }
+    if(isset($_POST['send'])){
+        $complaintno=$_POST['complaintno'];
+        $complainant=$_POST['complainant'];
+        $compname=$_POST['compname'];
+        $category=$_POST['category'];
+        $details=$_POST['details'];
+        $Image=$_FILES['pic']['name'];
+        $folder ='compimgs/' . $Image;
+        
+        move_uploaded_file($_FILES['pic']['tmp_name'], $folder);
+        $query="INSERT INTO complaint (Complaint_No, Complainant, Complaint_Name, Complaint_Details, Attachment, Category, Status)
+        VALUES ('$complaintno','$complainant','$compname','$category','$details','$Image','Pending')";
+        if($query){
+            echo"<script>alert('Your Complaint Submit Sucessful')</script>";
+        }else{
+            echo"<script>alert('Error please submit again)</script>";
+        }
+
+    }
+
 ?>
     <div class="main">
     <div class="side">
@@ -109,42 +135,41 @@
     <div class="container11">
         <div class="form-container">
             <h3>Create Complaint</h3>
-            <form action="" method="">
+            <form action="#" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Complaint No.</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="complaintno" style="color:red;" value="<?php echo $code ?>" class="form-control" id="exampleInputEmail1" readonly>
                     
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Complainant Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="complainant" class="form-control" id="exampleInputEmail1" required>
                    
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Complaint Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="compname" class="form-control" id="exampleInputEmail1" required>
                     
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Category</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <select name="category" class="form-select" id="" required>
+                        <option value="">Category</option>
+                        <option value="Minor">Minor</option>
+                        <option value="Major">Major</option>
+                    </select>
                     
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Status</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" value="Pending" readonly>
-                    
-                  </div>    
+                  </div> 
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Complaint Details</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" name="details" id="exampleFormControlTextarea1" rows="3" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Attach a File</label>
-                    <input type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="file" name="pic" class="form-control" id="pic" accept=".jpg, .jpeg, .png"required>
                 </div>
                 <div class="button">
-                    <button class="btn btn-primary">Submit</button>    
+                    <button class="btn btn-primary" type="submit" name="send">Submit</button>  
                   </div>
       
             </form>

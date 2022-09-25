@@ -198,11 +198,11 @@
                          ?>
                 <tbody>
                     <tr class="height">
-                    <td style="color:red;">ST-AD-001</td>
+                    <td style="color:red;"><?php echo $row['AdminAccNo']; ?></td>
                     <td><?php echo $row['FirstName']; ?></td>
                     <td><?php echo $row['LastName']; ?></td>
                     <td><?php echo $row['date_registered']; ?></td>
-                    <td><div class="success" hidden>Active</div></td>
+                    <td><div style="color:red;" ><?php echo $row['status']; ?></div></td>
                     <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Admin_ID']?>">View More  </button></td>
                     </tr>
                 </tbody>
@@ -303,29 +303,69 @@
                 if(mysqli_num_rows($doubleN)>0){
                     $_SESSION['message']="Records Has Already Exist";
                     $_SESSION['msg_status']="warning";        
-            }else{
-                if($Password==$Confirm_Password){
-                    $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
-                    $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
-                    $query="INSERT INTO admin (FirstName,LastName,Gender,Age,ContactNo,Address,Birthdate,Email,Image_Profile,Password,Confirm_Password) 
-                    VALUES ('$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Image','$Encrypt','$EncryptConfirm')";
-                    $run=mysqli_query($conn, $query);
-                    $_SESSION['message']="Registration Sucessful";
-                    $_SESSION['msg_status']="success";
+            }else if($Password!=$Confirm_Password){
+                    echo "<script>alert(Your Password and Confirm Password not match!')</script>";
                     
                 }else{
-                    $_SESSION['message']="Please Match the Password";
-                    $_SESSION['msg_type']="error";
+                    $Email=$_POST['Email'];
+                    $otp=rand(100000,999999); // RANDOM PARA DAMA
+                    $_SESSION['VerificationCode']=$otp; // OTP PARA SA MAMA MO
+                    $_SESSION['mail']=$Email;
+                    require("../phpmailer/PHPMailerAutoload.php");
+                    $mail = new PHPMailer;
+    
+                    $mail->isSMTP();
+                    $mail->Host='smtp.hostinger.com';  //HOSTING NATIN MGA MAHAL
+                    $mail->Port=587;
+                    $mail->SMTPAuth=true;
+                    $mail->SMTPSecure='tls';
+    
+                    $mail->Username='st.ceciliahoatrackersystem@stceciliahoa.online'; // EMAIL NA GAGAMITIN PARA IPANG SEND SA MGA KUPAL
+                    $mail->Password='Capstone_101822';
+    
+                    $mail->setFrom('st.ceciliahoatrackersystem@stceciliahoa.online', 'ST-CECILIA-HOA'); //EMAIL NATIN SAKA TITLE
+                    $mail->addAddress($_POST['Email']);
+    
+                    $mail->isHTML(true);
+                    $mail->Subject="Your OTP Verification Code";
+                    $mail->Body="<p>Dear $Email , </p> <h3>Your verify OTP code is $otp <br></h3> 
+                    <br><br>
+                    <p>With regards,</p>
+                    <b>ST CECILIA HOA</b>";
+                
+
+                    if(!$mail->send()){
+                        ?>
+                            <script>
+                                alert("<?php echo "Register Failed, Invalid Email "?>");
+                            </script>
+                        <?php
+                    }else{
+                        $last_id=rand(0,9999);
+                        $id=str_replace("ST-CE","-",$last_id);
+                        $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
+                        $code='ST-CE-' .$id1;
+                        $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
+                        $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
+                        $query="INSERT INTO admin (AdminAccNo,FirstName,LastName,Gender,Age,ContactNo,Address,Birthdate,Email,Image_Profile,Password,Confirm_Password,VerificationCode) 
+                        VALUES ('$code','$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Image','$Encrypt','$EncryptConfirm',$otp)";
+                        $run=mysqli_query($conn, $query);
+                        echo "<script>alert('Register Success')</script>";
+                    }
                     
+                
+                
                     
                 }
             }
-          }
+
+          
+
          ?>
         <div class="con">
         <div class="register">
                 <h1>ADD ADMIN</h1>
-                <form action="" id="form" method="POST" enctype="multipart/form-data">
+                <form action="#" id="form" method="POST" enctype="multipart/form-data">
                     <div class="col-md-12 mb-2 box1">
                         <input type="text" class="form-control" id="validationTooltip01" name="FirstName" autocomplete="0" placeholder="First Name">
                         <div class="error" ><p style="margin:0;"><?php echo $error ?></p></div>

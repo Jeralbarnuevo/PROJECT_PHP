@@ -114,6 +114,9 @@
     align-items: center;
     gap:1rem;
 }
+.container-entry>form>.group-2>.fill-info1>.group-a>.box>label{
+    width:30%;
+}
 .container-entry>form>.group-2>.fill-info1>.group-b{
     width: 100%;
     height: 100%;
@@ -123,6 +126,7 @@
     justify-content: flex-start;
 
 }
+
 .container-entry>form>.button{
     width:100%;
     display:flex;

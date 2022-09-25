@@ -37,6 +37,7 @@
         $_SESSION['messages']="Record has been deleted!";
         $_SESSION['msg_type']="success";
         header("location:Admin-Violations.php");
+        
     }
    }
        

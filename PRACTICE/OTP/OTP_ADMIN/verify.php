@@ -82,10 +82,10 @@
 </body>
 </html>
 <?php 
-    require('../connection.php');
+    require('../../connection.php');
     if(isset($_POST['verify'])){
         $otp = $_SESSION['VerificationCode'];
-        $Email = $_SESSION['Email'];
+        $Email = $_SESSION['mail'];
         $otp_code = $_POST['otp-code'];
 
         if($otp != $otp_code){
@@ -95,11 +95,11 @@
            </script>
            <?php
         }else{
-            mysqli_query($conn, "UPDATE homeowners SET verified = 1 WHERE Email = '$Email'");
+            mysqli_query($conn, "UPDATE admin SET Verified = 1 WHERE Email = '$Email'");
             ?>
              <script>
                  alert("Verfiy account done, you may sign in now");
-                   window.location.replace("../Accounts/Homeowners/Homeowner.php");
+                   window.location.replace("../../Accounts/Admin/Admin.php");
              </script>
              <?php
         }
@@ -107,3 +107,8 @@
     }
 
 ?>
+<script>
+        if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
+    </script>

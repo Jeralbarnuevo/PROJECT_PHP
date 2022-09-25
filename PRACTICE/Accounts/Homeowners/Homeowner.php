@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../../Assets/logo1.png">
     <script type="text/javascript">window.history.forward();</script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,11 +69,16 @@
                       </div>
                       <div class="col-lg-12 mt-2 forgot">
                         <p>Don't have an account? <a href="../../Register/Register.php">Sign up</a></p>
-                        <p><a href="">Forgot your password?</a></p>
+                        <p><a href="../../OTP/Reset.php">Forgot your password?</a></p>
                       </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
+    </script>
 </body>
 </html>

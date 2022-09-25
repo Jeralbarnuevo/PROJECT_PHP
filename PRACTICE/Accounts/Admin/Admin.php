@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../../Assets/logo1.png">
     <script type="text/javascript">window.history.forward();</script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,6 +24,10 @@
           $row=mysqli_fetch_assoc($result);
           if(mysqli_num_rows($result)>0){
             $Encrypt=$row['Password'];
+            $verify=$row['Verified'];
+            if($verify!=1){
+                echo"<script>alert('Verify Your Email Account')</script>";  
+            }else{
               if (password_verify($Password,$Encrypt)){
                   $_SESSION["login"]=true;
                   $_SESSION["Admin_ID"]=$row["Admin_ID"];
@@ -32,6 +37,7 @@
               else{
                   echo "<script> alert('Incorrect password please try again');</script>";
               }
+            }
       
           }
           else{
@@ -66,11 +72,17 @@
                       </div>
                       <div class="col-lg-12 mt-2 forgot">
                         <p><a href="../../Account-Menu/Account-Menu.php">Do you want to back to login menu?</a></p>
-                        <p><a href="">Forgot your password?</a></p>
+                        <p><a href="../../OTP/OTP_ADMIN/verify.php">Verify Your Account</a></p>
+                        <p><a href="../../OTP/OTP_ADMIN/">Forgot your password?</a></p>
                       </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
+    </script>
 </body>
 </html>

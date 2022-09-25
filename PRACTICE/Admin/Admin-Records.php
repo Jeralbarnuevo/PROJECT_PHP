@@ -42,6 +42,7 @@
         $row=mysqli_fetch_assoc($result);
 
     }
+
 ?>
     <div class="main">
     <div class="side">
@@ -176,16 +177,27 @@
                     <th class="text-center">Status</th>
                     <th class="text-center">Action</th>
                 </thead>
+                <?php
+                    if(!empty($_SESSION['Admin_ID'])){
+                    $adminID=$_SESSION['Admin_ID'];
+                    $query=mysqli_query($conn, "SELECT admin.Admin_ID, admin.FirstName, admin.LastName, records.records_iD FROM admin and records WHERE 
+                    admin.Admin_ID=records.records_iD and Admin_ID=$adminID order by date desc");
+                    while($row=mysqli_fetch_assoc($query)){
+                   
+                ?>
                 <tbody>
                     <tr>
-                    <td>T123CST</td>
+                    <td><?php echo $row['ticketNo']; ?></td>
                     <td>ST-CE-002</td>
                     <td>GHERBIE CASTOR</td>
                     <td>9/4/22</td>
                     <td>Pending</td>
-                    <td>Delete</td>
+                    <td><button class="btn btn-primary">View More</button></td>
                     </tr>
                 </tbody>
+                    <?php }
+                    }
+                    ?>
             </table>
             </div>
         </div>

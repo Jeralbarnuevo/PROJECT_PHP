@@ -136,6 +136,7 @@
             }
             
                 else{
+                    $Email=$_POST['Email'];
                     $otp=rand(100000,999999); // RANDOM PARA DAMA
                     $_SESSION['VerificationCode']=$otp; // OTP PARA SA MAMA MO
                     $_SESSION['mail']=$Email;
@@ -148,10 +149,10 @@
                     $mail->SMTPAuth=true;
                     $mail->SMTPSecure='tls';
     
-                    $mail->Username='st.ceciliahoawebbased@stceciliahoa.online'; // EMAIL NA GAGAMITIN PARA IPANG SEND SA MGA KUPAL
+                    $mail->Username='st.ceciliahoatrackersystem@stceciliahoa.online'; // EMAIL NA GAGAMITIN PARA IPANG SEND SA MGA KUPAL
                     $mail->Password='Capstone_101822';
     
-                    $mail->setFrom('st.ceciliahoawebbased@stceciliahoa.online', 'ST-CECILIA-HOA'); //EMAIL NATIN SAKA TITLE
+                    $mail->setFrom('st.ceciliahoatrackersystem@stceciliahoa.online', 'ST-CECILIA-HOA'); //EMAIL NATIN SAKA TITLE
                     $mail->addAddress($_POST['Email']);
     
                     $mail->isHTML(true);

@@ -65,15 +65,16 @@
     
     <div class="main">
         <div class="container1">
-            <h1>Verification Code</h1>
+            <h1>Reset Your Password</h1>
             <form action="" method="POST">
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Enter Your OTP Verifcation Code</label>
-                    <input type="text" class="form-control" name="otp-code" id="exampleFormControlInput1" placeholder="">
+                    <h4>STEP 1</h4>
+                    <label for="exampleFormControlInput1" class="form-label">Enter Your Current Email</label>
+                    <input type="Email" class="form-control" name="email" id="exampleFormControlInput1" placeholder="" required>
                   </div>
                 <div class="button mb-3">
-                    <button class="btn btn-dark">Cancel</button>
-                    <button class="btn btn-success" type="submit" name="verify">Verify</button>
+                    <a href="../Accounts/Homeowners/Homeowner.php"><button class="btn btn-dark" type="button">Cancel</button></a>
+                    <button class="btn btn-success" type="submit" name="Send">Send</button>
                 </div>
             </form>
         </div>
@@ -83,26 +84,51 @@
 </html>
 <?php 
     require('../connection.php');
-    if(isset($_POST['verify'])){
-        $otp = $_SESSION['VerificationCode'];
-        $Email = $_SESSION['Email'];
-        $otp_code = $_POST['otp-code'];
+    if(isset($_POST['Send'])){
+        $email = $_POST['email'];
+        $otp=rand(100000,999999); 
+        $_SESSION['VerificationCode']=$otp; 
+        $_SESSION['mail']=$email;
+        require("../phpmailer/PHPMailerAutoload.php");
+        $mail = new PHPMailer;
 
-        if($otp != $otp_code){
+        $mail->isSMTP();
+        $mail->Host='smtp.hostinger.com';  
+        $mail->Port=587;
+        $mail->SMTPAuth=true;
+        $mail->SMTPSecure='tls';
+
+        $mail->Username='st.ceciliahoatrackersystem@stceciliahoa.online'; 
+        $mail->Password='Capstone_101822';
+
+        $mail->setFrom('st.ceciliahoatrackersystem@stceciliahoa.online', 'ST-CECILIA-HOA'); 
+        $mail->addAddress($_POST['email']);
+
+        $mail->isHTML(true);
+        $mail->Subject="Your Reset Password";
+        $mail->Body="<p>Dear $email , </p> <h3>Your Reset Password Code is $otp <br></h3> 
+        <br><br>
+        <p>With regards,</p>
+        <b>ST CECILIA HOA</b>";
+    
+
+        if(!$mail->send()){
             ?>
-           <script>
-               alert("Invalid OTP code");
-           </script>
-           <?php
+                <script>
+                    alert("<?php echo "Register Failed, Invalid Email "?>");
+                </script>
+            <?php
         }else{
-            mysqli_query($conn, "UPDATE homeowners SET verified = 1 WHERE Email = '$Email'");
+            $query="UPDATE homeowners SET VerificationCode='$otp' WHERE Email='$email'";
+            $run=mysqli_query($conn, $query);
             ?>
-             <script>
-                 alert("Verfiy account done, you may sign in now");
-                   window.location.replace("../Accounts/Homeowners/Homeowner.php");
-             </script>
-             <?php
+            <script>
+                alert("<?php echo "Password Reset Code sent to " . $email ?>");
+                window.location.replace('ResetCode.php');
+            </script>
+            <?php
         }
+
 
     }
 
