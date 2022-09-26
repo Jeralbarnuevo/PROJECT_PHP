@@ -48,24 +48,28 @@
         $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
         $code="COMPLAINT-" .$id1;
     }
-    if(isset($_POST['send'])){
+    if(isset($_POST['confirm'])){                   
         $complaintno=$_POST['complaintno'];
-        $complainant=$_POST['complainant'];
-        $compname=$_POST['compname'];
-        $category=$_POST['category'];
+        $id=$_SESSION['Homeowners_ID'];
+        $Complainant=$_POST['complainantName'];
+        $contact=$_POST['contact'];
         $details=$_POST['details'];
+        $address=$_POST['Address'];
         $Image=$_FILES['pic']['name'];
+        $status='Pending';
         $folder ='compimgs/' . $Image;
-        
         move_uploaded_file($_FILES['pic']['tmp_name'], $folder);
-        $query="INSERT INTO complaint (Complaint_No, Complainant, Complaint_Name, Complaint_Details, Attachment, Category, Status)
-        VALUES ('$complaintno','$complainant','$compname','$category','$details','$Image','Pending')";
-        if($query){
+        $query1="INSERT INTO complaint (homeownersID,Complaint_No,Complainant_Name,Complaint_Details,Address,ContactNo,Attachment,Status)
+        VALUES ((SELECT Homeowners_ID FROM homeowners WHERE homeowners.Homeowners_ID='$id'),'$complaintno','$Complainant','$details','$address','$contact','$Image','$status')";
+        $test1=mysqli_query($conn,$query1);
+        if($test1){
             echo"<script>alert('Your Complaint Submit Sucessful')</script>";
         }else{
-            echo"<script>alert('Error please submit again)</script>";
+            echo"<script>alert('Error please submit again')</script>";
         }
 
+    }else{
+        echo"Mali ang codes mo";
     }
 
 ?>
@@ -85,13 +89,12 @@
                 </button>
                 <ul class="drop">
                     <li><a class="dropdown-item" href="Myviolations.php">Pending Violations</a></li>
-                    <li><a class="dropdown-item" href="Closed-Complaint.php">Closed Violations</a></li>
+                    <li><a class="dropdown-item" href="CloseViolations.php">Closed Violations</a></li>
                 </ul>
                 <button type="button" class="buttn buttn-primary dropdown-toggle" data-bs-toggle="dropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50 12c-21 0-38 17-38 38s17 38 38 38 38-17 38-38-17-38-38-38zm0 72c-18.8 0-34-15.2-34-34s15.2-34 34-34 34 15.2 34 34-15.2 34-34 34zm19.5-34c0 1.1-.9 2-2 2H45.1c-1.1 0-2-.9-2-2s.9-2 2-2h22.4c1.1 0 2 .9 2 2zm0 12c0 1.1-.9 2-2 2H45.1c-1.1 0-2-.9-2-2s.9-2 2-2h22.4c1.1 0 2 .9 2 2zM38.3 50c0 1.1-.9 2-2 2h-3.8c-1.1 0-2-.9-2-2s.9-2 2-2h3.8c1.1 0 2 .9 2 2zm0 12c0 1.1-.9 2-2 2h-3.8c-1.1 0-2-.9-2-2s.9-2 2-2h3.8c1.1 0 2 .9 2 2zm31.2-24c0 1.1-.9 2-2 2H45.1c-1.1 0-2-.9-2-2s.9-2 2-2h22.4c1.1 0 2 .9 2 2zm-31.2 0c0 1.1-.9 2-2 2h-3.8c-1.1 0-2-.9-2-2s.9-2 2-2h3.8c1.1 0 2 .9 2 2z"/><path fill="#00F" d="M244-1210V474h-1784v-1684H244m8-8h-1800V482H252v-1700z"/></svg><p>Complaints</p></a>
                 </button>
                 <ul class="drop">
-
                     <li><a class="dropdown-item" href="createcomplaint.php">Create Complaints</a></li>
                     <li><a class="dropdown-item" href="PendingCom.php">Pending Complaints</a></li>
                     <li><a class="dropdown-item" href="closedcomplaint.php">Closed Complaints</a></li>
@@ -141,35 +144,32 @@
                     <input type="text" name="complaintno" style="color:red;" value="<?php echo $code ?>" class="form-control" id="exampleInputEmail1" readonly>
                     
                   </div>
+                  
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Complainant Name</label>
-                    <input type="text" name="complainant" class="form-control" id="exampleInputEmail1" required>
-                   
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Complaint Name</label>
-                    <input type="text" name="compname" class="form-control" id="exampleInputEmail1" required>
+                    <input type="text" name="complainantName" class="form-control" required>
                     
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Category</label>
-                    <select name="category" class="form-select" id="" required>
-                        <option value="">Category</option>
-                        <option value="Minor">Minor</option>
-                        <option value="Major">Major</option>
-                    </select>
+                    <label for="exampleInputEmail1" class="form-label">Address</label>
+                    <input type="text" name="Address" class="form-control"  required>
+                    
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Contact Number</label>
+                    <input type="text" name="contact" class="form-control" required>
                     
                   </div> 
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Complaint Details</label>
-                    <textarea class="form-control" name="details" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    <textarea class="form-control" name="details"  rows="3" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Attach a File</label>
                     <input type="file" name="pic" class="form-control" id="pic" accept=".jpg, .jpeg, .png"required>
                 </div>
                 <div class="button">
-                    <button class="btn btn-primary" type="submit" name="send">Submit</button>  
+                    <button class="btn btn-primary" type="submit" name="confirm">Submit</button>
                   </div>
       
             </form>
@@ -178,9 +178,7 @@
     </div>
     </div>
 </div>
-<?php
-        include('loading.php');
-    ?>
+
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');

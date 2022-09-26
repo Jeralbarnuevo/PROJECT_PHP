@@ -72,7 +72,7 @@
                 <ul class="drop">
                     <li><a class="dropdown-item" href="Admin-Homeowners.php">Homeowners</a></li>
                     <li><a class="dropdown-item" href="Admin-Manage.php">Admin</a></li>
-                    <li><a class="dropdown-item" href="Admin-Officer.php">Officer</a></li>
+                
                 </ul>
                 <a href="Violation-Entry.php"><button class="buttn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,6a1,1,0,0,0-1,1V17a3,3,0,0,1-3,3H7a1,1,0,0,0,0,2H17a5,5,0,0,0,5-5V7A1,1,0,0,0,21,6Zm-3,9V5a3,3,0,0,0-3-3H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H15A3,3,0,0,0,18,15ZM10,4h2V8.86l-.36-.3a1,1,0,0,0-1.28,0l-.36.3ZM4,15V5A1,1,0,0,1,5,4H8v7a1,1,0,0,0,1.65.76L11,10.63l1.35,1.13A1,1,0,0,0,13,12a1.06,1.06,0,0,0,.42-.09A1,1,0,0,0,14,11V4h1a1,1,0,0,1,1,1V15a1,1,0,0,1-1,1H5A1,1,0,0,1,4,15Z"/></svg><p>Violations Entry</p>
@@ -114,56 +114,80 @@
     </div>
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
-    <div class="modal fade" id="viewdetails" tabindex="-1">
+    <?php
+                    if(!empty($_SESSION['Admin_ID'])){
+                    $adminID=$_SESSION['Admin_ID'];
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
+                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID)");
+                    while($row=mysqli_fetch_assoc($query)){
+                   
+                ?>
+    <div class="modal fade" id="viewdetails<?php echo $row['records_iD']; ?>" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">Homeowners Details</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                    <div class="modal-body">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th><img src="../Assets/example.jpg" alt="" width="100px"></th>
-                                <td colspan="5"><h2 style="color:green;">Active</h2></td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-2">Account No.</th>
-                                <td style="color:red;">ST-CE-001</td>
-                                <th>First Name:</th>
-                                <td>JERAL</td>
-                                <th>Last Name</th>
-                                <td>BARNUEVO</td>
-                            </tr>
-                            <tr>
-                                <th>Gender</th>
-                                <td>Male</td>
-                                <th>Birthdate</th>
-                                <td>07/13/2000</td>
-                                <th>Age:</th>
-                                <td>22</td>
-                            </tr>
-                            <tr>
-                                <th>Contact#:</th>
-                                <td colspan="3">09512341015</td>
-                                <th>Registered Date</th>
-                                <td style="color:green;">9/2/22</td>
-                            </tr>
-                            <tr>
-                                <th>Address:</th>
-                                <td colspan="5" style="height:40px;">Blk 191 Lot 13 St. Cecilia Deca Homes Brgy Loma De Gato Marilao, Bulacan</td>
-                            </tr>
-                           
-                        </tbody>
-                    </table>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">My Violation</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <div class="modal-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th class="col-md-2">TicketNo</th>
+                                    <td style="color:red;"><?php echo $row['ticketNo'] ?></td>
+                                    <th>Violator Name</th>
+                                    <td><?php echo $row['First_Name'], "&nbsp&nbsp", $row['Last_Name'] ?></td>
+                                    <th>Violation No.</th>
+                                    <td><?php echo $row['ViolationNo'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Violation Name</th>
+                                    <td class="col-md-3"><?php echo $row['ViolationName']; ?></td>
+                                    <th>Fine</th>
+                                    <td class="col-md-6"><?php echo $row['Fine'] ?></td>
+                                    <th>Category:</th>
+                                    <td><?php echo $row['Category'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Date:</th>
+                                    <td><?php echo $row['date_created'] ?></td>
+                                    <th>Status:</th>
+                                    <td style="color:green;"><?php echo $row['Status'] ?></td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="height:40px;"></td>
+                                </tr>
+                                <tr>
+                                    <th>Process By:</th>
+                                    <td colspan="5">Admin: <?php echo $row['FirstName'], "&nbsp&nbsp", $row['LastName'] ?></td>
+                                </tr>
+                                <tr>
+                    
+                                    <th>Remark Date:</th>
+                                    <td colspan="3"><?php echo $row['date_created'] ?></td>
+                                    <th>Action:</th>
+                                    <td colspan="3"><button class="btn btn-success">Paid</button></td>
+                                </tr>
+                                <tr>
+                                    <th>Comment</th>
+                                    <td colspan="3"><?php echo $row['Comment'] ?></td>
+                                   
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
+            <?php
+                }
+            } 
+            ?>
     <!------------------------------------------------------------------------------------------------>
         <div class="container3">
             <h3>List of Violators</h3>
@@ -180,19 +204,19 @@
                 <?php
                     if(!empty($_SESSION['Admin_ID'])){
                     $adminID=$_SESSION['Admin_ID'];
-                    $query=mysqli_query($conn, "SELECT admin.Admin_ID, admin.FirstName, admin.LastName, records.records_iD FROM admin and records WHERE 
-                    admin.Admin_ID=records.records_iD and Admin_ID=$adminID order by date desc");
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, homeowners.Account_Number,homeowners.First_Name, homeowners.Last_Name
+                    from records inner join homeowners on records.homeowners_ID = homeowners.Homeowners_ID");
                     while($row=mysqli_fetch_assoc($query)){
                    
                 ?>
                 <tbody>
                     <tr>
                     <td><?php echo $row['ticketNo']; ?></td>
-                    <td>ST-CE-002</td>
-                    <td>GHERBIE CASTOR</td>
-                    <td>9/4/22</td>
-                    <td>Pending</td>
-                    <td><button class="btn btn-primary">View More</button></td>
+                    <td><?php echo $row['Account_Number']?></td>
+                    <td><?php echo $row['First_Name'],"&nbsp&nbsp",$row['Last_Name']?></td>
+                    <td><?php echo $row['date_created']?></td>
+                    <td><?php echo $row['Status']?></td>
+                    <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['records_iD']; ?>">View More</button></td>
                     </tr>
                 </tbody>
                     <?php }

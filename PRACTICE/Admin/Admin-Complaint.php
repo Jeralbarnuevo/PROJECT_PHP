@@ -113,6 +113,15 @@
     </div>
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
+    <?php
+                    if(!empty($_SESSION['Admin_ID'])){
+                    $adminID=$_SESSION['Admin_ID'];
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName FROM ((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
+                    records.admin_ID = admin.Admin_ID)");
+                    while($row=mysqli_fetch_assoc($query)){
+                   
+                ?>
     <div class="modal fade" id="viewdetails" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
@@ -172,6 +181,10 @@
                     </div>
                 </div>
             </div>
+            <?php 
+             }
+             } 
+            ?>
     <!------------------------------------------------------------------------------------------------>
         <div class="container1">
             <div class="title"><h1>Pending Complaints</h1></div>

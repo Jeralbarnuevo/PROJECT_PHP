@@ -30,7 +30,6 @@
 </head>
 <body>
 <?php
-    require("../connection.php");
     if(!isset($_SESSION['Admin_ID'])){
         header('location: ../Accounts/Admin/Admin.php');
         die();
@@ -50,15 +49,17 @@
 
     if(isset($_POST['save'])){
         $violator=$_POST['Violator']; 
-        $adminName=$_POST['adminName'];
         $ticket=$_POST['ticket'];   
-        $date=$_POST['dateviolated'];
+        $date=$_POST['dateviolated'];   
         $status=$_POST['status'];
         $input=$_POST['input'];
         $comment=$_POST['comment'];
         $fine=$_POST['fine'];
-        $insert="INSERT INTO records (ViolatorName,admin_name,ticketNo,Fine,status,Comment,date_created)
-                VALUES ('$violator','$adminName','$ticket','$fine','$status','$comment','$date')";
+        $idhome=$_POST['idhome'];
+        $idadmin=$_POST['idadmin'];
+        $insert="INSERT INTO records (admin_ID,homeowners_ID,ticketNo,Fine,status,Comment,date_created)
+                VALUES ((SELECT Admin_ID FROM admin WHERE admin.Admin_ID='$idadmin'),(SELECT Homeowners_ID FROM homeowners WHERE homeowners.Homeowners_ID='$idhome')
+                ,'$ticket','$fine','$status','$comment','$date')";
         $run=mysqli_query($conn,$insert);
         if($run){
             echo"<script>alert('Records Insert Success')</script>";
@@ -100,7 +101,6 @@
                 <ul class="drop">
                     <li><a class="dropdown-item" href="Admin-Homeowners.php">Homeowners</a></li>
                     <li><a class="dropdown-item" href="Admin-Manage.php">Admin</a></li>
-                    <li><a class="dropdown-item" href="Admin-Officer.php">Officer</a></li>
                 </ul>
                 <a href="Violation-Entry.php"><button class="buttn active">
                     <svg class="active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,6a1,1,0,0,0-1,1V17a3,3,0,0,1-3,3H7a1,1,0,0,0,0,2H17a5,5,0,0,0,5-5V7A1,1,0,0,0,21,6Zm-3,9V5a3,3,0,0,0-3-3H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H15A3,3,0,0,0,18,15ZM10,4h2V8.86l-.36-.3a1,1,0,0,0-1.28,0l-.36.3ZM4,15V5A1,1,0,0,1,5,4H8v7a1,1,0,0,0,1.65.76L11,10.63l1.35,1.13A1,1,0,0,0,13,12a1.06,1.06,0,0,0,.42-.09A1,1,0,0,0,14,11V4h1a1,1,0,0,1,1,1V15a1,1,0,0,1-1,1H5A1,1,0,0,1,4,15Z"/></svg><p>Violations Entry</p>
@@ -142,6 +142,7 @@
     </div>
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
+  
     <div class="modal fade" id="viewdetails" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
@@ -192,6 +193,7 @@
                     </div>
                 </div>
             </div>
+            
     <!------------------------------------------------------------------------------------------------>
         <div class="container-entry">
             <h3>Create New Violators Record</h3>
@@ -200,21 +202,23 @@
                 <div class="group-1">
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Homeowner Name</label>
-                    <select class="form-select" name="Violator"aria-label="Default select example">
+                    <select class="form-select" id="select1" name="Violator"aria-label="Default select example">
                         <option selected>Select the Violator</option>
                         <?php
                             $sqlqry="SELECT*FROM homeowners order by First_Name asc";
                             $sqltest=mysqli_query($conn,$sqlqry);
         
-                            while($row=mysqli_fetch_assoc($sqltest)){
+                            while($row=mysqli_fetch_assoc($sqltest)):
                                 $FirstName=$row['First_Name'];
                                 $LastName=$row['Last_Name'];
-                                echo "<option value='$FirstName $LastName'>$FirstName $LastName</option>";
-                            }
-                        
-                        ?>
+                                ?>
+                                <option value="<?php echo $row['Homeowners_ID'];?>"><?php echo $row['First_Name'], "&nbsp&nbsp" ,$row['Last_Name']?></option>
+                                <?php endwhile; ?>
                     </select>
+                    
                 </div>
+                <input type="text" class="form-control" id="idnum1" name="idhome" style="color:red;" value="" readonly hidden>
+                           
                 <div class="col-lg-6 mb-2 box">
                     <label for="exampleFormControlInput1" class="form-label bold">Process by</label>
                     <select  id="select" class="form-select" name="adminName">
@@ -223,26 +227,39 @@
                             $sqlqry="SELECT*FROM admin order by FirstName asc";
                             $sqltest=mysqli_query($conn,$sqlqry);
         
-                            while($row=mysqli_fetch_assoc($sqltest)){
+                            while($row=mysqli_fetch_assoc($sqltest)):
                                 $FirstName=$row['FirstName'];
                                 $LastName=$row['LastName'];
-                                echo "<option value='$FirstName $LastName'>$FirstName $LastName</option>";
-                            }
-                        
-                        ?>
-                    </select>
+                                $id=$row['Homeowners_ID'];
+                                ?>
+                                <option value="<?php echo $row['Admin_ID'];?>">(Admin)&nbsp;<?php echo $row['FirstName'], "&nbsp&nbsp" ,$row['LastName']?></option>
+                                <?php endwhile; ?>
+                                
+    
+                        </select>
                 </div>
+                <input type="text" class="form-control" id="idnum" name="idadmin" style="color:red;" value="" readonly hidden>
+                <script>
+                    $('#select').change(function(){
+                        var opt = $(this).find('option:selected');
+                        $('#idnum').val(opt.val());  
+                    });
+                    $('#select1').change(function(){
+                        var opt = $(this).find('option:selected');
+                        $('#idnum1').val(opt.val());
+
+                    });
+
+                </script>
+                
+          
                 <div class="col-lg-6 mb-2 box" >
                     <label for="exampleFormControlInput1" class="form-label bold">Ticket No.</label>
                     <input type="text" class="form-control" name="ticket" id="exampleFormControlInput1" style="color:red;" value="<?php echo $code ?>" readonly>
                 </div>
                 <div class="col-lg-6 mb-2 box">
-                    <label for="exampleFormControlInput1" class="form-label bold">Account Type</label>
-                    <select  id="select" name="type" class="form-select" readonly>
-                
-                        <option value="Admin">Admin</option>
-                        
-                    </select>
+                    <label for="exampleFormControlInput1" class="form-label bold">Remark Date</label>
+                    <input type="date" class="form-control">
                 </div>
                 <div class="col-lg-6 mb-2 box" id="change">
                                     <label for="exampleFormControlInput1" class="form-label bold">Date Violated</label>
@@ -275,7 +292,7 @@
                                         $violationName=$row['ViolationName'];
                                         
                                         ?>
-                                        <option value="<?php echo $row['ViolationID'];?>"><?php echo $violationNo, "&nbsp&nbsp" ,$violationName?></option>
+                                        <option value="<?php echo $row['Punishment']?><?php $row['ViolationID'] ?>"><?php echo $violationNo, "&nbsp&nbsp" ,$violationName?></option>
                                         <?php endwhile; ?>
                                         
                         
@@ -284,24 +301,19 @@
                                 </div>
                                
 
-
+                                           
                         <div class="mb-3 box" id="records">
                         <label for="exampleFormControlInput1" class="form-label bold">Fine</label>
-                            <select name="fine" id="" class="form-select">
-                            <option  value="" selected="selected">Fine--</option>
-                                    <?php
-                                        $sqlqry="SELECT*FROM violations";
-                                        $sqltest=mysqli_query($conn,$sqlqry);
-                                        while($row=mysqli_fetch_assoc($sqltest)):
-                                        
-                                        
-                                        ?>
-                                        <option value="<?php echo $row['ViolationID'];?>"><?php echo $row['Punishment'];?></option>
-                                        <?php endwhile; ?>
-                                        
-                        
-                                    </select>
+                            <input type="text" class="form-control" name="fine" id="idnum2">    
+                            
                         </div>
+                        <script>
+                            $('#input').change(function(){
+                            var opt = $(this).find('option:selected');
+                            $('#idnum2').val(opt.val());
+                            });
+                            
+                        </script>
                             
                         </div>
                         <div class="group-b">

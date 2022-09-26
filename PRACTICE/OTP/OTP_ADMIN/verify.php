@@ -72,7 +72,7 @@
                     <input type="text" class="form-control" name="otp-code" id="exampleFormControlInput1" placeholder="">
                   </div>
                 <div class="button mb-3">
-                    <button class="btn btn-dark">Cancel</button>
+                    <a href="../../Accounts/Admin/Admin.php"><button type="button" class="btn btn-dark">Cancel</button></a>
                     <button class="btn btn-success" type="submit" name="verify">Verify</button>
                 </div>
             </form>

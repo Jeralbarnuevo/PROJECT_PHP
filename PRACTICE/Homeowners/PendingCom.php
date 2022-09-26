@@ -59,7 +59,7 @@
                 </button>
                 <ul class="drop">
                     <li><a class="dropdown-item" href="Myviolations.php">Pending Violations</a></li>
-                    <li><a class="dropdown-item" href="Closed-Complaint.php">Closed Violations</a></li>
+                    <li><a class="dropdown-item" href="CloseViolations.php">Closed Violations</a></li>
                 </ul>
                 <button type="button" class="buttn buttn-primary dropdown-toggle" data-bs-toggle="dropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50 12c-21 0-38 17-38 38s17 38 38 38 38-17 38-38-17-38-38-38zm0 72c-18.8 0-34-15.2-34-34s15.2-34 34-34 34 15.2 34 34-15.2 34-34 34zm19.5-34c0 1.1-.9 2-2 2H45.1c-1.1 0-2-.9-2-2s.9-2 2-2h22.4c1.1 0 2 .9 2 2zm0 12c0 1.1-.9 2-2 2H45.1c-1.1 0-2-.9-2-2s.9-2 2-2h22.4c1.1 0 2 .9 2 2zM38.3 50c0 1.1-.9 2-2 2h-3.8c-1.1 0-2-.9-2-2s.9-2 2-2h3.8c1.1 0 2 .9 2 2zm0 12c0 1.1-.9 2-2 2h-3.8c-1.1 0-2-.9-2-2s.9-2 2-2h3.8c1.1 0 2 .9 2 2zm31.2-24c0 1.1-.9 2-2 2H45.1c-1.1 0-2-.9-2-2s.9-2 2-2h22.4c1.1 0 2 .9 2 2zm-31.2 0c0 1.1-.9 2-2 2h-3.8c-1.1 0-2-.9-2-2s.9-2 2-2h3.8c1.1 0 2 .9 2 2z"/><path fill="#00F" d="M244-1210V474h-1784v-1684H244m8-8h-1800V482H252v-1700z"/></svg><p>Complaints</p></a>
@@ -104,8 +104,16 @@
         </div>
     </div>
     <div class="body content">
-
-        <div class="modal fade" id="viewdetails" tabindex="-1">
+<!----------------------------------------------------------------------------------------------->
+    <?php
+    if(!empty($_SESSION['Homeowners_ID'])){
+        $homeownersID=$_SESSION['Homeowners_ID'];       
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID");
+        while($row1=mysqli_fetch_assoc($query)){ 
+    ?>
+    <div class="modal fade" id="viewdetails" tabindex="-1">
             <div class="modal-dialog" style="width:100%; max-width:800px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -116,29 +124,28 @@
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th class="col-md-2">Complaint No.:</th>
-                                    <td>COM-001</td>
+                                    <th>Complaint No.:</th>
+                                    <td colspan="3"><?php echo $row1['Complaint_No'] ?></td>
                                     <th>Complainant:</th>
-                                    <td>JERAL BARNUEVO</td>
-                                    <th>Complaint Name:</th>
-                                    <td>Illegal Parking</td>
+                                    <td colspan="3"><?php echo $row1['First_Name'], "&nbsp&nbsp", $row1['Last_Name'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td colspan="3"><?php echo $row1['Address'] ?></td>
+                                    <th>Contact Number</th>
+                                    <th colspan="3"><?php echo $row1['ContactNo'] ?></th>
                                 </tr>
                                 <tr>
                                     <th>Complaint Details</th>
-                                    <td colspan="3">May nakaharang na motor</td>
-                                    <th>Attachment:</th>
-                                    <td>Files</td>
-                                </tr>
-                                <tr>
-                                    <th>Category:</th>
-                                    <td>Major</td>
+                                    <td colspan="3"><?php echo $row1['Complaint_Details'] ?></td>
                                     <th>Date:</th>
-                                    <td>9/2/22</td>
+                                    <td><?php echo $row1['Date'] ?></td>
                                     <th>Status:</th>
-                                    <td style="color:red;">Pending</td>
+                                    <td style="color:red;"><?php echo $row1['Status'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" style="height:40px;"></td>
+                                    <th>Attachment</th>
+                                    <td><img src="compimgs/<?php echo $row1['Attachment']?>" alt="hello" width="120px"></td>
                                 </tr>
                                
                             </tbody>
@@ -150,7 +157,10 @@
                         </div>
                     </div>
                 </div>
- 
+                <?php
+                    }
+                } 
+                ?>
     <!------------------------------------------------------------------------------------------------>
     <div class="container11">
         <div class="table-violations">
@@ -164,24 +174,34 @@
             <th class="text-center">Status</th>
             <th class="text-center">Action</th>
             </thead>
+            <?php
+        if(!empty($_SESSION['Homeowners_ID'])){
+        $homeownersID=$_SESSION['Homeowners_ID'];       
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE Homeowners_ID=$homeownersID;");
+        while($row1=mysqli_fetch_assoc($query)){
+        ?>
             <tbody>
                 <tr>
-                    <td class="text-center">ST-VIO_001</td>
-                    <td class="text-center">Jeral Barnuevo</td>
-                    <td class="text-center">9/15/22</td>
-                    <td class="text-center">Paid</td>
-                    <td class="text-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
+                    <td class="text-center align-middle"><?php echo $row1['Complaint_No'] ?></td>
+                    <td class="text-center align-middle"><?php echo $row1['First_Name'], "&nbsp&nbsp",$row1['Last_Name'] ?></td>
+                    <td class="text-center align-middle"><?php echo $row1['Date'] ?></td>
+                    <td class="text-center align-middle"><?php echo $row1['Status'] ?></td>
+                    <td class="text-center align-middle"><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
                 </tr>
             </tbody>
+            <?php
+                 }   
+            }
+             ?>
         </table>
     </div>
     </div>
     </div>
     </div>
 </div>
-<?php
-        include('loading.php');
-    ?>
+
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
