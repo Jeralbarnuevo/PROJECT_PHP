@@ -115,10 +115,9 @@
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
     <?php
-                    if(!empty($_SESSION['Admin_ID'])){
-                    $adminID=$_SESSION['Admin_ID'];
-                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
-                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
+                    
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category,violations.Punishment FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
                     records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID)");
                     while($row=mysqli_fetch_assoc($query)){
                    
@@ -145,7 +144,7 @@
                                     <th>Violation Name</th>
                                     <td class="col-md-3"><?php echo $row['ViolationName']; ?></td>
                                     <th>Fine</th>
-                                    <td class="col-md-6"><?php echo $row['Fine'] ?></td>
+                                    <td class="col-md-6"><?php echo $row['Punishment'] ?></td>
                                     <th>Category:</th>
                                     <td><?php echo $row['Category'] ?></td>
                                 </tr>
@@ -186,7 +185,7 @@
             </div>
             <?php
                 }
-            } 
+            
             ?>
     <!------------------------------------------------------------------------------------------------>
         <div class="container3">

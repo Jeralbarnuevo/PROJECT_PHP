@@ -170,10 +170,17 @@
                             </script>
                         <?php
                     }else{
+                        $last_id=rand(0,9999);
+                        if($last_id==true){
+                        $id=str_replace("ST-CE-HOA", "",$last_id);
+                        $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
+                        $code=strtoupper(chr(rand(65, 90)) . chr(rand(65, 90))) .$id1;
+                        }
+
                         $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
                         $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
-                        $query="INSERT INTO homeowners (First_Name,Last_Name,Gender,Age,ContactNo,Address,Birthdate,Email,Image,Password,Confirm_Password,VerificationCode,Verified) 
-                        VALUES ('$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Image','$Encrypt','$EncryptConfirm','$otp',0)";
+                        $query="INSERT INTO homeowners (Account_Number,First_Name,Last_Name,Gender,Age,ContactNo,Address,Birthdate,Email,Image,Password,Confirm_Password,VerificationCode,Verified) 
+                        VALUES ('$code','$Firstname','$Lastname','$Gender','$Age','$Contacts','$Address','$Birthday','$Email','$Image','$Encrypt','$EncryptConfirm','$otp',0)";
                         $run=mysqli_query($conn, $query);
                         ?>
                         <script>

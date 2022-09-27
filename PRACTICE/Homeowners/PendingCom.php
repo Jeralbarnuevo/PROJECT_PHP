@@ -105,15 +105,14 @@
     </div>
     <div class="body content">
 <!----------------------------------------------------------------------------------------------->
-    <?php
-    if(!empty($_SESSION['Homeowners_ID'])){
-        $homeownersID=$_SESSION['Homeowners_ID'];       
+    <?php 
         $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
         complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
         ON complaint.homeownersID=homeowners.Homeowners_ID");
-        while($row1=mysqli_fetch_assoc($query)){ 
+        if(mysqli_num_rows($query)>0){
+        while($row1=mysqli_fetch_assoc($query)){
     ?>
-    <div class="modal fade" id="viewdetails" tabindex="-1">
+    <div class="modal fade" id="viewmore<?php echo $row1['Complaint_ID']; ?>" tabindex="-1">
             <div class="modal-dialog" style="width:100%; max-width:800px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -159,7 +158,8 @@
                 </div>
                 <?php
                     }
-                } 
+                    }
+                
                 ?>
     <!------------------------------------------------------------------------------------------------>
     <div class="container11">
@@ -177,7 +177,7 @@
             <?php
         if(!empty($_SESSION['Homeowners_ID'])){
         $homeownersID=$_SESSION['Homeowners_ID'];       
-        $query=mysqli_query($conn,"SELECT complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
         complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
         ON complaint.homeownersID=homeowners.Homeowners_ID WHERE Homeowners_ID=$homeownersID;");
         while($row1=mysqli_fetch_assoc($query)){
@@ -188,7 +188,7 @@
                     <td class="text-center align-middle"><?php echo $row1['First_Name'], "&nbsp&nbsp",$row1['Last_Name'] ?></td>
                     <td class="text-center align-middle"><?php echo $row1['Date'] ?></td>
                     <td class="text-center align-middle"><?php echo $row1['Status'] ?></td>
-                    <td class="text-center align-middle"><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
+                    <td class="text-center align-middle"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewmore<?php echo  $row1['Complaint_ID']; ?>">View Details</button></td>
                 </tr>
             </tbody>
             <?php

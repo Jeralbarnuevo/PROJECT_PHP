@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,11 +26,10 @@
             $('#Mytable').DataTable();
         } );
     </script>
-    <title>Complaints</title>
+    <title>Violation Entry</title>
 </head>
 <body>
 <?php
-    
     if(!isset($_SESSION['Admin_ID'])){
         header('location: ../Accounts/Admin/Admin.php');
         die();
@@ -40,6 +38,37 @@
         $AdminID=$_SESSION['Admin_ID'];
         $result=mysqli_query($conn, "SELECT*FROM admin WHERE Admin_ID='$AdminID'");
         $row=mysqli_fetch_assoc($result);
+
+    }
+    $last_id=rand(0,9999);
+    if($last_id==true){
+        $id=str_replace("STC", "",$last_id);
+        $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
+        $code=strtoupper(chr(rand(65, 90)) . chr(rand(65, 90))) .$id1;
+    }
+
+    if(isset($_POST['save'])){
+        $violator=$_POST['Violator']; 
+        $ticket=$_POST['ticket'];   
+        $date=$_POST['dateviolated'];   
+        $status=$_POST['status'];
+        $input=$_POST['input'];
+        $comment=$_POST['comment'];
+        $fine=$_POST['fine'];
+        $idhome=$_POST['idhome'];
+        $idadmin=$_POST['idadmin'];
+        $insert="INSERT INTO records (admin_ID,homeowners_ID,ticketNo,Fine,status,Comment,date_created)
+                VALUES ((SELECT Admin_ID FROM admin WHERE admin.Admin_ID='$idadmin'),(SELECT Homeowners_ID FROM homeowners WHERE homeowners.Homeowners_ID='$idhome')
+                ,'$ticket','$fine','$status','$comment','$date')";
+        $run=mysqli_query($conn,$insert);
+        if($run){
+            echo"<script>alert('Records Insert Success')</script>";
+            
+        }else{
+            echo"<script>alert('Error! Please Try Again')</script>";
+            
+        }
+        
 
     }
 ?>
@@ -52,6 +81,7 @@
         <div class="button">
             <ul class="side-button">
                 <a href="Admin-Dashboard.php"><button class="buttn">
+                    
                     <svg xmlns="http://www.w3.org/2000/svg" width="1792" height="1792" viewBox="0 0 1600 2000"><path d="M1472 992v480q0 26-19 45t-45 19h-384v-384H768v384H384q-26 0-45-19t-19-45V992q0-1 .5-3t.5-3l575-474 575 474q1 2 1 6zm223-69-62 74q-8 9-21 11h-3q-13 0-21-7L896 424l-692 577q-12 8-24 7-13-2-21-11l-62-74q-8-10-7-23.5t11-21.5l719-599q32-26 76-26t76 26l244 204V288q0-14 9-23t23-9h192q14 0 23 9t9 23v408l219 182q10 8 11 21.5t-7 23.5z"/></svg><p>Home</p>
                 </button></a>
                 <a href="Admin-Violations.php"><button class="buttn">
@@ -72,8 +102,8 @@
                     <li><a class="dropdown-item" href="Admin-Homeowners.php">Homeowners</a></li>
                     <li><a class="dropdown-item" href="Admin-Manage.php">Admin</a></li>
                 </ul>
-                <a href="Violation-Entry.php"><button class="buttn">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,6a1,1,0,0,0-1,1V17a3,3,0,0,1-3,3H7a1,1,0,0,0,0,2H17a5,5,0,0,0,5-5V7A1,1,0,0,0,21,6Zm-3,9V5a3,3,0,0,0-3-3H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H15A3,3,0,0,0,18,15ZM10,4h2V8.86l-.36-.3a1,1,0,0,0-1.28,0l-.36.3ZM4,15V5A1,1,0,0,1,5,4H8v7a1,1,0,0,0,1.65.76L11,10.63l1.35,1.13A1,1,0,0,0,13,12a1.06,1.06,0,0,0,.42-.09A1,1,0,0,0,14,11V4h1a1,1,0,0,1,1,1V15a1,1,0,0,1-1,1H5A1,1,0,0,1,4,15Z"/></svg><p>Violations Entry</p>
+                <a href="Violation-Entry.php"><button class="buttn active">
+                    <svg class="active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,6a1,1,0,0,0-1,1V17a3,3,0,0,1-3,3H7a1,1,0,0,0,0,2H17a5,5,0,0,0,5-5V7A1,1,0,0,0,21,6Zm-3,9V5a3,3,0,0,0-3-3H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H15A3,3,0,0,0,18,15ZM10,4h2V8.86l-.36-.3a1,1,0,0,0-1.28,0l-.36.3ZM4,15V5A1,1,0,0,1,5,4H8v7a1,1,0,0,0,1.65.76L11,10.63l1.35,1.13A1,1,0,0,0,13,12a1.06,1.06,0,0,0,.42-.09A1,1,0,0,0,14,11V4h1a1,1,0,0,1,1,1V15a1,1,0,0,1-1,1H5A1,1,0,0,1,4,15Z"/></svg><p>Violations Entry</p>
                 </button></a>
                 <a href="Admin-Records.php"><button class="buttn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#fffff" d="M4 9h4v2H4V9z"/><path fill="#fffff" d="M16 2h-1V0H5v2H3v1.25L2.4 4H1v1.75L0 7v9h12l4-5V2zM2 5h8v2H2V5zm9 10H1V8h10v7zm1-8h-1V4H4V3h8v4zm2-2.5l-1 1.25V2H6V1h8v3.5z"/></svg><p>Records</p>
@@ -84,10 +114,10 @@
     <div class="top">
         <div class="burger">
             <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
-            <p>Complaints</p>
+            <p>Violators Entry</p>
         </div>
         <div class="profile">
-        <div class="welcome"><p>Welcome, <?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?></p></div>
+            <div class="welcome"><p>Welcome,<?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?> </p></div>
         <div class="image" onclick="Dropmenu();">
                 <img src="admin-imgs/<?php echo $row['Image_Profile']; ?>" alt="" width="50px">
             </div>
@@ -112,60 +142,48 @@
     </div>
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
-    <?php 
-        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
-        complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
-        ON complaint.homeownersID=homeowners.Homeowners_ID");
-    
-        if(mysqli_num_rows($query)>0){
-        while($row1=mysqli_fetch_assoc($query)){
-    ?>
-    <div class="modal fade" id="viewdetails<?php echo $row1['Complaint_ID'] ?>" tabindex="-1">
+  
+    <div class="modal fade" id="viewdetails" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title">Complaint Details</h2>
+                    <h2 class="modal-title">Homeowners Details</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                     <div class="modal-body">
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <th>Complaint No.:</th>
-                                <td colspan="3"><?php echo $row1['Complaint_No'] ?></td>
-                                <th>Complainant:</th>
-                                <td><?php echo $row1['Complainant_Name'] ?></td>
+                                <th><img src="../Assets/example.jpg" alt="" width="100px"></th>
+                                <td colspan="5"><h2 style="color:green;">Active</h2></td>
                             </tr>
                             <tr>
-                                <th>Complaint Details</th>
-                                <td colspan="3"><?php echo $row1['Complaint_Details'] ?></td>
-                                <th>Attachment:</th>
-                                <td><img src="../Homeowners/compimgs/<?php echo $row1['Attachment'] ?>" alt="" width="150px"></td>
+                                <th class="col-md-2">Account No.</th>
+                                <td style="color:red;">ST-CE-001</td>
+                                <th>First Name:</th>
+                                <td>JERAL</td>
+                                <th>Last Name</th>
+                                <td>BARNUEVO</td>
                             </tr>
                             <tr>
-                                <th>Date:</th>
-                                <td><?php echo $row1['Date'] ?></td>
-                                <th>Status:</th>
-                                <td style="color:red;"><?php echo $row1['Status'] ?></td>
+                                <th>Gender</th>
+                                <td>Male</td>
+                                <th>Birthdate</th>
+                                <td>07/13/2000</td>
+                                <th>Age:</th>
+                                <td>22</td>
                             </tr>
                             <tr>
-                                <td colspan="6" style="height:40px;"></td>
+                                <th>Contact#:</th>
+                                <td colspan="3">09512341015</td>
+                                <th>Registered Date</th>
+                                <td style="color:green;">9/2/22</td>
                             </tr>
                             <tr>
-                                <th>Remark By:</th>
-                                <td colspan="5">Admin: Alvin Capili</td>
+                                <th>Address:</th>
+                                <td colspan="5" style="height:40px;">Blk 191 Lot 13 St. Cecilia Deca Homes Brgy Loma De Gato Marilao, Bulacan</td>
                             </tr>
-                            <tr>
-                                <th>Status:</th>
-                                <td style="color:blue;" colspan="3">In Process</td>
-                
-                                <th>Remark Date:</th>
-                                <td colspan="3">9/2/22</td>
-                            </tr>
-                            <tr>
-                                <th>Action:</th>
-                                <td colspan="4"><button class="col-md-6 btn btn-success" data-bs-toggle="modal" data-bs-target="#action<?php echo $row1['Complaint_ID'] ?>">Forward to</button> <button class="btn btn-dark ">Take a action</button></td>
-                            </tr>
+                           
                         </tbody>
                     </table>
                     </div>
@@ -175,50 +193,151 @@
                     </div>
                 </div>
             </div>
-            <?php 
-             }
-             } 
-            ?>
-
-            <!--------------- ACTION----------------------------------->
-        
+            
     <!------------------------------------------------------------------------------------------------>
-        <div class="container1">
-            <div class="title"><h1>Pending Complaints</h1></div>
-            <div class="table-complaint">
-            <table class="table table-bordered table-hover table-responsive" id="Mytable" style="padding:0;">
-                <thead class="table-dark head">
-                    <tr>
-                    <th class="text-center">Complaint No.</th>
-                    <th class="text-center">Complainant</th>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Details</th>
-                    </tr>
-                </thead>
-                <?php
-        if(!empty($_SESSION['Admin_ID'])){
-        $homeownersID=$_SESSION['Admin_ID'];       
-        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
-        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
-        ON complaint.homeownersID=homeowners.Homeowners_ID");
-        while($row1=mysqli_fetch_assoc($query)){
-        ?>
-                <tbody>
-                    <tr>
-                    <td><?php echo $row1['Complaint_No'] ?></td>
-                    <td><?php echo $row1['Complainant_Name'] ?></td>
-                    <td><?php echo $row1['Date'] ?></td>
-                    <td style="color:red;"><?php echo $row1['Status'] ?></td>
-                    <td><button style="padding:.5rem; border:none;"  data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>">View Details</button></td>
-                    </tr>
-                </tbody>
-                <?php
-                    }
-                    } 
-                ?>
-            </table>
+        <div class="container-entry">
+            <h3>Create New Violators Record</h3>
+            <hr>
+            <form action="" method="POST">
+                <div class="group-1">
+                <div class="col-lg-6 mb-2 box">
+                    <label for="exampleFormControlInput1" class="form-label bold">Homeowner Name</label>
+                    <select class="form-select" id="select1" name="Violator"aria-label="Default select example">
+                        <option selected>Select the Violator</option>
+                        <?php
+                            $sqlqry="SELECT*FROM homeowners order by First_Name asc";
+                            $sqltest=mysqli_query($conn,$sqlqry);
+        
+                            while($row=mysqli_fetch_assoc($sqltest)):
+                                $FirstName=$row['First_Name'];
+                                $LastName=$row['Last_Name'];
+                                ?>
+                                <option value="<?php echo $row['Homeowners_ID'];?>"><?php echo $row['First_Name'], "&nbsp&nbsp" ,$row['Last_Name']?></option>
+                                <?php endwhile; ?>
+                    </select>
+                    
+                </div>
+                <input type="text" class="form-control" id="idnum1" name="idhome" style="color:red;" value="" readonly hidden>
+                           
+                <div class="col-lg-6 mb-2 box">
+                    <label for="exampleFormControlInput1" class="form-label bold">Process by</label>
+                    <select  id="select" class="form-select" name="adminName">
+                    <option selected>Process By--</option>
+                        <?php
+                            $sqlqry="SELECT*FROM admin order by FirstName asc";
+                            $sqltest=mysqli_query($conn,$sqlqry);
+        
+                            while($row=mysqli_fetch_assoc($sqltest)):
+                                $FirstName=$row['FirstName'];
+                                $LastName=$row['LastName'];
+                                $id=$row['Homeowners_ID'];
+                                ?>
+                                <option value="<?php echo $row['Admin_ID'];?>">(Admin)&nbsp;<?php echo $row['FirstName'], "&nbsp&nbsp" ,$row['LastName']?></option>
+                                <?php endwhile; ?>
+                                
+    
+                        </select>
+                </div>
+                <input type="text" class="form-control" id="idnum" name="idadmin" style="color:red;" value="" readonly hidden>
+                <script>
+                    $('#select').change(function(){
+                        var opt = $(this).find('option:selected');
+                        $('#idnum').val(opt.val());  
+                    });
+                    $('#select1').change(function(){
+                        var opt = $(this).find('option:selected');
+                        $('#idnum1').val(opt.val());
+
+                    });
+
+                </script>
+                
+          
+                <div class="col-lg-6 mb-2 box" >
+                    <label for="exampleFormControlInput1" class="form-label bold">Ticket No.</label>
+                    <input type="text" class="form-control" name="ticket" id="exampleFormControlInput1" style="color:red;" value="<?php echo $code ?>" readonly>
+                </div>
+                <div class="col-lg-6 mb-2 box">
+                    <label for="exampleFormControlInput1" class="form-label bold">Remark Date</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="col-lg-6 mb-2 box" id="change">
+                                    <label for="exampleFormControlInput1" class="form-label bold">Date Violated</label>
+                                    <input type="date" class="form-control" name="dateviolated" id="exampleFormControlInput1" placeholder="">
+                                </div>
+                <div class="col-lg-6 mb-2 box">
+                    <label for="exampleFormControlInput1" class="form-label bold">Status</label>
+                    <select  id="select" class="form-select" name="status">
+                        <option value="" disabled selected hidden></option>
+                        <option value="Pending">Pending</option>
+                        <option value="Paid">Paid</option>
+                    </select>
+                </div>  
+                
             </div>
+               <hr>
+                <div class="group-2">
+                    <h4 class="mb-3">Violation list</h4>
+                    <div class="fill-info1">
+                        <div class="group-a">
+                            <form id="formation" action="" method="GET" onsubmit="myFunction(event)">
+                            <div class="mb-3 box">
+                                <label for="exampleFormControlInput1" class="form-label bold">Violation</label>
+                                <select class="form-select" name="input" id="input" aria-label="Default select example">
+                                <option  value="" selected="selected">Violations--</option>
+                                    <?php
+                                        $sqlqry="SELECT*FROM violations";
+                                        $sqltest=mysqli_query($conn,$sqlqry);
+                                        while($row=mysqli_fetch_assoc($sqltest)):
+                                        $violationNo=$row['ViolationNo'];
+                                        $violationName=$row['ViolationName'];
+                                        
+                                        ?>
+                                        <option value="<?php echo $row['ViolationID'] ?>"><?php echo $violationNo, "&nbsp&nbsp" ,$violationName?></option>
+                                        <?php endwhile; ?>
+                                        
+                        
+                                    </select>
+                                
+                                </div>
+                                <button class="btn btn-dark" type="submit" id="a" onclick=event();>Select</button>
+                               
+
+                                           
+                        <div class="mb-3 box" id="records">
+                            <input type="text" class="form-control" name="punish" id="num3" value=""  > 
+                            <input type="text" class="form-control" name="fine" id="idnum2" hidden>    
+                           
+                        </div>
+                                        </form>
+                        <script>
+                            $('#input').change(function(){
+                            var opt = $(this).find('option:selected');
+                            $('#idnum2').val(opt.val());
+                            });
+                            
+                            myFunction = function(event) {
+    // prevents default action to happen
+    event.preventDefault();
+    // do what ever you want to do here
+    // i.e. perform a AJAX call
+}
+                            
+                        </script>
+                            
+                        </div>
+                        <div class="group-b">
+                            <label for="exampleFormControlInput1" class="form-label bold">Comment</label>
+                            <textarea name="comment" id="" cols="20" rows="5">Comment Here</textarea>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="button">
+                    <button class="btn btn-primary" name="save">Save</button>
+                </div>
+                
+            </form>
         </div>
     </div>
 </div>
@@ -226,11 +345,12 @@
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
-}
-$(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
+    }
+    if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
 </script>
+<script type="text/javascript" src="ajax.js"></script>
 <script type="text/javascript" src="slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

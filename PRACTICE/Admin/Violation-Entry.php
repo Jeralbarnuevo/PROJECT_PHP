@@ -54,12 +54,12 @@
         $status=$_POST['status'];
         $input=$_POST['input'];
         $comment=$_POST['comment'];
-        $fine=$_POST['fine'];
+        $violationID=$_POST['violationID'];
         $idhome=$_POST['idhome'];
         $idadmin=$_POST['idadmin'];
-        $insert="INSERT INTO records (admin_ID,homeowners_ID,ticketNo,Fine,status,Comment,date_created)
-                VALUES ((SELECT Admin_ID FROM admin WHERE admin.Admin_ID='$idadmin'),(SELECT Homeowners_ID FROM homeowners WHERE homeowners.Homeowners_ID='$idhome')
-                ,'$ticket','$fine','$status','$comment','$date')";
+        $insert="INSERT INTO records (admin_ID,homeowners_ID,violation_ID,ticketNo,status,Comment,date_created)
+                VALUES ((SELECT Admin_ID FROM admin WHERE admin.Admin_ID='$idadmin'),(SELECT Homeowners_ID FROM homeowners WHERE homeowners.Homeowners_ID='$idhome'),
+                (SELECT ViolationID FROM violations WHERE violations.ViolationID='$violationID'),'$ticket','$status','$comment','$date')";
         $run=mysqli_query($conn,$insert);
         if($run){
             echo"<script>alert('Records Insert Success')</script>";
@@ -292,7 +292,7 @@
                                         $violationName=$row['ViolationName'];
                                         
                                         ?>
-                                        <option value="<?php echo $row['Punishment']?><?php $row['ViolationID'] ?>"><?php echo $violationNo, "&nbsp&nbsp" ,$violationName?></option>
+                                        <option value="<?php echo $row['ViolationID'] ?>"><?php echo $violationNo, "&nbsp&nbsp" ,$violationName?></option>
                                         <?php endwhile; ?>
                                         
                         
@@ -303,15 +303,16 @@
 
                                            
                         <div class="mb-3 box" id="records">
-                        <label for="exampleFormControlInput1" class="form-label bold">Fine</label>
-                            <input type="text" class="form-control" name="fine" id="idnum2">    
-                            
+                           
+                            <input type="text" class="form-control" name="violationID" id="idnum2" hidden>    
+                           
                         </div>
                         <script>
                             $('#input').change(function(){
                             var opt = $(this).find('option:selected');
                             $('#idnum2').val(opt.val());
                             });
+                            
                             
                         </script>
                             
