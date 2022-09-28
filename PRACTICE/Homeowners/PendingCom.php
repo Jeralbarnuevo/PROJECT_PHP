@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,8 +179,8 @@
         if(!empty($_SESSION['Homeowners_ID'])){
         $homeownersID=$_SESSION['Homeowners_ID'];       
         $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
-        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
-        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE Homeowners_ID=$homeownersID;");
+        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, complaint.forward_status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE (complaint.Status='Pending' or complaint.Status='In Process') and complaint.forward_status=''");
         while($row1=mysqli_fetch_assoc($query)){
         ?>
             <tbody>
@@ -207,9 +208,7 @@
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
-$(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
+
 </script>
 <script type="text/javascript" src="../Admin/slide.js"></script>
 <script type="text/javascript" src="cal.js"></script>

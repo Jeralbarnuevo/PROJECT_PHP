@@ -1,12 +1,14 @@
 <?php
-    require("process.php");
+    session_start();
+    require('../connection.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -83,7 +85,6 @@
     </div>
     <div class="top">
         <div class="burger">
-            <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
             <p>Complaints</p>
         </div>
         <div class="profile">
@@ -115,7 +116,7 @@
     <?php 
         $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
         complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
-        ON complaint.homeownersID=homeowners.Homeowners_ID");
+        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE complaint.Status='Pending' and complaint.forward_status=''");
     
         if(mysqli_num_rows($query)>0){
         while($row1=mysqli_fetch_assoc($query)){
@@ -153,19 +154,16 @@
                             </tr>
                             <tr>
                                 <th>Remark By:</th>
-                                <td colspan="5">Admin: Alvin Capili</td>
+                                <td colspan="5">Admin:</td>
                             </tr>
                             <tr>
                                 <th>Status:</th>
-                                <td style="color:blue;" colspan="3">In Process</td>
+                                <td style="color:blue;" colspan="3"></td>
                 
                                 <th>Remark Date:</th>
-                                <td colspan="3">9/2/22</td>
+                                <td colspan="3"></td>
                             </tr>
-                            <tr>
-                                <th>Action:</th>
-                                <td colspan="4"><button class="col-md-6 btn btn-success" data-bs-toggle="modal" data-bs-target="#action<?php echo $row1['Complaint_ID'] ?>">Forward to</button> <button class="btn btn-dark ">Take a action</button></td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                     </div>
@@ -175,14 +173,136 @@
                     </div>
                 </div>
             </div>
+  
             <?php 
              }
              } 
+        
             ?>
 
             <!--------------- ACTION----------------------------------->
-        
+            <?php
+                if(!empty($_SESSION['Admin_ID'])){
+                $AdminID=$_SESSION['Admin_ID']; 
+                $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+                complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+                ON complaint.homeownersID=homeowners.Homeowners_ID WHERE complaint.Status='Pending'or complaint.Status='In Process' and complaint.forward_status=''");
+    
+                if(mysqli_num_rows($query)>0){
+                while($row1=mysqli_fetch_assoc($query)){
+            ?>
+            <div class="modal fade" id="forward<?php echo $row1['Complaint_ID'] ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalToggleLabel">Complaint No. <?php echo $row1['Complaint_No'] ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="" method="POST" id="form-forward">
+                        <div class="modal-body">
+                            <label for="" class="form-label">Forward To</label>
+                            <select name="select" id="select" class="form-select">
+                                <option value="" selected>Admin</option>
+                            <?php
+                                $sqlqry="SELECT*FROM admin order by FirstName asc";
+                                $sqltest=mysqli_query($conn,$sqlqry);
+                                while($row=mysqli_fetch_assoc($sqltest)):
+                                $FirstName=$row['FirstName'];
+                                $LastName=$row['LastName'];
+                                ?>
+                                <option value="<?php echo $row['Admin_ID'];?>">(ADMIN)<?php echo $row['FirstName'], "&nbsp&nbsp" ,$row['LastName']?></option>
+                                <?php endwhile; ?>
+                            </select>
+                            <input type="text" id="input" name="admin_id" hidden>
+                            <input type="number" id="id" name="comp" value="<?php echo $row1['Complaint_ID'] ?>" hidden>
+                        </div>
+                        </form>
+                         
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit" form="form-forward" name="push">Forward</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <?php } } }?>
+           
+            <?php
+               
+                                     
+                if(isset($_POST['push'])){
+                    $comp=$_POST['comp'];
+                    $adminID=$_SESSION['Admin_ID'];
+                    $forward='a';
+                    $update="UPDATE complaint SET adminID='$adminID',forward_status='$forward' WHERE Complaint_ID='$comp'";
+                    $test=mysqli_query($conn,$update);
+                    if($test){
+                        echo"<script>alert('Forward Success')</script>";
+                    }else{
+                        echo"<script>alert('Forward Failed')</script>";
+                    }
+                    }
+                
+            ?>
     <!------------------------------------------------------------------------------------------------>
+    <!-------------------------------------------TAKE-ACTION------------------------------------------------->
+            <?php 
+            if(!empty($_SESSION['Admin_ID'])){
+                $AdminID=$_SESSION['Admin_ID'];
+                $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+                complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+                ON complaint.homeownersID=homeowners.Homeowners_ID WHERE complaint.Status='Pending' and complaint.forward_status=''");
+    
+                if(mysqli_num_rows($query)>0){
+                while($row1=mysqli_fetch_assoc($query)){
+            ?>
+            <div class="modal fade" id="action<?php echo $row1['Complaint_ID'] ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalToggleLabel">Complaint No. <?php echo $row1['Complaint_No'] ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="" method="POST" id="form-action">
+                        <div class="modal-body">
+                            <label for="" class="form-label">Status</label>
+                            <select name="select" id="select" class="form-select">
+                                <option value="" selected>Select Status</option>
+                                <option value="Process">In Process</option>
+                                <option value="Complete">Complete</option>
+                            </select>
+
+                            <label for="" class="form-label mt-3">Remark</label>
+                            <textarea name="Remarks" class="form-control" id="" cols="20" rows="5"></textarea>
+                            <input type="text" name="id" value="<?php echo $row1['Complaint_ID'] ?>" hidden>
+
+                        </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit" form="form-action" name="update">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php } } }?>   
+            <?php
+                if(isset($_POST['update'])){
+                    $id=$_SESSION['Admin_ID'];
+                    $complaintid=$_POST['id'];
+                    $Status=$_POST['select'];
+                    $Remarks=$_POST['Remarks'];
+                    $update="UPDATE complaint SET adminID='$id',Status='$Status', Remarks='$Remarks' WHERE Complaint_ID='$complaintid'";
+                    $run=mysqli_query($conn,$update);
+                    if($run){
+                        echo "<script>Update Success</script>";
+                    }else{
+                        echo "<script>Update Failed</script>";
+                    }
+                } 
+            ?>                 
+
+
+    <!----------------------------------------------------------------------------------------------------------->
         <div class="container1">
             <div class="title"><h1>Pending Complaints</h1></div>
             <div class="table-complaint">
@@ -200,17 +320,18 @@
         if(!empty($_SESSION['Admin_ID'])){
         $homeownersID=$_SESSION['Admin_ID'];       
         $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
-        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
-        ON complaint.homeownersID=homeowners.Homeowners_ID");
+        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, complaint.forward_status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE (complaint.Status='Pending' or complaint.Status='In Process') and complaint.forward_status=''");
         while($row1=mysqli_fetch_assoc($query)){
         ?>
                 <tbody>
                     <tr>
-                    <td><?php echo $row1['Complaint_No'] ?></td>
-                    <td><?php echo $row1['Complainant_Name'] ?></td>
-                    <td><?php echo $row1['Date'] ?></td>
-                    <td style="color:red;"><?php echo $row1['Status'] ?></td>
-                    <td><button style="padding:.5rem; border:none;"  data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>">View Details</button></td>
+                    <td  data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>" style="cursor:pointer;"><?php echo $row1['Complaint_No'] ?></td>
+                    <td  data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>" style="cursor:pointer;"><?php echo $row1['Complainant_Name'] ?></td>
+                    <td  data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>" style="cursor:pointer;"><?php echo $row1['Date'] ?></td>
+                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>" style="cursor:pointer; color:red;"><?php echo $row1['Status'] ?></td>
+                    <td class=""><div class="div" style="display:flex; justify-content:center; gap:.9rem;"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#forward<?php echo $row1['Complaint_ID']; ?>"  ><i class="fas fa-share"></i>
+                                </button><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#action<?php echo $row1['Complaint_ID']; ?>"><i class="fas fa-edit"></i></button></div></td>
                     </tr>
                 </tbody>
                 <?php
@@ -227,9 +348,13 @@
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
-$(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
+    $('#select').change(function(){
+    var opt = $(this).find('option:selected');
+    $('#input').val(opt.val());  
+     });
+     if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
 </script>
 <script type="text/javascript" src="slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

@@ -352,6 +352,18 @@ svg{
     background-color: #FFFFFF;
     transform: rotate(45deg);
 }
+.modal-header{
+    background-color:var(--secondary);
+}
+.modal-body{
+    background-color:#ffffff; 
+    
+}
+.modal-footer{
+    background-color: #FFFDE4;
+    width: 100%;
+    height: 100%;   
+}
 
 /* MY VIOLATIONS */
 .container11{

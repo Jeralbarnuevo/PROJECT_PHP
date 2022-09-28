@@ -85,7 +85,7 @@
     require('../connection.php');
     if(isset($_POST['verify'])){
         $otp = $_SESSION['VerificationCode'];
-        $Email = $_SESSION['Email'];
+        $Email = $_SESSION['mail'];
         $otp_code = $_POST['otp-code'];
 
         if($otp != $otp_code){

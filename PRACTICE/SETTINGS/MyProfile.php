@@ -1,5 +1,6 @@
 <?php
-    require("../Admin/process.php");
+    session_start();
+    require('../connection.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,12 +42,11 @@
         $AdminID=$_SESSION['Admin_ID'];
         $result=mysqli_query($conn, "SELECT*FROM admin WHERE Admin_ID='$AdminID'");
         $row=mysqli_fetch_assoc($result);
-    }
+    }   
 
 
 
-    $password=$_SESSION['Password'];
-    
+   
 ?>
 
     <div class="main">
@@ -169,6 +169,167 @@
                     </div>
                 </div>
             </div>
+
+
+    <!----------------------------------------------UPDATE------------------------------------------------->
+    <?php
+            $errorfirst="";$errorlast="";$errorGender="";$errorAge="";$errorcontact="";$errorAddress="";
+            $erroremail="";$errorpassword="";$errorconfirm="";
+
+            $firstname="";$lastname="";$gender="";$age="";$contact="";$address="";$email="";$password="";$confirm="";$img="";
+            if(isset($_POST['confirm'])){
+                if(empty($_POST['firstname'])){
+                    $errorfirst="Please fill the blank!*";
+                }else{
+                    $firstname=$_POST['firstname'];
+                    if(!preg_match("/^[a-zA-Z].*[\s\.]*$/", $firstname)){
+                        $errorfirst="Only Letters are allowed*";
+                    }
+                }if(empty($_POST['lastname'])){
+                    $errorlast="Please fill the blank!*";
+                }else{
+                    $lastname=$_POST['lastname'];
+                    if(!preg_match("/^[a-zA-Z].*[\s\.]*$/", $lastname)){
+                        $errorlast="Only Letters are allowed*";
+                    }
+                }if(empty($_POST['gender'])){
+                    $errorGender="Please fill the blank*";
+                }else{
+                    $gender=$_POST['gender'];
+                }if(empty($_POST['Age'])){
+                    $errorAge="Please fill the blank*";
+                }else{
+                    $age=$_POST['Age'];
+                }if(empty($_POST['ContactNumber'])){
+                    $errorcontact="Please fill the blank*";
+                }else{
+                    $contact=$_POST['ContactNumber'];
+                    if(!preg_match("/^[0-9]*$/", $contact)){
+                        $errorcontact="Only numbers are allowed*";
+
+                    }
+                }if(empty($_POST['Address'])){  
+                    $errorAddress="Please fill the blank*";
+
+                }else{
+                    $address=$_POST['Address'];
+                }if(empty($_POST['email'])){
+                    $erroremail="Please fill the blank*";
+                }else{
+                    $email=$_POST['email'];
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {  
+                        $errorEmail = "Invalid email format*";  
+                    } 
+                }if(empty($_POST['Password'])){
+                    $errorpassword="Please fill the blank*";
+                }else{
+                    $password=$_POST['Password'];
+                    if(strlen($password)<=12){
+                        $errorpassword="Your Password Must Contain At Least 12 Characters";
+                    }
+                }if(empty($_POST['Confirm'])){
+                    $errorconfirm="Please fill the blank*";
+                }else{
+                    $confirm=$_POST['Confirm'];
+                }if(!empty($_FILES['img']['name'])){
+                    $img=$_FILES['img']['name'];
+                    $folder = '../Admin/admin-imgs/' .$img;
+                    move_uploaded_file($_FILES['img']['tmp_name'], $folder);
+
+                }
+                if($password!=$confirm){
+                    echo "<script>alert('Please Match The Confirm and Password')</script>";
+                }else{ 
+                $adminid=$row['Admin_ID'];
+                    $Encrypt=password_hash($password, PASSWORD_DEFAULT);
+                    $confirm1=password_hash($confirm, PASSWORD_DEFAULT);
+                    $update="UPDATE admin SET FirstName='$firstname', LastName='$lastname', Gender='$gender', Age='$age', ContactNo='$contact',
+                    Address='$address', Email='$email', Password='$Encrypt', Image_Profile='$img' WHERE Admin_ID='$adminid'";
+                    $runtest=mysqli_query($conn, $update);
+                   if($runtest){
+                        echo"<script>alert('Update Sucess')</script>";
+                   }else{
+                        echo"<script>alert('Update Failed')</script>";
+                   }
+                }
+
+            }
+            
+        
+        ?>
+    
+    <div class="modal fade" id="updated<?php echo $row['Admin_ID'] ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Personal Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                    <form action="#" method="POST" id="update-form" enctype="multipart/form-data" >
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputEmail1" class="form-label">First Name</label>
+                            <input type="text" name="firstname" class="form-control" id="exampleInputEmail1" value="<?php echo $row['FirstName']; ?>" aria-describedby="emailHelp">
+                            <div class="error" style="color:red;"><?php echo $errorfirst ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Last Name</label>
+                            <input type="text" name="lastname" value="<?php echo $row['LastName']; ?>" class="form-control" id="exampleInputPassword1">
+                            <div class="error" style="color:red;"><?php echo $errorlast ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Gender</label>
+                            <select name="gender" id="" class="form-select" >
+                                <option value="" disabled selected hidden>Select-</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <div class="error" style="color:red;"><?php echo $errorGender ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Age</label>
+                            <input type="text" name="Age" value="<?php echo $row['Age']; ?>" class="form-control" id="exampleInputPassword1">
+                            <div class="error"style="color:red;"><?php echo $errorAge ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Contact Number</label>
+                            <input type="text" name="ContactNumber" value="<?php echo $row['ContactNo']; ?>" class="form-control" id="exampleInputPassword1">
+                            <div class="error" style="color:red;"><?php echo  $errorcontact ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Address</label>
+                            <input type="text" name="Address" value="<?php echo $row['Address']; ?>" class="form-control" id="exampleInputPassword1">
+                            <div class="error" style="color:red;"><?php echo $errorAddress ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Email</label>
+                            <input type="email" name="email" value="<?php echo $row['Email']; ?>" class="form-control" id="exampleInputPassword1">
+                            <div class="error" style="color:red;"><?php echo $erroremail ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" name="Password" value="" class="form-control" id="exampleInputPassword1">
+                            <div class="error" style="color:red;"><?php echo $errorpassword ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                            <input type="password" name="Confirm" value="" class="form-control" id="exampleInputPassword1">
+                            <div class="error" style="color:red;"><?php echo $errorconfirm ?></div>
+                        </div>
+                        <div class="col-sm-12 mb-2 info">
+                            <label for="exampleInputPassword1" class="form-label">Upload New Profile Pic</label>
+                            <input type="file" name="img" id="img" value="<?php echo $row['Image_Profile'] ?>" class="form-control" id="exampleInputPassword1">
+                        </div>
+
+                    </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" form="update-form" type="submit" name="confirm" >Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+      
     <!------------------------------------------------------------------------------------------------>
         <div class="container4">
             <h3>Personal Info</h3>
@@ -182,13 +343,13 @@
                         </div>
                         <div class="name">
                         <p class="text-align"><?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?></p>
-                        <p style="color:red;">ST-CE-001</p>
+                        <p style="color:red;"><?php echo $row['AdminAccNo']; ?></p>
                         </div>
                     </div>
                     <form>
                         <div class="col-sm-6 mb-2 info">
                             <label for="exampleInputEmail1" class="form-label">First Name</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" value="<?php echo $row['FirstName']; ?>" aria-describedby="emailHelp" disabled>
+                            <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $row['FirstName']; ?>" aria-describedby="emailHelp" disabled>
                         </div>
                         <div class="col-sm-6 mb-2 info">
                             <label for="exampleInputPassword1" class="form-label">Last Name</label>
@@ -219,8 +380,9 @@
                             <input type="password" value="<?php echo $row['Password']; ?>" class="form-control" id="exampleInputPassword1"disabled>
                         </div>
                         
+                        
                        
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="button" class="btn btn-primary" data-bs-target="#updated<?php echo $row['Admin_ID'] ?>" data-bs-toggle="modal">Update</button>
                     </form>
                 </div>
                    
@@ -239,6 +401,9 @@
     $(window).on("load", function(){
         $(".rotate").fadeOut(2000);
     })
+    if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
 </script>
 <script type="text/javascript" src="../Admin/slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

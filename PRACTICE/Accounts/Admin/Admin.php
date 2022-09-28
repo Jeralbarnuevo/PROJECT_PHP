@@ -32,6 +32,10 @@
                   $_SESSION["login"]=true;
                   $_SESSION["Admin_ID"]=$row["Admin_ID"];
                   $_SESSION['Email']=$row['Email'];
+                  $admin=$_SESSION['Admin_ID'];
+                  
+                  $online="UPDATE admin SET status='Online' WHERE Admin_ID=$admin";
+                  $sql=mysqli_query($conn,$online);
                   header("location: ../../Admin/Admin-Dashboard.php");
               }
               else{

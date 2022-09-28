@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,7 +105,16 @@
     </div>
     <div class="body content">
 
-        <div class="modal fade" id="viewdetails" tabindex="-1">
+    <?php
+                    if(!empty($_SESSION['Homeowners_ID'])){
+                    $homeownersID=$_SESSION['Homeowners_ID'];
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
+                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE homeowners.Homeowners_ID=$homeownersID");
+                    while($row=mysqli_fetch_assoc($query)){
+                   
+                ?>
+        <div class="modal fade" id="paid<?php echo $row['records_iD'] ?>" tabindex="-1">
             <div class="modal-dialog" style="width:100%; max-width:800px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -116,44 +126,38 @@
                             <tbody>
                                 <tr>
                                     <th class="col-md-2">TicketNo</th>
-                                    <td>ST-VIO-001</td>
+                                    <td><?php echo $row['ticketNo'] ?></td>
                                     <th>Violator Name</th>
-                                    <td>JERAL BARNUEVO</td>
+                                    <td><?php echo $row['First_Name'], "&nbsp&nbsp", $row['Last_Name']?></td>
                                     <th>Violation No.</th>
-                                    <td>VIOLATION-001</td>
+                                    <td><?php echo $row['ViolationNo'] ?></td>
                                 </tr>
                                 <tr>
                                     <th>Violation Name</th>
-                                    <td class="col-md-3">ILLEGAL PARKING</td>
+                                    <td class="col-md-3"><?php echo $row['ViolationName'] ?></td>
                                     <th>Fine</th>
-                                    <td class="col-md-6">PHP 500.00</td>
+                                    <td class="col-md-6"><?php echo $row['Fine'] ?></td>
                                     <th>Category:</th>
-                                    <td>Major</td>
+                                    <td><?php echo $row['Category'] ?></td>
                                 </tr>
                                 <tr>
                                     <th>Date:</th>
-                                    <td>9/2/22</td>
+                                    <td><?php echo $row['date_created'] ?></td>
                                     <th>Status:</th>
-                                    <td style="color:green;">Pending</td>
+                                    <td style="color:green;"><?php echo $row['Status'] ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" style="height:40px;"></td>
                                 </tr>
                                 <tr>
                                     <th>Remark By:</th>
-                                    <td colspan="5">Admin: Alvin Capili</td>
+                                    <td colspan="5" class="text-center">Admin: <?php echo $row['FirstName'], "&nbsp&nbsp", $row['LastName']?></td>
                                 </tr>
                                 <tr>
-                                    <th>Status:</th>
-                                    <td style="color:blue;" colspan="3">Pending</td>
-                    
                                     <th>Remark Date:</th>
-                                    <td colspan="3">9/2/22</td>
+                                    <td colspan="3"><?php echo $row['date_created'] ?></td>
                                 </tr>
-                                <tr>
-                                    <th>Action:</th>
-                                    <td colspan="3"></td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                         </div>
@@ -163,6 +167,10 @@
                         </div>
                     </div>
                 </div>
+                        <?php
+                            }
+                        } 
+                        ?>
  
     <!------------------------------------------------------------------------------------------------>
     <div class="container11">
@@ -178,13 +186,23 @@
             <th class="text-center">Action</th>
             </thead>
             <tbody>
+            <?php
+                    if(!empty($_SESSION['Homeowners_ID'])){
+                    $homeownersID=$_SESSION['Homeowners_ID'];
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,records.date_updated, homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
+                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE homeowners.Homeowners_ID=$homeownersID and records.Status='Paid'");
+                    while($row=mysqli_fetch_assoc($query)){
+                   
+                ?>
                 <tr>
-                    <td class="text-center">ST-VIO_001</td>
-                    <td class="text-center">ST-CE-001</td>
-                    <td class="text-center">9/15/22</td>
-                    <td class="text-center">Paid</td>
-                    <td class="text-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
+                    <td class="text-center"><?php echo $row['ticketNo'] ?></td>
+                    <td class="text-center"><?php echo $row['First_Name'], "&nbsp&nbsp", $row['Last_Name'] ?></td>
+                    <td class="text-center"><?php echo $row['date_updated'] ?></td>
+                    <td class="text-center" style="color:green;"><?php echo $row['Status'] ?></td>
+                    <td class="text-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paid<?php echo $row['records_iD'] ?>">View Details</button></td>
                 </tr>
+                <?php } }?>
             </tbody>
         </table>
     </div>
@@ -192,17 +210,13 @@
     </div>
     </div>
 </div>
-<?php
-        include('loading.php');
-    ?>
+
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
-$(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
+
 </script>
 <script type="text/javascript" src="../Admin/slide.js"></script>
 <script type="text/javascript" src="cal.js"></script>

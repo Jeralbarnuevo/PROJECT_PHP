@@ -14,17 +14,16 @@
         $Punishment=$_POST['Punishment'];
         $duplicate=mysqli_query($conn, "SELECT*FROM violations WHERE ViolationName='$violationName'");
         if(mysqli_num_rows($duplicate)>0){
-            $_SESSION['message']="Record has already saved";
-            $_SESSION['msg_type']="warning";
-            header("location:Admin-Violations.php");
+            echo"<script>toastr.info('Records already exist')</script>";
+            header("location:try.php");
         }   
         else{   
             $query="INSERT INTO violations (ViolationNo,ViolationName,Category,Punishment) VALUES('$ViolationNo','$violationName','$Category','$Punishment')";
             $run=mysqli_query($conn,$query);
-                    $_SESSION['messages']="Record has been saved!";
-                    $_SESSION['msg_type']="success";
-                    header("location:Admin-Violations.php");
-            
+            echo"<script>toastr.info('Records already exist')</script>";
+            header("location:try.php");
+          
+                   
                 }   
                 
             }        
@@ -34,9 +33,9 @@
         $mysqli="DELETE FROM violations WHERE ViolationID=$id";
         $run=mysqli_query($conn,$mysqli);
     if($run==true){
-        $_SESSION['messages']="Record has been deleted!";
-        $_SESSION['msg_type']="success";
-        header("location:Admin-Violations.php");
+        echo"<script>toastr.info('Records deleted')</script>";
+        header("location:try.php");
+       
         
     }
    }
@@ -47,7 +46,7 @@
         $VtionName=$_POST['VtionName'];
         $category=$_POST['category'];
         $punishment=$_POST['punishment'];
-        $update="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID='$VtionID'";
+        $update="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID=$VtionID";
         $test=mysqli_query($conn, $update); 
         if($test){
         $_SESSION['messages']="Record has been updated!";
@@ -59,5 +58,9 @@
             header("location:Admin-Violations.php");
         }   
     }
+
+
+    
+            
 ?>
 

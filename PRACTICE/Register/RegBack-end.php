@@ -149,10 +149,10 @@
                     $mail->SMTPAuth=true;
                     $mail->SMTPSecure='tls';
     
-                    $mail->Username='st.ceciliahoatrackersystem@stceciliahoa.online'; // EMAIL NA GAGAMITIN PARA IPANG SEND SA MGA KUPAL
+                    $mail->Username='stceciliahoaviolationcomplaint@stceciliahoa.online'; // EMAIL NA GAGAMITIN PARA IPANG SEND SA MGA KUPAL
                     $mail->Password='Capstone_101822';
     
-                    $mail->setFrom('st.ceciliahoatrackersystem@stceciliahoa.online', 'ST-CECILIA-HOA'); //EMAIL NATIN SAKA TITLE
+                    $mail->setFrom('stceciliahoaviolationcomplaint@stceciliahoa.online', 'ST-CECILIA-HOA'); //EMAIL NATIN SAKA TITLE
                     $mail->addAddress($_POST['Email']);
     
                     $mail->isHTML(true);
@@ -171,12 +171,9 @@
                         <?php
                     }else{
                         $last_id=rand(0,9999);
-                        if($last_id==true){
                         $id=str_replace("ST-CE-HOA", "",$last_id);
                         $id1=str_pad($id + 1, 4,0, STR_PAD_LEFT);
-                        $code=strtoupper(chr(rand(65, 90)) . chr(rand(65, 90))) .$id1;
-                        }
-
+                        $code="ST-CE-HOA" .$id1;
                         $Encrypt=password_hash($Password, PASSWORD_DEFAULT);
                         $EncryptConfirm=password_hash($Confirm_Password, PASSWORD_DEFAULT);
                         $query="INSERT INTO homeowners (Account_Number,First_Name,Last_Name,Gender,Age,ContactNo,Address,Birthdate,Email,Image,Password,Confirm_Password,VerificationCode,Verified) 

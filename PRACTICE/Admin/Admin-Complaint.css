@@ -162,35 +162,22 @@
      
 }
 
-.main>.container>.register>h1{
-    margin-left:1rem;
-    font-weight:700; 
-    letter-spacing:.3rem; 
-    text-transform: uppercase;
-
-}
-.main>.container>.register>form{
-    width: 100%;
-    display:flex;
-    flex-wrap: wrap;
-    padding:0 1rem;
-}
-.box1{
+.con>.register>form>.box1{
     width: 100%;
     padding-right:1rem;
     padding-top:.3rem;
 }
-.box1>a{
+.con>.register>form>.box1>a{
     width: 100%;   
     border:1px solid black;
 }
-input[type="text"],input[type="email"],input[type="date"],input[type="password"],input[type="number"]{
+.con>.register>form>.box1>input[type="text"],input[type="email"],.con>.register>form>.box1>input[type="date"],input[type="password"],input[type="number"]{
     border: 2px solid #319052;
 }
-input#formFile{
+.con>.register>form>.box1>input#formFile{
     border: 2px solid #3190 52;
 }
-input[type=file]::file-selector-button{
+.con>.register>form>.box1>input[type=file]::file-selector-button{
     background-color: #319052;
     color:white;
 }

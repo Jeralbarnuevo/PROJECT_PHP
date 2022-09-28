@@ -4,8 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -82,7 +84,7 @@
     </div>
     <div class="top">
         <div class="burger">
-            <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
+            
             <p>Complaints</p>
         </div>
         <div class="profile">
@@ -111,7 +113,18 @@
     </div>
     <div class="body">
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
-    <div class="modal fade" id="viewdetails" tabindex="-1">
+    
+    <?php
+    if(!empty($_SESSION['Admin_ID'])){
+        $AdminID=$_SESSION['Admin_ID']; 
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, complaint.Remarks, homeowners.First_Name,homeowners.Last_Name, admin.FirstName, admin.LastName FROM (complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID) INNER JOIN admin ON complaint.adminID=admin.Admin_ID WHERE complaint.Status='Complete';");
+    
+        if(mysqli_num_rows($query)>0){
+        while($row1=mysqli_fetch_assoc($query)){
+    ?>
+    <div class="modal fade" id="viewdetails<?php echo $row1['Complaint_ID'] ?>" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -122,45 +135,38 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <th class="col-md-2">Complaint No.:</th>
-                                <td>COM-001</td>
+                                <th>Complaint No.:</th>
+                                <td colspan="3"><?php echo $row1['Complaint_No'] ?></td>
                                 <th>Complainant:</th>
-                                <td>JERAL BARNUEVO</td>
-                                <th>Complaint Name:</th>
-                                <td>Illegal Parking</td>
+                                <td><?php echo $row1['Complainant_Name'] ?></td>
                             </tr>
                             <tr>
                                 <th>Complaint Details</th>
-                                <td colspan="3">May nakaharang na motor</td>
+                                <td colspan="3"><?php echo $row1['Complaint_Details'] ?></td>
                                 <th>Attachment:</th>
-                                <td>Files</td>
+                                <td><img src="../Homeowners/compimgs/<?php echo $row1['Attachment'] ?>" alt="" width="150px"></td>
                             </tr>
                             <tr>
-                                <th>Category:</th>
-                                <td>Major</td>
                                 <th>Date:</th>
-                                <td>9/2/22</td>
+                                <td><?php echo $row1['Date'] ?></td>
                                 <th>Status:</th>
-                                <td style="color:green;">Success</td>
+                                <td style="color:green;"><?php echo $row1['Status'] ?></td>
                             </tr>
                             <tr>
                                 <td colspan="6" style="height:40px;"></td>
                             </tr>
                             <tr>
                                 <th>Remark By:</th>
-                                <td colspan="5">Admin: Alvin Capili</td>
+                                <td colspan="5">Admin: <?php echo $row1['FirstName'], "&nbsp&nbsp", $row1['LastName'] ?> </td>
                             </tr>
                             <tr>
                                 <th>Status:</th>
-                                <td style="color:blue;" colspan="3">Closed</td>
+                                <td style="color:blue;" colspan="3"><?php echo $row1['Status'] ?></td>
                 
-                                <th>Remark Date:</th>
-                                <td colspan="3">9/2/22</td>
+                                <th>Remarks:</th>
+                                <td colspan="5"><?php echo $row1['Remarks'] ?></td>
                             </tr>
-                            <tr>
-                                <th>Action:</th>
-                                <td colspan="3"></td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                     </div>
@@ -170,6 +176,13 @@
                     </div>
                 </div>
             </div>
+  
+            <?php 
+             }
+             } 
+    }
+        
+            ?>
     <!------------------------------------------------------------------------------------------------>
         <div class="container1">
             <div class="title"><h1>Closed Complaints</h1></div>
@@ -184,22 +197,27 @@
                     <th class="text-center">Details</th>
                     </tr>
                 </thead>
+                <?php
+        if(!empty($_SESSION['Admin_ID'])){
+        $homeownersID=$_SESSION['Admin_ID'];       
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE complaint.Status='Complete'");
+        while($row1=mysqli_fetch_assoc($query)){
+        ?>
                 <tbody>
                     <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>11/11/22</td>
-                    <td style="color:green;">Success</td>
-                    <td><button style="padding:.5rem; border:none;">View Details</button></td>
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                    <td>JERAL</td>
-                    <td>9/2/22</td>
-                    <td style="color:green;">Success</td>
-                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
+                    <td><?php echo $row1['Complaint_No']; ?></td>
+                    <td><?php echo $row1['Complainant_Name']; ?></td>
+                    <td><?php echo $row1['Date']; ?></td>
+                    <td style="color:green;"><?php echo $row1['Status'] ?></td>
+                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID']; ?>">View Details</button></td>
                     </tr>
                 </tbody>
+                <?php 
+                    }
+                    }
+                ?>
             </table>
             </div>
         </div>

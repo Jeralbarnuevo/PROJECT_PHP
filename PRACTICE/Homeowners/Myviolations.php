@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,9 +108,9 @@
 <?php
                     if(!empty($_SESSION['Homeowners_ID'])){
                     $homeownersID=$_SESSION['Homeowners_ID'];
-                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
-                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
-                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE homeowners.Homeowners_ID=$homeownersID");
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.homeowners_ID, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category, violations.Punishment FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
+                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE records.homeowners_ID=$homeownersID and records.Status='Pending'");
                     while($row=mysqli_fetch_assoc($query)){
                    
                 ?>
@@ -135,7 +136,7 @@
                                     <th>Violation Name</th>
                                     <td class="col-md-3"><?php echo $row['ViolationName'] ?></td>
                                     <th>Fine</th>
-                                    <td class="col-md-6"><?php echo $row['Fine'] ?></td>
+                                    <td class="col-md-6"><?php echo $row['Punishment'] ?></td>
                                     <th>Category:</th>
                                     <td><?php echo $row['Category'] ?></td>
                                 </tr>
@@ -152,7 +153,9 @@
                                     <th>Remark By:</th>
                                     <td colspan="5" class="text-center">Admin: <?php echo $row['FirstName'], "&nbsp&nbsp", $row['LastName']?></td>
                                 </tr>
-                                <tr>
+                                
+                                <tr><th>Comment</th>
+                                    <td colspan="3"><?php echo $row['Comment'] ?></td>
                                     <th>Remark Date:</th>
                                     <td colspan="3"><?php echo $row['date_created'] ?></td>
                                 </tr>
@@ -188,7 +191,7 @@
                     $homeownersID=$_SESSION['Homeowners_ID'];
                     $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
                     homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
-                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE homeowners.Homeowners_ID=$homeownersID");
+                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE homeowners.Homeowners_ID=$homeownersID and records.Status='Pending'");
                     while($row=mysqli_fetch_assoc($query)){
                    
                 ?>
@@ -211,17 +214,13 @@
     </div>
     </div>
 </div>
-<?php
-        include('loading.php');
-    ?>
+
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
-$(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
+
 </script>
 <script type="text/javascript" src="../Admin/slide.js"></script>
 <script type="text/javascript" src="cal.js"></script>

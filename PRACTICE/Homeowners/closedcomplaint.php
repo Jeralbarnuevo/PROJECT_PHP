@@ -1,9 +1,11 @@
 <?php
-    require("../Admin/process.php");
+    session_start();
+    require('../connection.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,11 +24,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready( function () {
-            $('#mytable').DataTable();
-        } );
-    </script>
     <title>My Closed Violations</title>
 </head>
 <body>
@@ -103,52 +100,76 @@
         </div>
     </div>
     <div class="body content">
-
-        <div class="modal fade" id="viewdetails" tabindex="-1">
-            <div class="modal-dialog" style="width:100%; max-width:800px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title">My Violation</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-------------------------------------------------------------------------------------------------------------->
+    <?php
+    if(!empty($_SESSION['Homeowners_ID'])){
+        $homeownersID=$_SESSION['Homeowners_ID'];  
+      
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.homeownersID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, complaint.Remarks, homeowners.First_Name,homeowners.Last_Name, admin.FirstName, admin.LastName FROM (complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID) INNER JOIN admin ON complaint.adminID=admin.Admin_ID WHERE complaint.homeownersID = '$homeownersID' and complaint.Status='Complete'");
+        if(mysqli_num_rows($query)>0){
+        while($row1=mysqli_fetch_assoc($query)){
+    ?>
+    <div class="modal fade" id="viewdetails<?php echo $row1['Complaint_ID']; ?>" tabindex="-1">
+        <div class="modal-dialog" style="width:100%; max-width:800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Complaint Details</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Complaint No.:</th>
+                                <td colspan="3"><?php echo $row1['Complaint_No'] ?></td>
+                                <th>Complainant:</th>
+                                <td><?php echo $row1['Complainant_Name'] ?></td>
+                            </tr>
+                            <tr>
+                                <th>Complaint Details</th>
+                                <td colspan="3"><?php echo $row1['Complaint_Details'] ?></td>
+                                <th>Attachment:</th>
+                                <td><img src="../Homeowners/compimgs/<?php echo $row1['Attachment'] ?>" alt="" width="150px"></td>
+                            </tr>
+                            <tr>
+                                <th>Date:</th>
+                                <td><?php echo $row1['Date'] ?></td>
+                                <th>Status:</th>
+                                <td style="color:green;"><?php echo $row1['Status'] ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="height:40px;"></td>
+                            </tr>
+                            <tr>
+                                <th>Remark By:</th>
+                                <td colspan="5">Admin: <?php echo $row1['FirstName'], "&nbsp&nbsp", $row1['LastName'] ?> </td>
+                            </tr>
+                            <tr>
+                                <th>Status:</th>
+                                <td style="color:blue;" colspan="3"><?php echo $row1['Status'] ?></td>
+                
+                                <th>Remarks:</th>
+                                <td colspan="5"><?php echo $row1['Remarks'] ?></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
                     </div>
-                        <div class="modal-body">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th class="col-md-2">Complaint No.:</th>
-                                    <td>COM-001</td>
-                                    <th>Complainant:</th>
-                                    <td>JERAL BARNUEVO</td>
-                                    <th>Complaint Name:</th>
-                                    <td>Illegal Parking</td>
-                                </tr>
-                                <tr>    
-                                    <th>Complaint Details</th>
-                                    <td colspan="3">May nakaharang na motor</td>
-                                    <th>Attachment:</th>
-                                    <td>Files</td>
-                                </tr>
-                                <tr>
-                                    <th>Category:</th>
-                                    <td>Major</td>
-                                    <th>Date:</th>
-                                    <td>9/2/22</td>
-                                    <th>Status:</th>
-                                    <td style="color:red;">Pending</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" style="height:40px;"></td>
-                                </tr>
-                               
-                            </tbody>
-                        </table>
-                        </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
+            </div>
+  
+            <?php 
+             }
+             } 
+    }
+        
+            ?>
  
     <!------------------------------------------------------------------------------------------------>
     <div class="container11">
@@ -163,33 +184,50 @@
                 <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
                 </thead>
-                <tbody>
+           <tbody>
+           <?php
+        if(!empty($_SESSION['Homeowners_ID'])){
+        $homeownersID=$_SESSION['Homeowners_ID'];       
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.homeownersID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
+        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE complaint.homeownersID=$homeownersID and complaint.Status='Complete'");
+        if(mysqli_num_rows($query)>0){
+        while($row1=mysqli_fetch_assoc($query)){
+        ?>
                     <tr>
-                        <td class="text-center">ST-VIO_001</td>
-                        <td class="text-center">Jeral Barnuevo</td>
-                        <td class="text-center">9/15/22</td>
-                        <td class="text-center">Paid</td>
-                        <td class="text-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
+                        <td class="text-center"><?php echo $row1['Complaint_No'] ?></td>
+                        <td class="text-center"><?php echo $row1['Complainant_Name'] ?></td>
+                        <td class="text-center"><?php echo $row1['Date'] ?></td>
+                        <td class="text-center" style="color:green;"><?php echo $row1['Status'] ?></td>
+                        <td class="text-center "><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID']; ?>">View Details</button></td>
                     </tr>
-                </tbody>    
+                </tbody>  
+                <?php
+            }
+        }
+        } 
+        ?>  
         </table>
+       
     </div>
     </div>
     </div>
     </div>
 </div>
-<?php
-        include('loading.php');
-    ?>
+
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
-$(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
+
+
 </script>
+<script type="text/javascript">
+        $(document).ready( function () {
+            $('#mytable').DataTable();
+        } );
+    </script>
 <script type="text/javascript" src="../Admin/slide.js"></script>
 <script type="text/javascript" src="cal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

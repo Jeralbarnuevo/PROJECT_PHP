@@ -4,9 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -85,7 +86,6 @@
     </div>
     <div class="top">
         <div class="burger">
-            <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
             <p>Manage Accounts</p>
         </div>
         <div class="profile">
@@ -174,6 +174,7 @@
               }
               } 
             ?>
+    
     <!------------------------------------------------------------------------------------------------>
         <div class="container1">
             <div class="title"><h1>Registered Homeowners</h1></div>
@@ -189,26 +190,28 @@
                     <th class="text-center">Details</th>
                     </tr>
                 </thead>
+               
+                <tbody>
                 <?php
-                    $query1="SELECT*FROM homeowners";
+                    $query1="SELECT*FROM homeowners WHERE verified='1'";
                     $result=mysqli_query($conn, $query1);
                     if(mysqli_num_rows($result)>0){
                     while($row=mysqli_fetch_assoc($result)){
                 ?>
-                <tbody>
                     <tr class="height">
-                    <td>ST-CE-001</td>
+                    <td><?php echo $row['Account_Number'] ?></td>
                     <td><?php echo $row['First_Name']; ?></td>
                     <td><?php echo $row['Last_Name']; ?></td>
                     <td><?php echo $row['date_registered']; ?></td>
                     <td><div class="success">Active</div></td>
                     <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Homeowners_ID']; ?>">View More  </button></td>
                     </tr>
-                </tbody>
-                <?php
+                    <?php
                     }
                     } 
                 ?>
+                </tbody>
+                
             </table>
             </div>
         </div>

@@ -5,8 +5,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -85,7 +86,6 @@
     </div>
     <div class="top">
         <div class="burger">
-            <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
             <p>Violators Records</p>
         </div>
         <div class="profile">
@@ -116,9 +116,9 @@
     <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
     <?php
                     
-                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.homeowners_ID,records.ticketNo, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
                     homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category,violations.Punishment FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
-                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID)");
+                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE records.Status='Pending'");
                     while($row=mysqli_fetch_assoc($query)){
                    
                 ?>
@@ -129,6 +129,7 @@
                         <h2 class="modal-title">My Violation</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form action="" method="POST">
                         <div class="modal-body">
                         <table class="table table-bordered">
                             <tbody>
@@ -154,7 +155,7 @@
                                     <th>Status:</th>
                                     <td style="color:green;"><?php echo $row['Status'] ?></td>
                                     
-                                </tr>
+                                </tr>   
                                 <tr>
                                     <td colspan="6" style="height:40px;"></td>
                                 </tr>
@@ -167,16 +168,18 @@
                                     <th>Remark Date:</th>
                                     <td colspan="3"><?php echo $row['date_created'] ?></td>
                                     <th>Action:</th>
-                                    <td colspan="3"><button class="btn btn-success">Paid</button></td>
+                                    <td colspan="3"><button class="btn btn-success" type="submit" name="paid">Paid</button></td>
                                 </tr>
                                 <tr>
                                     <th>Comment</th>
                                     <td colspan="3"><?php echo $row['Comment'] ?></td>
-                                   
+                                
                                 </tr>
+                                <input type="text" value="<?php echo $row['homeowners_ID'] ?>" name="idHome" hidden>
                             </tbody>
                         </table>
                         </div>
+                    </form>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                             </div>
@@ -187,6 +190,18 @@
                 }
             
             ?>
+            <?php
+                if(isset($_POST['paid'])){
+                    $idHome=$_POST['idHome'];
+                    $paid ="UPDATE records SET Status='Paid' WHERE records.homeowners_ID=$idHome";
+                    $itest=mysqli_query($conn,$paid);
+                    if($itest){
+                        echo"<script>alert('Violation Paid Success')</script>";
+                    }else{
+                        echo"<script>alert('Violation Paid Failed')</script>";
+                    }
+                }
+             ?>
     <!------------------------------------------------------------------------------------------------>
         <div class="container3">
             <h3>List of Violators</h3>
@@ -200,27 +215,29 @@
                     <th class="text-center">Status</th>
                     <th class="text-center">Action</th>
                 </thead>
+                
+                <tbody>
                 <?php
                     if(!empty($_SESSION['Admin_ID'])){
                     $adminID=$_SESSION['Admin_ID'];
                     $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, homeowners.Account_Number,homeowners.First_Name, homeowners.Last_Name
-                    from records inner join homeowners on records.homeowners_ID = homeowners.Homeowners_ID");
+                    from records inner join homeowners on records.homeowners_ID = homeowners.Homeowners_ID WHERE records.Status='Pending'");
                     while($row=mysqli_fetch_assoc($query)){
                    
                 ?>
-                <tbody>
                     <tr>
                     <td><?php echo $row['ticketNo']; ?></td>
                     <td><?php echo $row['Account_Number']?></td>
                     <td><?php echo $row['First_Name'],"&nbsp&nbsp",$row['Last_Name']?></td>
                     <td><?php echo $row['date_created']?></td>
-                    <td><?php echo $row['Status']?></td>
+                    <td style="color:red;"><?php echo $row['Status']?></td>
                     <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['records_iD']; ?>">View More</button></td>
                     </tr>
-                </tbody>
                     <?php }
                     }
                     ?>
+                </tbody>
+                    
             </table>
             </div>
         </div>

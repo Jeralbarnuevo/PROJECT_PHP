@@ -4,9 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="icon" href="../Assets/logo1.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="realtime.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,6 +31,14 @@
     <title>Admin Manage Account</title>
 </head>
 <body>
+    <style>
+        .online{
+                color:green;
+        }
+        .offline{
+            color:red;
+        }
+    </style>
 <?php
     
     if(!isset($_SESSION['Admin_ID'])){
@@ -83,7 +92,6 @@
     </div>
     <div class="top">
         <div class="burger">
-            <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
             <p>Manage Accounts</p>
         </div>
         <div class="profile">
@@ -188,6 +196,8 @@
                     <th class="text-center">Details</th>
                     </tr>
                 </thead>
+                
+                <tbody>
                 <?php
                             $query="SELECT*FROM admin";
                             $result=mysqli_query($conn, $query);
@@ -195,20 +205,28 @@
                             while($row=mysqli_fetch_assoc($result)){
                             
                          ?>
-                <tbody>
                     <tr class="height">
                     <td style="color:red;"><?php echo $row['AdminAccNo']; ?></td>
                     <td><?php echo $row['FirstName']; ?></td>
                     <td><?php echo $row['LastName']; ?></td>
                     <td><?php echo $row['date_registered']; ?></td>
-                    <td><div style="color:red;" ><?php echo $row['status']; ?></div></td>
+                    <td><div style="" id="online" ><?php echo $row['status']; ?></div></td>
                     <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Admin_ID']?>">View More  </button></td>
                     </tr>
+                    <?php
+                        }
+                    }
+                    ?>
                 </tbody>
-                <?php
+             
+              <script type="text/javascript">
+                var color = document.getElementById('#online');
+                if (color.value="Online"){
+                    document.querySelector('.online');
+                }else{
+                    document.querySelector('.offline');
                 }
-                }
-            ?>
+            </script>
             </table>
            
             </div>
@@ -417,7 +435,7 @@
                         <div class="error"><p style="margin:0;"><?php echo $errorFile ?></p></div>
                       </div>
                       <div class="col-lg-12 button box1">
-                        <button type="button" class="btn btn-dark" id="back">Back to login</button>
+                        <button type="button" class="btn btn-dark" id="back">Back</button>
                         <button type="submit" name="add" id="reg" class="btn btn-success">Register</button>
                       </div>
                 </form>
