@@ -231,7 +231,7 @@
                     $errorconfirm="Please fill the blank*";
                 }else{
                     $confirm=$_POST['Confirm'];
-                }if(!empty($_FILES['img']['name'])){
+                }if(empty($_FILES['img']['name'])){
                     $img=$_FILES['img']['name'];
                     $folder = '../Admin/admin-imgs/' .$img;
                     move_uploaded_file($_FILES['img']['tmp_name'], $folder);
@@ -340,6 +340,12 @@
                         
                         <div class="profile-pic">
                             <img src="../Admin/admin-imgs/<?php echo $row['Image_Profile']; ?>" alt="" width="50px">
+                        </div>
+                        <div class="upload">
+                        <input type="hidden" name="id" value="<?php echo $row['Admin_ID']; ?>">
+                            <input type="hidden" name="FirstName" value="<?php echo $row['FirstName'] ?>">
+                            <input type="file" name="img" id="img">
+                            <i class="fas fa-camera"></i>
                         </div>
                         <div class="name">
                         <p class="text-align"><?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?></p>

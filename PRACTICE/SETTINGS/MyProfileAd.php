@@ -174,6 +174,7 @@
                         <div class="profile-pic">
                             <img src="../Register/imgs/<?php echo $row['Image']; ?>" alt="" width="50px">
                         </div>
+
                         <div class="name">
                         <p class="text-align"><?php echo $row['First_Name'], "&nbsp;&nbsp;",$row['Last_Name']; ?></p>
                         <p style="color:red;">ST-CE-001</p>

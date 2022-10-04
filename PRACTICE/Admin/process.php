@@ -14,14 +14,16 @@
         $Punishment=$_POST['Punishment'];
         $duplicate=mysqli_query($conn, "SELECT*FROM violations WHERE ViolationName='$violationName'");
         if(mysqli_num_rows($duplicate)>0){
-            echo"<script>toastr.info('Records already exist')</script>";
-            header("location:try.php");
+            $_SESSION['messages']="Record has already exist!";
+        $_SESSION['msg_type']="success";
+            header("location:Admin-Violations.php");
         }   
         else{   
             $query="INSERT INTO violations (ViolationNo,ViolationName,Category,Punishment) VALUES('$ViolationNo','$violationName','$Category','$Punishment')";
             $run=mysqli_query($conn,$query);
-            echo"<script>toastr.info('Records already exist')</script>";
-            header("location:try.php");
+            $_SESSION['messages']="Record has been added!";
+            $_SESSION['msg_type']="success";
+            header("location:Admin-Violations.php");
           
                    
                 }   
@@ -33,30 +35,26 @@
         $mysqli="DELETE FROM violations WHERE ViolationID=$id";
         $run=mysqli_query($conn,$mysqli);
     if($run==true){
-        echo"<script>toastr.info('Records deleted')</script>";
-        header("location:try.php");
+        $_SESSION['messages']="Record has been deleted!";
+        $_SESSION['msg_type']="success";
+        header("location:Admin-Violations.php");
        
         
     }
    }
        
 
-    if(isset($_POST['update'])){
-        $VtionID=$_POST['VtionID'];
+    if(isset($_GET['update'])){
+        $VtionID=$_GET['update'];
         $VtionName=$_POST['VtionName'];
         $category=$_POST['category'];
         $punishment=$_POST['punishment'];
-        $update="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID=$VtionID";
-        $test=mysqli_query($conn, $update); 
-        if($test){
-        $_SESSION['messages']="Record has been updated!";
-        $_SESSION['msg_type']="success";
+        $updated="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID=$VtionID";
+        $test1=mysqli_query($conn, $updated); 
+        if($test1){
+        echo"hello";
         header("location:Admin-Violations.php");
-        }else{
-            $_SESSION['messages']="Update Failed";
-            $_SESSION['msg_type']="danger";
-            header("location:Admin-Violations.php");
-        }   
+        }
     }
 
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +130,7 @@
                             while($row=mysqli_fetch_assoc($result)){
                             
                          ?>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="delete<?php echo $row['ViolationID']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -156,46 +155,48 @@
     <!--------------------------------------------------------------------------------------------->
     <!------------------------------------------UPDATE-MODAL--------------------------------------->
     <?php
+
                             $query="SELECT*FROM violations";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
-                            while($row=mysqli_fetch_assoc($result)){
+                            while($row1=mysqli_fetch_assoc($result)){
                             
                          ?>
-    <div class="modal fade" id="updateModal<?php echo $row['ViolationID']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="update<?php echo $row1['ViolationID']?>" tabindex="-1" >
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="exampleModalLabel">Violation Record</h3>
                     </div>
                 <div class="modal-body">
-                  <form class="form" id="form1" action="#" method="POST">
+                  <form class="form" id="form2" action="" method="POST">
                     <div class="type-update">
                         <label  class="form-label">Violation No.</label>
-                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row['ViolationNo']?>" style="color:red;">
-                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row['ViolationID']?>" style="color:red;" hidden>
+                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row1['ViolationNo']?>" style="color:red;">
+                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row1['ViolationID']?>" style="color:red;" hidden >
                     </div>
                     <div class="type-update">
                         <label class="form-label">Violation Name</label>
-                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row['ViolationName']?>" required>
+                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row1['ViolationName']?>" required>
                     </div>
                     <div class="type-update">
                     <label for="category">Category :</label>
                         <select name="category" required>
-                            <option value="<?php echo $row['Category']?>">Select Category--</option>
+                            <option value="<?php echo $row1['Category']?>">Select Category--</option>
                             <option value="Minor">Minor</option>
                             <option value="Major">Major</option>
                         </select>
                     </div>
                     <div class="type-update">
                         <label  class="form-label">Punishment</label>
-                        <textarea  class="col-12" name="punishment" required><?php echo $row['Punishment']?></textarea>
+                        <textarea  class="col-12" name="punishment" required><?php echo $row1['Punishment']?></textarea>
                     </div>
                   </form>
                 </div>  
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="update" form="form1" class="btn btn-success">Update</button>
+                
+                    <button type="submit" name="updated" form="form2" class="btn btn-success">Update</button>
                 </div>
             </div>
         </div>
@@ -263,9 +264,9 @@
                         <td><?php echo $row['Category'] ?></td>
                         <td><?php echo $row['Punishment'] ?></td>
                         <td class="action">
-                            <button class="update" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['ViolationID']?>">Edit</button>
+                            <button class="update" data-bs-toggle="modal" data-bs-target="#update<?php echo $row['ViolationID']?>">Edit</button>
                 
-                            <button class="delete" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                            <button class="delete" data-bs-toggle="modal" data-bs-target="#delete<?php echo $row['ViolationID']; ?>">Delete</button>
                         </td>
                       </tr>
                       <?php

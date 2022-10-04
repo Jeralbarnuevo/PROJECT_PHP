@@ -61,6 +61,24 @@
     overflow: hidden;
     
 }
+.upload{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #00B4FF;
+    width: 32px;
+    height: 32px;
+    line-height: 33px;
+    text-align: center;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid black;
+}
+.container4>.info1>.boxA>.photo>.upload input[type = "file"]{
+    position: absolute;
+  transform: scale(2);
+  opacity: 0
+}
 .container4>.info1>.boxA>.photo>.profile-pic>img{
     position: absolute;
     top:0;

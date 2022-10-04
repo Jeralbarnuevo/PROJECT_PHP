@@ -197,20 +197,26 @@
                     </tr>
                 </thead>
                 
-                <tbody>
+                <tbody id="admin-pg">
                 <?php
-                            $query="SELECT*FROM admin";
+                            $query="SELECT*FROM admin WHERE verified=1";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
                             while($row=mysqli_fetch_assoc($result)){
-                            
+                            $time=time();
+                            $status="Offline";
+                            $class="btn-danger";
+                            if($row['status']>$time){
+                                $status="Online";
+                                $class="btn-success";
+                            }
                          ?>
                     <tr class="height">
                     <td style="color:red;"><?php echo $row['AdminAccNo']; ?></td>
                     <td><?php echo $row['FirstName']; ?></td>
                     <td><?php echo $row['LastName']; ?></td>
                     <td><?php echo $row['date_registered']; ?></td>
-                    <td><div style="" id="online" ><?php echo $row['status']; ?></div></td>
+                    <td><button class="btn <?php echo $class ?>"><?php echo $status; ?></button></td>
                     <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Admin_ID']?>">View More  </button></td>
                     </tr>
                     <?php
@@ -220,12 +226,30 @@
                 </tbody>
              
               <script type="text/javascript">
-                var color = document.getElementById('#online');
-                if (color.value="Online"){
-                    document.querySelector('.online');
-                }else{
-                    document.querySelector('.offline');
+                function updatestatus(){
+                    jQuery.ajax({
+                        url:'../SETTINGS/update-status.php',
+                        success:function(){
+
+                        }
+                    });
                 }
+                function getstatus(){
+                    jQuery.ajax({
+                        url:'../SETTINGS/get-status.php',
+                        success:function(result){
+                            jQuery('#admin-pg').html(result);
+                        }
+                    });
+                }
+                
+
+                setInterval(function(){
+                    updatestatus();
+                },1000);
+                setInterval(function(){
+                    getstatus();
+                },3000);
             </script>
             </table>
            

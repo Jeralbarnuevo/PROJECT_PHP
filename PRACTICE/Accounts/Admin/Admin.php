@@ -33,10 +33,11 @@
                   $_SESSION["Admin_ID"]=$row["Admin_ID"];
                   $_SESSION['Email']=$row['Email'];
                   $admin=$_SESSION['Admin_ID'];
-                  
-                  $online="UPDATE admin SET status='Online' WHERE Admin_ID=$admin";
+                  $time=time()+10;
+                  $online="UPDATE admin SET status='$time' WHERE Admin_ID=$admin";
                   $sql=mysqli_query($conn,$online);
                   header("location: ../../Admin/Admin-Dashboard.php");
+                  die();
               }
               else{
                   echo "<script> alert('Incorrect password please try again');</script>";
@@ -77,7 +78,7 @@
                       <div class="col-lg-12 mt-2 forgot">
                         <p><a href="../../Account-Menu/Account-Menu.php">Do you want to back to login menu?</a></p>
                         <p><a href="../../OTP/OTP_ADMIN/verify.php">Verify Your Account</a></p>
-                        <p><a href="../../OTP/OTP_ADMIN/">Forgot your password?</a></p>
+                        <p><a href="../../OTP/OTP_ADMIN/resetadmin.php">Forgot your password?</a></p>
                       </div>
                 </form>
             </div>
