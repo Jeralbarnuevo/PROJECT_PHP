@@ -12,6 +12,7 @@
         $violationName=$_POST['ViolationName'];
         $Category=$_POST['Category'];
         $Punishment=$_POST['Punishment'];
+        $status="Active";
         $duplicate=mysqli_query($conn, "SELECT*FROM violations WHERE ViolationName='$violationName'");
         if(mysqli_num_rows($duplicate)>0){
             $_SESSION['messages']="Record has already exist!";
@@ -19,17 +20,16 @@
             header("location:Admin-Violations.php");
         }   
         else{   
-            $query="INSERT INTO violations (ViolationNo,ViolationName,Category,Punishment) VALUES('$ViolationNo','$violationName','$Category','$Punishment')";
+            $query="INSERT INTO violations (ViolationNo,ViolationName,Category,Punishment,Status) VALUES('$ViolationNo','$violationName','$Category','$Punishment','$status')";
             $run=mysqli_query($conn,$query);
             $_SESSION['messages']="Record has been added!";
             $_SESSION['msg_type']="success";
             header("location:Admin-Violations.php");
-          
                    
                 }   
                 
             }        
-            
+    /*        
     if(isset($_GET['delete'])){
         $id=$_GET['delete'];
         $mysqli="DELETE FROM violations WHERE ViolationID=$id";
@@ -41,18 +41,42 @@
        
         
     }
-   }
-       
+   }*/
 
-    if(isset($_GET['update'])){
-        $VtionID=$_GET['update'];
+   // Inactive //
+   if(isset($_GET['deactivate'])){
+        $id=$_GET['deactivate'];
+        $mysqli="UPDATE violations SET Status='Inactive' WHERE ViolationID=$id";
+        $run=mysqli_query($conn,$mysqli);
+    if($run==true){
+        $_SESSION['messages']="Violation has been deactivate!";
+        $_SESSION['msg_type']="success";
+        header("location:Admin-Violations.php");
+    }
+    }
+
+    // Active //
+    if(isset($_GET['activate'])){
+        $id=$_GET['activate'];
+        $mysqli="UPDATE violations SET Status='Active' WHERE ViolationID=$id";
+        $run=mysqli_query($conn,$mysqli);
+    if($run==true){
+        $_SESSION['messages']="Violation has been activate!";
+        $_SESSION['msg_type']="success";
+        header("location:Admin-Violations.php");
+    }
+    }
+       
+    // Update //
+    if(isset($_POST['updated'])){
+        $VtionID=$_POST['VtionID'];
         $VtionName=$_POST['VtionName'];
         $category=$_POST['category'];
         $punishment=$_POST['punishment'];
         $updated="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID=$VtionID";
         $test1=mysqli_query($conn, $updated); 
-        if($test1){
-        echo"hello";
+        if($test1==true){
+        echo"<script>alert('Success')</script>";
         header("location:Admin-Violations.php");
         }
     }

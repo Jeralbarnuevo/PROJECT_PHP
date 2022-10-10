@@ -204,10 +204,9 @@ svg{
     flex-direction: row;
     align-items: center;
     gap:1rem;
+    padding-left:2rem;
 }
-.ham{
-    fill: #000;
-}
+
 
 .top>.profile{
     display: flex;
@@ -217,6 +216,7 @@ svg{
 .top>.burger>p{
     margin:0;
     font-size: 1.5rem;
+    
 }
 .text>h4{
     margin:0;
@@ -354,6 +354,7 @@ svg{
 }
 .modal-header{
     background-color:var(--secondary);
+    color: var(--body);
 }
 .modal-body{
     background-color:#ffffff; 

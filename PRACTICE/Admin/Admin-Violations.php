@@ -97,10 +97,10 @@
                         <a href="../SETTINGS/MyProfile.php" class="link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M5.84846399,13.5498221 C7.28813318,13.433801 8.73442297,13.433801 10.1740922,13.5498221 C10.9580697,13.5955225 11.7383286,13.6935941 12.5099314,13.8434164 C14.1796238,14.1814947 15.2696821,14.7330961 15.73685,15.6227758 C16.0877167,16.317132 16.0877167,17.1437221 15.73685,17.8380783 C15.2696821,18.727758 14.2228801,19.3149466 12.4926289,19.6174377 C11.7216312,19.7729078 10.9411975,19.873974 10.1567896,19.9199288 C9.43008411,20 8.70337858,20 7.96802179,20 L6.64437958,20 C6.36753937,19.9644128 6.09935043,19.9466192 5.83981274,19.9466192 C5.05537891,19.9062698 4.27476595,19.8081536 3.50397353,19.6530249 C1.83428106,19.3327402 0.744222763,18.7633452 0.277054922,17.8736655 C0.0967111971,17.5290284 0.00163408158,17.144037 0.000104217816,16.752669 C-0.00354430942,16.3589158 0.0886574605,15.9704652 0.268403665,15.6227758 C0.72692025,14.7330961 1.81697855,14.1548043 3.50397353,13.8434164 C4.27816255,13.6914539 5.06143714,13.5933665 5.84846399,13.5498221 Z M8.00262682,-1.16351373e-13 C10.9028467,-1.16351373e-13 13.2539394,2.41782168 13.2539394,5.40035587 C13.2539394,8.38289006 10.9028467,10.8007117 8.00262682,10.8007117 C5.10240696,10.8007117 2.75131423,8.38289006 2.75131423,5.40035587 C2.75131423,2.41782168 5.10240696,-1.16351373e-13 8.00262682,-1.16351373e-13 Z" transform="translate(4 2)"/></svg>
                         <p>My Profile</p></a>
                     </li>
-                    <li>
+                    <!----<li>
                         <a href="" class="link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16z"/></svg>
                         <p>Notifications</p></a>
-                    </li>
+                    </li>---->
                     <li>
                         <a href="../SETTINGS/logout.php" class="link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.9 11.6c-.1-.1-.1-.2-.2-.3l-3-3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l1.3 1.3H13c-.6 0-1 .4-1 1s.4 1 1 1h4.6l-1.3 1.3c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3l3-3c.1-.1.2-.2.2-.3.1-.3.1-.5 0-.8z"/><path d="M15.5 18.1c-1.1.6-2.3.9-3.5.9-3.9 0-7-3.1-7-7s3.1-7 7-7c1.2 0 2.4.3 3.5.9.5.3 1.1.1 1.4-.4.3-.5.1-1.1-.4-1.4C15.1 3.4 13.6 3 12 3c-5 0-9 4-9 9s4 9 9 9c1.6 0 3.1-.4 4.5-1.2.5-.3.6-.9.4-1.4-.3-.4-.9-.6-1.4-.3z"/></svg>
                         <p>Logout</p></a>
@@ -122,7 +122,7 @@
          ?>
     </div>
     <?php endif ?>
-    <!------------------------------------------DELETE-MODAL-------------------------------------->
+    <!------------------------------------------Inactive-MODAL-------------------------------------->
     <?php
                             $query="SELECT*FROM violations";
                             $result=mysqli_query($conn, $query);
@@ -134,7 +134,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Do you want to delete this record?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Do you want to deactivate this violation?</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                 <div class="modal-body">
@@ -142,8 +142,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="process.php?delete=<?php echo $row['ViolationID'];?>">
-                    <button type="button" class="btn btn-danger">Yes! Delete</button></a>
+                    <a href="process.php?deactivate=<?php echo $row['ViolationID'];?>">
+                    <button type="button" class="btn btn-danger">Yes! Deactivate</button></a>
                 </div>
             </div>
         </div>
@@ -152,44 +152,73 @@
                             }
                         }
         ?>
-    <!--------------------------------------------------------------------------------------------->
+    <!-----------------------------------------ACTIVE-MODAL---------------------------------------------------->
+    <?php
+                            $query="SELECT*FROM violations";
+                            $result=mysqli_query($conn, $query);
+                            if(mysqli_num_rows($result)>0){
+                            while($row=mysqli_fetch_assoc($result)){
+                            
+                         ?>
+        <div class="modal fade" id="activate<?php echo $row['ViolationID']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Do you want to activate this violation?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                <div class="modal-body">
+                    Are You Sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="process.php?activate=<?php echo $row['ViolationID'];?>">
+                    <button type="button" class="btn btn-success">Yes! Activate</button></a>
+                </div>
+            </div>
+        </div>
+        </div>
+        <?php
+                            }
+                        }
+        ?>
     <!------------------------------------------UPDATE-MODAL--------------------------------------->
     <?php
 
                             $query="SELECT*FROM violations";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
-                            while($row1=mysqli_fetch_assoc($result)){
+                            while($row=mysqli_fetch_assoc($result)){
                             
                          ?>
-    <div class="modal fade" id="update<?php echo $row1['ViolationID']?>" tabindex="-1" >
+    <div class="modal fade" id="update<?php echo $row['ViolationID']?>" tabindex="-1" >
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="exampleModalLabel">Violation Record</h3>
                     </div>
                 <div class="modal-body">
-                  <form class="form" id="form2" action="" method="POST">
+                  <form class="form" id="form2" action="#" method="POST">
                     <div class="type-update">
                         <label  class="form-label">Violation No.</label>
-                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row1['ViolationNo']?>" style="color:red;">
-                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row1['ViolationID']?>" style="color:red;" hidden >
+                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row['ViolationNo']?>" style="color:red;">
+                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row['ViolationID']?>" style="color:red;" hidden >
                     </div>
                     <div class="type-update">
                         <label class="form-label">Violation Name</label>
-                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row1['ViolationName']?>" required>
+                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row['ViolationName']?>" required>
                     </div>
                     <div class="type-update">
                     <label for="category">Category :</label>
                         <select name="category" required>
-                            <option value="<?php echo $row1['Category']?>">Select Category--</option>
+                            <option value="<?php echo $row['Category']?>">Select Category--</option>
                             <option value="Minor">Minor</option>
                             <option value="Major">Major</option>
                         </select>
                     </div>
                     <div class="type-update">
                         <label  class="form-label">Punishment</label>
-                        <textarea  class="col-12" name="punishment" required><?php echo $row1['Punishment']?></textarea>
+                        <textarea  class="col-12" name="punishment" required><?php echo $row['Punishment']?></textarea>
                     </div>
                   </form>
                 </div>  
@@ -247,26 +276,37 @@
                         <th class="mid text-center">Violation Name</th>
                         <th class="mid text-center">Category</th>
                         <th class="mid text-center">Punishment</th>
+                        <th class="mid text-center">Status</th>
                         <th class="mid text-center">Action</th>
                       </tr>
                     </thead>
-                    <tbody class="table-success">
+                    <tbody>
                         <?php
-                            $query="SELECT*FROM violations";
+                            $query="SELECT*FROM violations ORDER BY ViolationID DESC";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
                             while($row=mysqli_fetch_assoc($result)){
-                            
+                            $status="Inactive";
+                            $class="table-danger";
+                            if($row['Status']=='Active'){
+                                $status="Active";
+                                $class="table-success";
+                            }else{
+                                $status="Inactive";
+                                $class="table-danger";
+                            }
+                        
                          ?>
-                      <tr>      
+                      <tr class="<?php echo $class ?>">      
                         <td><?php echo $row['ViolationNo'] ?></td>
                         <td><?php echo $row['ViolationName'] ?></td>
                         <td><?php echo $row['Category'] ?></td>
                         <td><?php echo $row['Punishment'] ?></td>
+                        <td><?php echo $row['Status'] ?></td>
                         <td class="action">
-                            <button class="update" data-bs-toggle="modal" data-bs-target="#update<?php echo $row['ViolationID']?>">Edit</button>
-                
-                            <button class="delete" data-bs-toggle="modal" data-bs-target="#delete<?php echo $row['ViolationID']; ?>">Delete</button>
+                            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#update<?php echo $row['ViolationID']?>"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#activate<?php echo $row['ViolationID']?>"><i class="fas fa-check"></i></button>
+                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?php echo $row['ViolationID']; ?>"><i class="fas fa-times"></i></button>
                         </td>
                       </tr>
                       <?php
