@@ -22,7 +22,7 @@
         else{   
             $query="INSERT INTO violations (ViolationNo,ViolationName,Category,Punishment,Status) VALUES('$ViolationNo','$violationName','$Category','$Punishment','$status')";
             $run=mysqli_query($conn,$query);
-            $_SESSION['messages']="Record has been added!";
+            $_SESSION['messages']="Violation has been added";
             $_SESSION['msg_type']="success";
             header("location:Admin-Violations.php");
                    
@@ -74,10 +74,10 @@
         $category=$_POST['category'];
         $punishment=$_POST['punishment'];
         $updated="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID=$VtionID";
-        $test1=mysqli_query($conn, $updated); 
+        $test1=mysqli_query($conn,$updated); 
         if($test1==true){
         echo"<script>alert('Success')</script>";
-        header("location:Admin-Violations.php");
+       
         }
     }
 

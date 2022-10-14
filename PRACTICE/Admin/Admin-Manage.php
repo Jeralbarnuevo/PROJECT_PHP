@@ -408,16 +408,16 @@
                 <h1>ADD ADMIN</h1>
                 <form action="#" id="form" method="POST" enctype="multipart/form-data">
                     <div class="col-md-12 mb-2 box1">
-                        <input type="text" class="form-control" id="validationTooltip01" name="FirstName" autocomplete="0" placeholder="First Name">
+                        <input type="text" class="form-control" id="validationTooltip01" name="FirstName" autocomplete="0" placeholder="First Name" required>
                         <div class="error" ><p style="margin:0;"><?php echo $error ?></p></div>
                       </div>
                       <div class="col-md-12 mb-2 box1">
-                        <input type="text" class="form-control is valid" name="LastName" autocomplete="0" placeholder="Last Name" >
+                        <input type="text" class="form-control is valid" name="LastName" autocomplete="0" placeholder="Last Name" required>
                         <div class="error" ><p style="margin:0;"><?php echo $errorLastName ?></p></div>
                       </div>
                       
                       <div class="col-sm-12 mb-2 box1">
-                        <select class="form-select" name="Gender" id="select" value="Gender" style="border:2px solid #319052;">
+                        <select class="form-select" name="Gender" id="select" value="Gender" style="border:2px solid #319052;" required>
                             <option style="color:gray;" value="" disabled selected hidden>Gender--</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -426,36 +426,36 @@
                         
                       </div>
                       <div class="col-sm-12 mb-2 box1">
-                        <input type="number" class="form-control" name="Age" autocomplete="0" placeholder="Age" >
+                        <input type="number" class="form-control" name="Age" autocomplete="0" placeholder="Age" required>
                         <div class="error"><p style="margin:0;"><?php echo $errorAge ?></p></div>
                       </div>
                       <div class="col-md-12 mb-2 box1">
-                        <input type="text" class="form-control" name="Contact#" autocomplete="0" placeholder="Contact No.">
+                        <input type="text" class="form-control" name="Contact#" autocomplete="0" placeholder="Contact No."required>
                         <div class="error"><p style="margin:0;"><?php echo $errorContact ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2  box1">
-                        <input type="text" class="form-control" name="Address" autocomplete="0" placeholder="Address">
+                        <input type="text" class="form-control" name="Address" autocomplete="0" placeholder="Address" required>
                         <div class="error"><p style="margin:0;"><?php echo $errorAddress ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2  box1">
-                        <input type="text" id="date" class="form-control" name="Birthday" autocomplete="0" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')">
+                        <input type="text" id="date" class="form-control" name="Birthday" autocomplete="0" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" required>
                         <div class="error"><p style="margin:0;"><?php echo $errorBirthday ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2  box1">
-                        <input type="email" class="form-control" name="Email" autocomplete="0" placeholder="Email">
+                        <input type="email" class="form-control" name="Email" autocomplete="0" placeholder="Email" required>
                         <div class="error"><p style="margin:0;"><?php echo $errorEmail ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2  box1">
-                        <input type="password" class="form-control" name="Password" autocomplete="0" placeholder="Password">
+                        <input type="password" class="form-control" name="Password" autocomplete="0" placeholder="Password" required>
                         <div class="error"><p style="margin:0;"><?php echo $errorPass ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2 box1">
-                        <input type="password" class="form-control" name="Confirm_Password" autocomplete="0" placeholder="Confirm Password" >
+                        <input type="password" class="form-control" name="Confirm_Password" autocomplete="0" placeholder="Confirm Password" required>
                         <div class="error"><p style="margin:0;"><?php echo $errorConfirm ?></p></div>
                       </div>
                       <div class="col-lg-12 mb-2  box1">
                         <label for="profile-pic" class="form-label">Upload Your Image</label>
-                        <input class="form-control" name="profile-pic" id="profile-pic" accept=".jpg, .jpeg, .png"  type="file">
+                        <input class="form-control" name="profile-pic" id="profile-pic" accept=".jpg, .jpeg, .png"  type="file" required>
                         <div class="error"><p style="margin:0;"><?php echo $errorFile ?></p></div>
                       </div>
                       <div class="col-lg-12 button box1">
@@ -479,18 +479,21 @@ $(window).on("load", function(){
 </script>
 <!-------JQUERY-SHOW/HIDE------>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function(e){
         $("#add").click(function(){
             $(".register").show(300);
             $(".container1").hide();
+            e.preventDefault();
         });
-        $("#back").click(function(){
+        $("#back").click(function(e){
             $(".container1").show(300);
             $(".register").hide(); 
+            e.preventDefault();
         })
         $("#reg").click(function(){
             $(".container1").hide(300);
             $(".register").show(); 
+            
         })
     })
    

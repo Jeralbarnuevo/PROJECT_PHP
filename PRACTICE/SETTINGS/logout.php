@@ -7,7 +7,7 @@
  die();
  }
 
- if($_SESSION['Admin_ID']){
+ if($_SESSION['Admin_ID']){ 
  unset($_SESSION['Admin_ID']);
  unset($_SESSION['Email']);
  header("location:../Accounts/Admin/Admin.php");

@@ -35,7 +35,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 100vh;
+            height: 100vh;  
             padding:1rem;
         }
         .main>.container1{

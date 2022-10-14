@@ -204,7 +204,7 @@
                             <select name="select" id="select" class="form-select">
                                 <option value="" selected>Admin</option>
                             <?php
-                                $sqlqry="SELECT*FROM admin order by FirstName asc";
+                                $sqlqry="SELECT*FROM admin WHERE Verified='1' order by FirstName asc";
                                 $sqltest=mysqli_query($conn,$sqlqry);
                                 while($row=mysqli_fetch_assoc($sqltest)):
                                 $FirstName=$row['FirstName'];
@@ -233,7 +233,7 @@
                 if(isset($_POST['push'])){
                     $comp=$_POST['comp'];
                     $adminID=$_SESSION['Admin_ID'];
-                    $forward='a';
+                    $forward=$_POST['select'];
                     $update="UPDATE complaint SET adminID='$adminID',forward_status='$forward' WHERE Complaint_ID='$comp'";
                     $test=mysqli_query($conn,$update);
                     if($test){
@@ -313,7 +313,7 @@
                     <th class="text-center">Complainant</th>
                     <th class="text-center">Date</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Details</th>
+                    <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <?php

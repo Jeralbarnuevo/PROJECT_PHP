@@ -90,8 +90,7 @@
     </div>
     <div class="top">
         <div class="burger">
-            <div class="hamburger"><svg class="ham" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 7h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1zm0 6h14c.6 0 1-.4 1-1s-.4-1-1-1H5c-.6 0-1 .4-1 1s.4 1 1 1z"/></svg></div>
-            <p>Personal Info    </p>
+            <p>Personal Info</p>
         </div>
         <div class="profile">
             <div class="welcome"><p>Welcome, <?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?> </p></div>
@@ -381,15 +380,17 @@
                             <label for="exampleInputPassword1" class="form-label">Email</label>
                             <input type="email" value="<?php echo $row['Email']; ?>" class="form-control" id="exampleInputPassword1"disabled>
                         </div>
-                        <div class="col-sm-6 mb-2 info">
+
+                       <div class="col-sm-6 mb-2 info" style="visibility:hidden;">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" value="<?php echo $row['Password']; ?>" class="form-control" id="exampleInputPassword1"disabled>
                         </div>
                         
                         
-                       
+                        <div class="mt-3">
                             <button type="button" class="btn btn-primary" data-bs-target="#updated<?php echo $row['Admin_ID'] ?>" data-bs-toggle="modal">Update</button>
-                    </form>
+                        </div>                   
+                        </form>
                 </div>
                    
             </div>

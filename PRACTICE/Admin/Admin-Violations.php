@@ -195,7 +195,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="exampleModalLabel">Violation Record</h3>
+                        <h3 class="modal-title" id="exampleModalLabel">Violation Record </h3>
                     </div>
                 <div class="modal-body">
                   <form class="form" id="form2" action="#" method="POST">
@@ -238,7 +238,7 @@
         <div class="container">
             <div class="input">
                 <h2>Create Violation</h2>
-                <form action="process.php" method="post">
+                <form action="" method="post">
                     <div class="one">
                     <div class="box">
                         <label>Violation No. :</label>
@@ -282,12 +282,11 @@
                     </thead>
                     <tbody>
                         <?php
-                            $query="SELECT*FROM violations ORDER BY ViolationID DESC";
+                            $query="SELECT*FROM violations";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
                             while($row=mysqli_fetch_assoc($result)){
-                            $status="Inactive";
-                            $class="table-danger";
+                           
                             if($row['Status']=='Active'){
                                 $status="Active";
                                 $class="table-success";
@@ -297,7 +296,8 @@
                             }
                         
                          ?>
-                      <tr class="<?php echo $class ?>">      
+                      <tr class="<?php echo $class ?>"> 
+                        
                         <td><?php echo $row['ViolationNo'] ?></td>
                         <td><?php echo $row['ViolationName'] ?></td>
                         <td><?php echo $row['Category'] ?></td>
@@ -339,6 +339,10 @@ $(window).on("load", function(){
             $(this).addClass('active');
         })
     })
+    
+    $(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+    $(".alert-dismissible").alert('close');
+});
 </script>
 <script type="text/javascript" src="slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

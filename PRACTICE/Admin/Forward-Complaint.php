@@ -246,9 +246,10 @@
                     <tr class="height">
                     <th class="text-center">Complaint No.</th>
                     <th class="text-center">Complainant</th>
-                    <th class="text-center">Date</th>   
+                    <th class="text-center">Date</th>  
+                    <th class="text-center">Forwarded by</th>  
                     <th class="text-center">Status</th>
-                    <th class="text-center">Details</th>
+                    <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -264,7 +265,8 @@
                     <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style="cursor:pointer"><?php echo $row1['Complaint_No'] ?></td>
                     <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style="cursor:pointer"><?php echo $row1['Complainant_Name'] ?></td>
                     <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style=" cursor:pointer">9/2/22</td>
-                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?> "style="color:red; cursor:pointer">Pending</td>
+                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style=" cursor:pointer">(ADMIN) JUAN DELA CRUZ</td>
+                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?> "style="color:red; cursor:pointer"><?php echo $row1['Status'] ?></td>
                     <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#action<?php echo $row1['Complaint_ID'] ?>"><i class="fas fa-edit"></i></button></td>
                     </tr>
                 </tbody>
