@@ -28,7 +28,7 @@
 </head>
 <body>
     <?php
-    require("process.php");
+    include("process.php");
 ?>
 <?php
     
@@ -183,57 +183,60 @@
                         }
         ?>
     <!------------------------------------------UPDATE-MODAL--------------------------------------->
-    <?php
+        <?php
 
-                            $query="SELECT*FROM violations";
-                            $result=mysqli_query($conn, $query);
+                            $query1="SELECT*FROM violations";
+                            $result1=mysqli_query($conn, $query1);
                             if(mysqli_num_rows($result)>0){
-                            while($row=mysqli_fetch_assoc($result)){
+                            while($row1=mysqli_fetch_assoc($result1)){
                             
                          ?>
-    <div class="modal fade" id="update<?php echo $row['ViolationID']?>" tabindex="-1" >
+    <div class="modal fade" id="updates<?php echo $row1['ViolationID'];?>" tabindex="-1" >
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="exampleModalLabel">Violation Record </h3>
                     </div>
                 <div class="modal-body">
-                  <form class="form" id="form2" action="#" method="POST">
+                  <form class="form" id="form3" action="" method="POST">
                     <div class="type-update">
                         <label  class="form-label">Violation No.</label>
-                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row['ViolationNo']?>" style="color:red;">
-                        <input type="text" class="form-control" name="VtionID" value="<?php echo $row['ViolationID']?>" style="color:red;" hidden >
+                        <input type="text" class="form-control" name="VtionNo" value="<?php echo $row1['ViolationNo']?>" style="color:red;">
+                        <input type="text" class="form-control" name="vid" value="<?php echo $row1['ViolationID']?>" style="color:red;">
                     </div>
                     <div class="type-update">
                         <label class="form-label">Violation Name</label>
-                        <input type="text" class="form-control" name="VtionName" value="<?php echo $row['ViolationName']?>" required>
+                        <input type="text" class="form-control" name="vname" value="<?php echo $row1['ViolationName']?>" required>
                     </div>
                     <div class="type-update">
-                    <label for="category">Category :</label>
-                        <select name="category" required>
-                            <option value="<?php echo $row['Category']?>">Select Category--</option>
+                    <label class="form-label">Category :</label>
+                        <select name="categ" required>
+                            <option value="<?php echo $row1['Category']?>">Select Category--</option>
                             <option value="Minor">Minor</option>
                             <option value="Major">Major</option>
                         </select>
                     </div>
                     <div class="type-update">
-                        <label  class="form-label">Punishment</label>
-                        <textarea  class="col-12" name="punishment" required><?php echo $row['Punishment']?></textarea>
+                        <label class="form-label">Punishment</label>
+                        <textarea  class="col-12" name="punish" required><?php echo $row1['Punishment']?></textarea>
                     </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="process.php?updates=<?php echo $row1['ViolationID'];?>">
+                    <button type="submit" name="updates" class="btn btn-success">Update</button></a>
+                </div>
                   </form>
                 </div>  
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                
-                    <button type="submit" name="updated" form="form2" class="btn btn-success">Update</button>
-                </div>
+               
             </div>
         </div>
         </div>
         <?php
                             }
                         } 
+                     
         ?>
+        
     <!------------------------------------------------------------------------------------------------>
         <div class="container">
             <div class="input">
@@ -266,9 +269,29 @@
                 </div>
                 </form>
             </div>
-
-            <div class="table" >
+            <nav>                 
+            <div class="table tab-pane">
                 <h4>Lists of Violations</h4>
+                <div class="radio d-flex flex-row align-items-center gap-3">
+                <div class="form-check d-flex flex-row align-items-center">
+                    <input class="form-check-input" name="stats" type="radio" value="1" id="flexCheckDefault" onclick="toggle('Active')">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Active
+                    </label>
+                </div>
+                <div class="form-check d-flex flex-row align-items-center">
+                <input class="form-check-input" name="stats" type="radio" value="1" id="flexCheckChecked" onclick="toggle('Inactive')">
+                    <label class="form-check-label" for="flexCheckChecked">
+                    Inactive
+                    </label>
+                </div>
+                <div class="form-check d-flex flex-row align-items-center">
+                    <input class="form-check-input" name="stats" type="radio" value="1" id="flexCheckDefault1" onclick="show()" checked>
+                    <label class="form-check-label" for="flexCheckDefault1">
+                    All
+                    </label>
+                </div>
+                </div>
                 <table class="table table-responsive table-hover" id="mytable" >
                     <thead class="table-dark">
                       <tr>
@@ -282,7 +305,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            $query="SELECT*FROM violations";
+                            $query="SELECT*FROM violations order by ViolationID DESC";
                             $result=mysqli_query($conn, $query);
                             if(mysqli_num_rows($result)>0){
                             while($row=mysqli_fetch_assoc($result)){
@@ -296,16 +319,15 @@
                             }
                         
                          ?>
-                      <tr class="<?php echo $class ?>"> 
-                        
+                        <tr id="row" class="<?php echo $class ?>"> 
                         <td><?php echo $row['ViolationNo'] ?></td>
                         <td><?php echo $row['ViolationName'] ?></td>
                         <td><?php echo $row['Category'] ?></td>
                         <td><?php echo $row['Punishment'] ?></td>
-                        <td><?php echo $row['Status'] ?></td>
+                        <td id="status"><?php echo $row['Status'] ?></td>
                         <td class="action">
-                            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#update<?php echo $row['ViolationID']?>"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#activate<?php echo $row['ViolationID']?>"><i class="fas fa-check"></i></button>
+                            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#updates<?php echo $row['ViolationID'];?>"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#activate<?php echo $row['ViolationID'];?>"><i class="fas fa-check"></i></button>
                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?php echo $row['ViolationID']; ?>"><i class="fas fa-times"></i></button>
                         </td>
                       </tr>
@@ -343,7 +365,25 @@ $(window).on("load", function(){
     $(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
     $(".alert-dismissible").alert('close');
 });
+if(window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+      }
 </script>
+
+<script>
+
+function toggle(status) {
+  $('#mytable tbody #row').each(function() {
+    $(this).toggle($('td:eq(4):contains(' + status + ')', this).length > 0);
+  })
+}
+
+function show() {
+  $('#mytable tbody #row').show();
+}
+                                
+</script>
+
 <script type="text/javascript" src="slide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

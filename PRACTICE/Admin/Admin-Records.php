@@ -27,6 +27,9 @@
         $(document).ready( function () {
             $('#Mytable1').DataTable();
         } );
+        $(document).ready( function () {
+            $('#Mytable2').DataTable();
+        } );
     </script>
     <title>Violators Record</title>
 </head>
@@ -113,7 +116,7 @@
         </div>
     </div>
     <div class="body">
-    <!-----------------------------------------VIEW-DETAILS-MODAL------------------------------------->
+    <!-----------------------------------------VIEW-DETAILS-MODAL-Pending------------------------------------->
     <?php
                     
                     $query=mysqli_query($conn, "SELECT records.records_iD, records.homeowners_ID,records.ticketNo, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
@@ -203,10 +206,110 @@
                 }
              ?>
     <!------------------------------------------------------------------------------------------------>
+    <!-----------------------------------------VIEW-DETAILS-MODAL-Pending------------------------------------->
+    <?php
+                    
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.homeowners_ID,records.ticketNo, records.Status, records.date_created, records.Comment,homeowners.Account_Number, homeowners.First_Name, homeowners.Last_Name,
+                    homeowners.ContactNo, homeowners.Address,admin.FirstName,admin.LastName, violations.ViolationNo,violations.ViolationName,violations.Category,violations.Punishment FROM (((records INNER JOIN homeowners ON homeowners.Homeowners_ID = records.homeowners_ID)INNER JOIN admin ON 
+                    records.admin_ID = admin.Admin_ID)INNER JOIN violations ON records.violation_ID = violations.ViolationID) WHERE records.Status='Paid'");
+                    while($row=mysqli_fetch_assoc($query)){
+                   
+                ?>
+    <div class="modal fade" id="history<?php echo $row['records_iD']; ?>" tabindex="-1">
+        <div class="modal-dialog" style="width:100%; max-width:800px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">My Violation</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" method="POST">
+                        <div class="modal-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th class="col-md-2">TicketNo</th>
+                                    <td style="color:red;"><?php echo $row['ticketNo'] ?></td>
+                                    <th>Violator Name</th>
+                                    <td><?php echo $row['First_Name'], "&nbsp&nbsp", $row['Last_Name'] ?></td>
+                                    <th>Violation No.</th>
+                                    <td><?php echo $row['ViolationNo'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Violation Name</th>
+                                    <td class="col-md-3"><?php echo $row['ViolationName']; ?></td>
+                                    <th>Fine</th>
+                                    <td class="col-md-6"><?php echo $row['Punishment'] ?></td>
+                                    <th>Category:</th>
+                                    <td><?php echo $row['Category'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Date:</th>
+                                    <td><?php echo $row['date_created'] ?></td>
+                                    <th>Status:</th>
+                                    <td style="color:green; font-weight:600"><?php echo $row['Status'] ?></td>
+                                    
+                                </tr>   
+                                <tr>
+                                    <td colspan="6" style="height:40px;"></td>
+                                </tr>
+                                <tr>
+                                    <th>Process By:</th>
+                                    <td colspan="5">Admin: <?php echo $row['FirstName'], "&nbsp&nbsp", $row['LastName'] ?></td>
+                                </tr>
+                                <tr>
+                    
+                                    <th>Remark Date:</th>
+                                    <td colspan="3"><?php echo $row['date_created'] ?></td>
+                                    <th>Action:</th>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <th>Comment</th>
+                                    <td colspan="3"><?php echo $row['Comment'] ?></td>
+                                
+                                </tr>
+                                <input type="text" value="<?php echo $row['homeowners_ID'] ?>" name="idHome" hidden>
+                            </tbody>
+                        </table>
+                        </div>
+                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <?php
+                }
+            
+            ?>
+            <?php
+                if(isset($_POST['paid'])){
+                    $idHome=$_POST['idHome'];
+                    $paid ="UPDATE records SET Status='Paid' WHERE records.homeowners_ID=$idHome";
+                    $itest=mysqli_query($conn,$paid);
+                    if($itest){
+                        echo"<script>alert('Violation Paid Success')</script>";
+                    }else{
+                        echo"<script>alert('Violation Paid Failed')</script>";
+                    }
+                }
+             ?>
+    
         <div class="container3">
             <h3>List of Violators</h3>
-            <div class="table1">
-            <table class="table table-bordered table-hover" id="Mytable1">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Records</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">History</button>
+  </li>
+  
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+  <table class="table table-bordered table-hover" id="Mytable1">
                 <thead class="table-dark">
                     <th class="text-center">Ticket No.</th>
                     <th class="text-center">Account No.</th>
@@ -230,7 +333,7 @@
                     <td><?php echo $row['Account_Number']?></td>
                     <td><?php echo $row['First_Name'],"&nbsp&nbsp",$row['Last_Name']?></td>
                     <td><?php echo $row['date_created']?></td>
-                    <td style="color:red;"><?php echo $row['Status']?></td>
+                    <td style="color:red; font-weight:600"><?php echo $row['Status']?></td>
                     <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['records_iD']; ?>">View More</button></td>
                     </tr>
                     <?php }
@@ -239,7 +342,43 @@
                 </tbody>
                     
             </table>
-            </div>
+  </div>
+  <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <table class="table table-bordered table-hover" id="Mytable2">
+                <thead class="table-dark">
+                    <th class="text-center">Ticket No.</th>
+                    <th class="text-center">Account No.</th>
+                    <th class="text-center">Violator</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Action</th>
+                </thead>
+                
+                <tbody>
+                <?php
+                    if(!empty($_SESSION['Admin_ID'])){
+                    $adminID=$_SESSION['Admin_ID'];
+                    $query=mysqli_query($conn, "SELECT records.records_iD, records.ticketNo, records.Fine, records.Status, records.date_created, homeowners.Account_Number,homeowners.First_Name, homeowners.Last_Name
+                    from records inner join homeowners on records.homeowners_ID = homeowners.Homeowners_ID WHERE records.Status='Paid' ORDER BY records.records_iD DESC");
+                    while($row=mysqli_fetch_assoc($query)){
+                   
+                ?>
+                    <tr>
+                    <td><?php echo $row['ticketNo']; ?></td>
+                    <td><?php echo $row['Account_Number']?></td>
+                    <td><?php echo $row['First_Name'],"&nbsp&nbsp",$row['Last_Name']?></td>
+                    <td><?php echo $row['date_created']?></td>
+                    <td style="color:green; font-weight:600"><?php echo $row['Status']?></td>
+                    <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#history<?php echo $row['records_iD']; ?>">View More</button></td>
+                    </tr>
+                    <?php }
+                    }
+                    ?>
+                </tbody>
+                    
+            </table>
+  </div>
+</div>
         </div>
     </div>
 </div>

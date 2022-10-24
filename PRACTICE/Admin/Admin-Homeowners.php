@@ -204,7 +204,7 @@
                     <td><?php echo $row['Last_Name']; ?></td>
                     <td><?php echo $row['date_registered']; ?></td>
                     <td><div class="success">Active</div></td>
-                    <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Homeowners_ID']; ?>">View More  </button></td>
+                    <td><button class="btn btn-primary" style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['Homeowners_ID']; ?>">View More  </button></td>
                     </tr>
                     <?php
                     }

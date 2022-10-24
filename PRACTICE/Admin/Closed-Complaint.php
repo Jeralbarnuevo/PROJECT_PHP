@@ -207,10 +207,10 @@
                     while($row1=mysqli_fetch_assoc($query)){
                 ?>
                     <tr>
-                    <td><?php echo $row1['Complaint_No']; ?></td>
+                    <td style="color:blue; font-weight:600"><?php echo $row1['Complaint_No']; ?></td>
                     <td><?php echo $row1['Complainant_Name']; ?></td>
                     <td><?php echo $row1['Date']; ?></td>
-                    <td style="color:green;"><?php echo $row1['Status'] ?></td>
+                    <td style="color:green; font-weight:600"><?php echo $row1['Status'] ?></td>
                     <td><button style="padding:.5rem; border:none;" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID']; ?>">View Details</button></td>
                     </tr>
                     <?php 

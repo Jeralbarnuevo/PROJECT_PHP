@@ -381,10 +381,11 @@
                             <input type="email" value="<?php echo $row['Email']; ?>" class="form-control" id="exampleInputPassword1"disabled>
                         </div>
 
-                       <div class="col-sm-6 mb-2 info" style="visibility:hidden;">
+                       <div class="col-sm-6 mb-2 info">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" value="<?php echo $row['Password']; ?>" class="form-control" id="exampleInputPassword1"disabled>
+                            <input type="date" value="<?php echo $row['Birthdate']; ?>" class="form-control" id="exampleInputPassword1"disabled>
                         </div>
+                        
                         
                         
                         <div class="mt-3">

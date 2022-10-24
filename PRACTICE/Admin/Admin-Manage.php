@@ -212,7 +212,7 @@
                             }
                          ?>
                     <tr class="height">
-                    <td style="color:red;"><?php echo $row['AdminAccNo']; ?></td>
+                    <td style="color:red; font-weight:600;"><?php echo $row['AdminAccNo']; ?></td>
                     <td><?php echo $row['FirstName']; ?></td>
                     <td><?php echo $row['LastName']; ?></td>
                     <td><?php echo $row['date_registered']; ?></td>

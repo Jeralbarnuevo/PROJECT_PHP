@@ -197,14 +197,7 @@ svg{
     
     
 }
-.toast
-    {
-        position: absolute; 
-        top: 10px; 
-        right:10px;
-       
-        z-index: 99999;
-    }
+
 .burger{
     display: flex;
     flex-direction: row;
@@ -377,7 +370,6 @@ svg{
     flex-direction: column;
     border: 1px black solid;  
     width:100%; 
-    max-height: 900px;
     max-width: 800px;
     border-radius: 20px;
     gap:1rem;
@@ -477,11 +469,11 @@ select{
 .table{
     width: 100%;
     height: 100%;
-    max-height: 400px;
+    
     background-color: #FFFFFF;
     padding:1.5rem;
     margin:0;
-    overflow: scroll;
+    
     
 }
 
@@ -555,7 +547,7 @@ tr{
 }
 
 .dataTables_filter{
-    width: 75%;
+    width: 100%;
 }
 .alert{
     z-index: 999;
@@ -590,9 +582,7 @@ tr{
     max-width: 600px;
     border:1px solid black;
 }
-#mytable_wrapper:nth-child(3){
-    padding-top:2rem;
-}
+
 
 .modal-header{
     background-color: var(--secondary);
@@ -634,3 +624,7 @@ tr{
     }
 }
 */
+.form-check-input:checked {
+    background-color: #319052 !important;
+    border-color: #319052 !important;
+}

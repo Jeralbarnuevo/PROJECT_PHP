@@ -20,7 +20,7 @@ body{
 }
 .main{
     width: 100%;
-    height:100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,7 +120,7 @@ body{
 		transform: translateY(-10%);
 	}
 }
-@media  (max-width:777px){
+@media screen and  (max-width:777px){
     .main>.container>.header{
         flex-direction:column;
         max-height: 700px;

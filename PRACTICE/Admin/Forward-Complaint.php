@@ -118,7 +118,7 @@
         $adminID=$_SESSION['Admin_ID'];       
         $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
         complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name, admin.FirstName, admin.LastName FROM ((complaint INNER JOIN homeowners
-        ON complaint.homeownersID=homeowners.Homeowners_ID) INNER JOIN admin ON complaint.adminID=admin.Admin_ID) WHERE complaint.adminID=$adminID");
+        ON complaint.homeownersID=homeowners.Homeowners_ID) INNER JOIN admin ON complaint.adminID=admin.Admin_ID) WHERE Forward_To=$adminID");
         while($row1=mysqli_fetch_assoc($query)){
         
     ?>
@@ -189,7 +189,7 @@
                         $adminID=$_SESSION['Admin_ID'];       
                         $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
                         complaint.ContactNo, complaint.Address, complaint.Attachment, complaint.Date, complaint.Status, homeowners.First_Name,homeowners.Last_Name, admin.FirstName, admin.LastName FROM ((complaint INNER JOIN homeowners
-                        ON complaint.homeownersID=homeowners.Homeowners_ID) INNER JOIN admin ON complaint.adminID=admin.Admin_ID) WHERE complaint.adminID=$adminID and complaint.forward_status='a'");
+                        ON complaint.homeownersID=homeowners.Homeowners_ID) INNER JOIN admin ON complaint.adminID=admin.Admin_ID) WHERE Forward_To=$adminID and complaint.forward_status='forwarded'");
                         while($row1=mysqli_fetch_assoc($query)){
                         
                     ?>
@@ -205,7 +205,7 @@
                             <label for="" class="form-label">Status</label>
                             <select name="select" id="select" class="form-select">
                                 <option value="" selected>Select Status</option>
-                                <option value="Process">In Process</option>
+                                <option value="In Process">In Process</option>
                                 <option value="Complete">Complete</option>
                             </select>
 
@@ -256,24 +256,25 @@
                 <?php
         if(!empty($_SESSION['Admin_ID'])){
         $homeownersID=$_SESSION['Admin_ID'];       
-        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
+        $query=mysqli_query($conn,"SELECT complaint.Complaint_ID, complaint.adminID, complaint.Complaint_No, complaint.Complainant_Name, complaint.Complaint_Details,complaint.Address,
         complaint.ContactNo, complaint.Address, complaint.Date, complaint.Status, complaint.forward_status, homeowners.First_Name,homeowners.Last_Name FROM complaint INNER JOIN homeowners
-        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE (complaint.Status='Pending' or complaint.Status='In Process') and complaint.forward_status='a'");
+        ON complaint.homeownersID=homeowners.Homeowners_ID WHERE (complaint.Status='Pending' or complaint.Status='In Process') and complaint.forward_status='forwarded' and Forward_To='$homeownersID'");
         while($row1=mysqli_fetch_assoc($query)){
         ?>
                     <tr class="height">
-                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style="cursor:pointer"><?php echo $row1['Complaint_No'] ?></td>
+                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style="cursor:pointer"><?php echo $row1['Complaint_No']?></td>
                     <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style="cursor:pointer"><?php echo $row1['Complainant_Name'] ?></td>
-                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style=" cursor:pointer">9/2/22</td>
-                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style=" cursor:pointer">(ADMIN) JUAN DELA CRUZ</td>
+                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style=" cursor:pointer"><?php echo $row1['Date']?></td>
+                    <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>"style=" cursor:pointer"><?php echo $row1['adminID'] ?></td>
                     <td data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?> "style="color:red; cursor:pointer"><?php echo $row1['Status'] ?></td>
                     <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#action<?php echo $row1['Complaint_ID'] ?>"><i class="fas fa-edit"></i></button></td>
                     </tr>
-                </tbody>
-                <?php
+                    <?php
                     }
                 } 
                 ?>
+                </tbody>
+               
             </table>
             </div>
         </div>

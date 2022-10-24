@@ -68,16 +68,23 @@
     }
        
     // Update //
-    if(isset($_POST['updated'])){
-        $VtionID=$_POST['VtionID'];
-        $VtionName=$_POST['VtionName'];
-        $category=$_POST['category'];
-        $punishment=$_POST['punishment'];
+    if(isset($_POST['updates'])){
+        $VtionID=$_POST['vid'];
+        $VtionName=$_POST['vname'];
+        $category=$_POST['categ'];
+        $punishment=$_POST['punish'];
         $updated="UPDATE violations SET ViolationName='$VtionName', Category='$category', Punishment='$punishment' WHERE ViolationID=$VtionID";
         $test1=mysqli_query($conn,$updated); 
         if($test1==true){
-        echo"<script>alert('Success')</script>";
-       
+        $_SESSION['messages']="Violation has been update!";
+        $_SESSION['msg_type']="success";
+        
+        
+        }else{
+            $_SESSION['messages']="update failed!";
+            $_SESSION['msg_type']="danger";
+            
+            
         }
     }
 

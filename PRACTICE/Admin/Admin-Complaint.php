@@ -119,9 +119,9 @@
         ON complaint.homeownersID=homeowners.Homeowners_ID WHERE complaint.Status='Pending' or complaint.Status='In Process' and complaint.forward_status=''");
     
         if(mysqli_num_rows($query)>0){
-        while($row1=mysqli_fetch_assoc($query)){
+        while($row3=mysqli_fetch_assoc($query)){
     ?>
-    <div class="modal fade" id="viewdetails<?php echo $row1['Complaint_ID'] ?>" tabindex="-1">
+    <div class="modal fade" id="viewdetails<?php echo $row3['Complaint_ID'] ?>" tabindex="-1">
         <div class="modal-dialog" style="width:100%; max-width:800px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -133,21 +133,21 @@
                         <tbody>
                             <tr>
                                 <th>Complaint No.:</th>
-                                <td colspan="3"><?php echo $row1['Complaint_No'] ?></td>
+                                <td colspan="3"><?php echo $row3['Complaint_No'] ?></td>
                                 <th>Complainant:</th>
-                                <td><?php echo $row1['Complainant_Name'] ?></td>
+                                <td><?php echo $row3['Complainant_Name'] ?></td>
                             </tr>
                             <tr>
                                 <th>Complaint Details</th>
-                                <td colspan="3"><?php echo $row1['Complaint_Details'] ?></td>
+                                <td colspan="3"><?php echo $row3['Complaint_Details'] ?></td>
                                 <th>Attachment:</th>
-                                <td><img src="../Homeowners/compimgs/<?php echo $row1['Attachment'] ?>" alt="" width="150px"></td>
+                                <td><img src="../Homeowners/compimgs/<?php echo $row3['Attachment'] ?>" alt="" width="150px"></td>
                             </tr>
                             <tr>
                                 <th>Date:</th>
-                                <td><?php echo $row1['Date'] ?></td>
+                                <td><?php echo $row3['Date'] ?></td>
                                 <th>Status:</th>
-                                <td style="color:red;"><?php echo $row1['Status'] ?></td>
+                                <td style="color:red;"><?php echo $row3['Status'] ?></td>
                             </tr>
                             <tr>
                                 <td colspan="6" style="height:40px;"></td>
@@ -198,22 +198,23 @@
                             <h5 class="modal-title" id="exampleModalToggleLabel">Complaint No. <?php echo $row1['Complaint_No'] ?></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="" method="POST" id="form-forward">
+                        <form action="#" method="POST" id="form-forward">
                         <div class="modal-body">
-                            <label for="" class="form-label">Forward To</label>
-                            <select name="select" id="select" class="form-select">
-                                <option value="" selected>Admin</option>
+                            <label  class="form-label">Forward To</label>
+                            <select name="select" id="select-op" class="form-select">
+                                <option value="" selected="selected">Admin</option>
                             <?php
                                 $sqlqry="SELECT*FROM admin WHERE Verified='1' order by FirstName asc";
                                 $sqltest=mysqli_query($conn,$sqlqry);
                                 while($row=mysqli_fetch_assoc($sqltest)):
                                 $FirstName=$row['FirstName'];
                                 $LastName=$row['LastName'];
+                                $adminID=$row['Admin_ID'];
                                 ?>
-                                <option value="<?php echo $row['Admin_ID'];?>">(ADMIN)<?php echo $row['FirstName'], "&nbsp&nbsp" ,$row['LastName']?></option>
+                                <option value="<?php echo $adminID ?>">(ADMIN)<?php echo $row['FirstName'], "&nbsp&nbsp" ,$row['LastName']?></option>
                                 <?php endwhile; ?>
                             </select>
-                            <input type="text" id="input" name="admin_id" hidden>
+                            <input type="text" id="inputs" name="forwardto" value="">
                             <input type="number" id="id" name="comp" value="<?php echo $row1['Complaint_ID'] ?>" hidden>
                         </div>
                         </form>
@@ -233,9 +234,10 @@
                 if(isset($_POST['push'])){
                     $comp=$_POST['comp'];
                     $adminID=$_SESSION['Admin_ID'];
-                    $forward=$_POST['select'];
-                    $update="UPDATE complaint SET adminID='$adminID',forward_status='$forward' WHERE Complaint_ID='$comp'";
-                    $test=mysqli_query($conn,$update);
+                    $forward="forwarded";
+                    $forwardto=$_POST['forwardto'];
+                    $updated="UPDATE complaint SET adminID='$adminID',forward_status='$forward', Forward_To='$forwardto' WHERE Complaint_ID='$comp'";
+                    $test=mysqli_query($conn,$updated);
                     if($test){
                         echo"<script>alert('Forward Success')</script>";
                     }else{
@@ -244,6 +246,12 @@
                     }
                 
             ?>
+            <script>
+                    $('#select-op').change(function(){
+                    var opt = $(this).find('option:selected');
+                    $('#inputs').val(opt.val());  
+                    });
+            </script>
     <!------------------------------------------------------------------------------------------------>
     <!-------------------------------------------TAKE-ACTION------------------------------------------------->
             <?php 
@@ -254,13 +262,13 @@
                 ON complaint.homeownersID=homeowners.Homeowners_ID WHERE complaint.Status='Pending' or complaint.Status='In Process' and complaint.forward_status=''");
     
                 if(mysqli_num_rows($query)>0){
-                while($row1=mysqli_fetch_assoc($query)){
+                while($row2=mysqli_fetch_assoc($query)){
             ?>
-            <div class="modal fade" id="action<?php echo $row1['Complaint_ID'] ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal fade" id="action<?php echo $row2['Complaint_ID'] ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalToggleLabel">Complaint No. <?php echo $row1['Complaint_No'] ?></h5>
+                            <h5 class="modal-title" id="exampleModalToggleLabel">Complaint No. <?php echo $row2['Complaint_No'] ?></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="" method="POST" id="form-action">
@@ -274,7 +282,7 @@
 
                             <label for="" class="form-label mt-3">Remark</label>
                             <textarea name="Remarks" class="form-control" id="" cols="20" rows="5"></textarea>
-                            <input type="text" name="id" value="<?php echo $row1['Complaint_ID'] ?>" hidden>
+                            <input type="text" name="id" value="<?php echo $row2['Complaint_ID'] ?>" hidden>
 
                         </div>
                         </form>
@@ -316,6 +324,8 @@
                     <th class="text-center">Action</th>
                     </tr>
                 </thead>
+           
+                <tbody>
                 <?php
         if(!empty($_SESSION['Admin_ID'])){
         $homeownersID=$_SESSION['Admin_ID'];       
@@ -324,7 +334,6 @@
         ON complaint.homeownersID=homeowners.Homeowners_ID WHERE (complaint.Status='Pending' or complaint.Status='In Process') and complaint.forward_status='' ORDER BY complaint.Complaint_ID DESC");
         while($row1=mysqli_fetch_assoc($query)){
         ?>
-                <tbody>
                     <tr>
                     <td  data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>" style="cursor:pointer;"><?php echo $row1['Complaint_No'] ?></td>
                     <td  data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row1['Complaint_ID'] ?>" style="cursor:pointer;"><?php echo $row1['Complainant_Name'] ?></td>
@@ -333,11 +342,12 @@
                     <td class=""><div class="div" style="display:flex; justify-content:center; gap:.9rem;"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#forward<?php echo $row1['Complaint_ID']; ?>"  ><i class="fas fa-share"></i>
                                 </button><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#action<?php echo $row1['Complaint_ID']; ?>"><i class="fas fa-edit"></i></button></div></td>
                     </tr>
-                </tbody>
-                <?php
+                    <?php
                     }
                     } 
                 ?>
+                </tbody>
+               
             </table>
             </div>
         </div>

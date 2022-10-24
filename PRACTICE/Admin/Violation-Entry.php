@@ -286,7 +286,7 @@
                                 <select class="form-select" name="input" id="input" aria-label="Default select example">
                                 <option  value="" selected="selected">Violations--</option>
                                     <?php
-                                        $sqlqry="SELECT*FROM violations";
+                                        $sqlqry="SELECT*FROM violations WHERE Status='Active'";
                                         $sqltest=mysqli_query($conn,$sqlqry);
                                         while($row=mysqli_fetch_assoc($sqltest)):
                                         $violationNo=$row['ViolationNo'];
