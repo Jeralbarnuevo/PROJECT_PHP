@@ -145,7 +145,7 @@
                                     <th>Date:</th>
                                     <td><?php echo $row['date_created'] ?></td>
                                     <th>Status:</th>
-                                    <td style="color:green;"><?php echo $row['Status'] ?></td>
+                                    <td style="background-color:red; color:White; font-weight:600"><?php echo $row['Status'] ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" style="height:40px;"></td>
@@ -199,10 +199,10 @@
                    
                 ?>
                 <tr>
-                    <td class="text-center align-middle"><?php echo $row['ticketNo'] ?></td>
+                    <td class="text-center align-middle" style="color:blue; font-weight:600"><?php echo $row['ticketNo'] ?></td>
                     <td class="text-center align-middle"><?php echo $row['Account_Number'] ?></td>
                     <td class="text-center align-middle"><?php echo $row['date_created'] ?></td>
-                    <td class="text-center align-middle"><?php echo $row['Status'] ?></td>
+                    <td class="text-center align-middle" style="background-color:red; color:White; font-weight:600"><?php echo $row['Status'] ?></td>
                     <td class="text-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails">View Details</button></td>
                 </tr>
                 <?php

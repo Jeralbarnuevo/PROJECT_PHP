@@ -189,10 +189,10 @@
         while($row1=mysqli_fetch_assoc($query)){
         ?>
                 <tr>
-                    <td class="text-center align-middle"><?php echo $row1['Complaint_No']?></td>
+                    <td class="text-center align-middle" style="color:blue; font-weight:600"><?php echo $row1['Complaint_No']?></td>
                     <td class="text-center align-middle"><?php echo $row1['First_Name'], "&nbsp&nbsp",$row1['Last_Name'] ?></td>
                     <td class="text-center align-middle"><?php echo $row1['Date'] ?></td>
-                    <td class="text-center align-middle" style="color:red; font-weight:700"><?php echo $row1['Status'] ?></td>
+                    <td class="text-center align-middle" style="color:white; background-color:red; font-weight:700"><?php echo $row1['Status'] ?></td>
                     <td class="text-center align-middle"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewmore<?php echo  $row1['Complaint_ID']; ?>">View Details</button></td>
                 </tr>
                 <?php

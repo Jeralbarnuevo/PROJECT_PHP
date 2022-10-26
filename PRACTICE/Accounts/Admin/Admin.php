@@ -14,7 +14,11 @@
 <body>
 <?php
       session_start(); 
-      require('../../connection.php'); 
+      require('../../connection.php');
+      if(isset($_SESSION['Admin_ID'])){
+        header('location: ../../Admin/Admin-Dashboard.php');
+        die();
+    } 
       if(isset($_POST["login"])){
           $Email=$_POST["Email"];
           $Password=$_POST["Password"];
@@ -34,7 +38,7 @@
                   $_SESSION['Email']=$row['Email'];
                   $admin=$_SESSION['Admin_ID'];
                   $time=time()+10;
-                  $online="UPDATE admin SET status='$time' WHERE Admin_ID=$admin";
+                  $online="UPDATE admin SET status='$time' WHERE Admin_ID=".$_SESSION['Admin_ID'];
                   $sql=mysqli_query($conn,$online);
                   header("location: ../../Admin/Admin-Dashboard.php");
                   die();

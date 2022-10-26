@@ -16,6 +16,10 @@
 }
 main{
     width:100%;
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 main>nav{
     width: 100%;
@@ -24,7 +28,7 @@ main>nav{
     display: flex;
     justify-content:space-between;
     align-items: center;
-    padding:0 50px;
+    padding:0 80px;
     position: fixed;
     top:0;
     left:0;
@@ -40,7 +44,7 @@ main>nav>.logo>h3{
     margin:0;
     font-size: 1.3em;
 }
-main>nav>.logo>img{
+main>nav>.logo>a>img{
     border-radius: 50%;
 }
 main>nav>.logo>h3{
@@ -68,55 +72,97 @@ main>nav>ul>li>a:hover{
 
 }
 main>.banner{
-    height:100vh;
+    margin-top:100px;
+    margin-bottom:50px;
+
+}
+main>.banner>.main-banner{
+    display: flex;
+    align-items: center;
+    padding:60px;
+}
+main>.banner>.main-banner>.title{
     width: 100%;
-    border: 1px solid black;
+    max-width: 700px;
+    animation: transition 1s;
+}
+main>.banner>.main-banner>.image{
+    animation: fade 1s;
+}
+main>.banner>.main-banner>.image>img{
+    width: 100%;
+    max-width: 650px;
+}
+
+
+.bars{
+    display: none;
+}
+main>.features{
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ebe9e9;
+}
+main>.features>h1{
+    text-align: center;
+    margin-top: 2rem;
+}
+main>.features>.features-box{
     display: flex;
     align-items: center;
     justify-content: center;
-    background:rgb(0,0,0,0.7)url("Assets/background.jpg");
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: darken;
-    background-attachment: fixed;
+    flex-wrap: wrap;
+    gap:1rem;
+    margin-top: 2rem;
+    padding:2rem 1rem;
+    
 }
-main>.banner>.main-banner>.logo>img{
-    border-radius: 50%;
-    box-shadow: 3px 3px 13px 5px black;
+main>.features>.features-box>.box{
+    border-top:8px solid #319052;
     width:100%;
     max-width: 400px;
-}
-
-main>.banner>.main-banner>.title>h1{
-    color: var(--body);
-    text-shadow:3px 5px 10px var(--secondary);
-}
-main>.banner>.main-banner{
-    width: 100%;
-    margin-top:100px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap:2rem;
-    padding: 1.5rem;
     text-align: center;
+    border-radius: 1rem;
+    background-color: #ffffff;
 }
-.bars{
-    display: none;
+main>.features>.features-box>.box>.icon{
+    font-size: 5rem;
 }
 main>.about-us{
     display:flex;
-    height: 50vh;
+    flex-direction: column;
     width: 100%;
+    min-height: 500px;
+    margin-bottom:5rem;
     padding: 60px 60px;
     justify-content:space-evenly;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    
 }
-main>.about-us>.description{
+main>.about-us>h1{
+    margin-bottom: 5rem;
+}
+main>.about-us>.about-us-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:2rem;
+}
+main>.about-us>.about-us-content>.description{
+    width: 100%;
     max-width: 700px;
 }
-main>.about-us>.description{
+main>.about-us>.about-us-content>.description{
     border:none;
     padding: 1rem;
     background-color: #319052;
@@ -124,23 +170,73 @@ main>.about-us>.description{
     width:100%;
     box-shadow:1px 1px 20px gray;
 }
+div#carouselExampleFade{
+    width: 100%;
+    max-width: 700px;
+}
 .carousel-inner{
     width: 100%;
-    height: 350px;
-    max-width: 700px;
-    overflow: hidden;
-    position:relative;
-
 }
 .carousel-item{
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
-    top:0;
-    left:0;
     width: 100%;
-    height: 100%;
 }
+.carousel-item>img{
+    width: 100%;
+}
+main>footer{
+    width: 100%;
+    background-color: #191919;
+    color:white;
+    padding: 1rem;
+}
+main>footer>.box-a{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+main>footer>.box-a>.logo-cecilia{
+    display:flex;
+    align-items: center;
+    flex-direction:column;
+    font-size: 1rem;
+}
+main>footer>.box-a>.logo-marilao{
+    display:flex;
+    align-items: center;
+    flex-direction:column;
+    font-size: 1rem;
+}
+main>footer>.box-a>.logo-marilao>img{
+    width: 100%;
+    max-width: 90px;
+}
+.link {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+main>footer>.box-a>.link>a{
+    display: flex;
+    align-items: center;
+    gap:.5rem;
+    text-decoration: none;
+    color:white;
+}
+main>footer>.box-a>.link>a:hover{
+    color:#319052;
+}
+main>footer>.box-a>.link>a>i{
+    font-size: 2rem;
+    color: white;
+}
+
+main>footer>.box-a>.logo-cecilia>img{
+    width: 100%;
+    max-width: 90px;
+}
+
+
+
 @media screen and (max-width:1060px){
     main>nav>.menu{
         width:50%; 
@@ -187,4 +283,64 @@ main>.about-us>.description{
     main>nav>.logo>h3{
         opacity: 0;
     }
+}
+@media screen and (max-width:1060px){
+    main>.banner>.main-banner{
+       flex-wrap: wrap;
+       flex-direction: column-reverse;
+       text-align: center;
+    }
+    main>.banner>.main-banner>.image>img{
+        width: 100%;
+        max-width: 600px;
+    }
+    main>.banner>.main-banner{
+        padding:1rem;
+    }
+}
+@media screen and (max-width:1393px){
+    main>.about-us>.about-us-content{
+       
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+    main>.about-us{
+        padding:1.5rem;
+    }
+}
+@media screen and (max-width:1082px){
+    main>footer>.box-a{
+       flex-wrap: wrap;
+       flex-direction: column;
+       gap:3rem;
+    }
+}
+@media screen and (max-width:448px){
+    main>footer>.box-a>.logo-cecilia>p{
+       width: 100%;
+       text-align: center;
+    }
+    main>footer>.box-a>.link>a{
+        width: 100%;
+        font-size: 3.5vw;
+    }
+}
+@keyframes transition {
+	from {
+        opacity: 0;
+		transform: translateX(-20%);
+	}
+	50% {
+		opacity: 1;
+		transform: translateX(10%);
+	}
+}
+@keyframes fade {
+	from {
+        opacity: 0;
+		
+	}
+	100% {
+		opacity: 1;
+	}
 }

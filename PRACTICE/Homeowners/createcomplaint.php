@@ -141,7 +141,7 @@
             <form action="#" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Complaint No.</label>
-                    <input type="text" name="complaintno" style="color:red;" value="<?php echo $code ?>" class="form-control" id="exampleInputEmail1" readonly>
+                    <input type="text" name="complaintno" style="color:blue; font-weight:600" value="<?php echo $code ?>" class="form-control" id="exampleInputEmail1" readonly>
                     
                   </div>
                   

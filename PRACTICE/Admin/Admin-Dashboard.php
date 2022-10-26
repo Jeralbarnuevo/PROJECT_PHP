@@ -227,6 +227,32 @@ $(window).on("load", function(){
         $(".rotate").fadeOut(5000);
     })
 </script>
+<script type="text/javascript">
+                function updatestatus(){
+                    jQuery.ajax({
+                        url:'../SETTINGS/update-status.php',
+                        success:function(){
+
+                        }
+                    });
+                }
+                function getstatus(){
+                    jQuery.ajax({
+                        url:'../SETTINGS/get-status.php',
+                        success:function(result){
+                            jQuery('#admin-pg').html(result);
+                        }
+                    });
+                }
+                
+
+                setInterval(function(){
+                    updatestatus();
+                },1000);
+                setInterval(function(){
+                    getstatus();
+                },7000);
+            </script>
 <script type="text/javascript" src="slide.js"></script>
 <script type="text/javascript" src="calendar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

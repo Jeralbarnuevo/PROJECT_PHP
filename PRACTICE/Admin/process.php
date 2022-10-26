@@ -78,13 +78,9 @@
         if($test1==true){
         $_SESSION['messages']="Violation has been update!";
         $_SESSION['msg_type']="success";
-        
-        
         }else{
             $_SESSION['messages']="update failed!";
-            $_SESSION['msg_type']="danger";
-            
-            
+            $_SESSION['msg_type']="danger";          
         }
     }
 

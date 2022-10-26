@@ -16,11 +16,12 @@
     <main>
         <nav>
             <div class="logo">
-                <img src="Assets/logo.jpg" alt="" width="55px">
+                <a href="#home"><img src="Assets/logo.jpg" alt="" width="55px"></a>
                 <h3>St. Cecilia Homeowners Association</h3>
             </div>
-            <ul class="menu">   
-                <li><a href="">ABOUT US</a></li>
+            <ul class="menu"> 
+                <li><a href="#features">FEATURES</a></li>  
+                <li><a href="#about-us">ABOUT US</a></li>
                 <div class="button">
                     <a href="Account-Menu/Account-Menu.php"><button class="btn btn-outline-success">Login</button></a>
                     <a href="Register/Register.php"><button class="btn btn-outline-success">Register</button></a>
@@ -29,17 +30,39 @@
             <div class="bars"><i id="bar" class="fas fa-bars"></i></div>
            
         </nav>
-        <div class="banner">
+        <section id="home" class="banner">
             <div class="main-banner">
-            <div class="logo">  
-                <img src="Assets/logo.jpg" alt="">
+            <div class="title">  
+                <h1>COMPLAINT AND VIOLATION TRACKING SYSTEM FOR<br>ST. CECILIA HOA</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem magnam similique eaque nemo temporibus recusandae quibusdam dolore illo vel? Dicta delectus illum minus dolore, saepe unde omnis dignissimos vitae perspiciatis!</p>
+                <button class="btn btn-success">Read More</button>
             </div>
-            <div class="title">
-                <h1>Complaint and Violation Tracker System</h1>
+            <div class="image">
+                <img src="Assets/lappy1.jpg" alt="">
             </div>
         </div>
-        </div>
-        <div class="about-us mt-5">
+    </section>
+        <section id="features" class="features">
+            <h1>FEATURES</h1>
+            <div class="features-box">
+                <div class="box">
+                    <div class="icon"><i class="fas fa-envelope-open-text"></i></div>
+                    <h4>Email <br>OTP Verification</h4>
+                </div>
+                <div class="box">
+                    <div class="icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h4>Violation Tracking</h4>
+                </div>
+                <div class="box">
+                    <div class="icon"><i class="far fa-edit"></i></div>
+                    <h4>Create Complaint</h4>
+                </div>
+                
+            </div>
+        </section>
+        <section id="about-us" class="about-us mt-5">
+            <h1>ABOUT US</h1>
+            <div class="about-us-content">
             <div class="description">
                 <h2>ABOUT US</h2>
                 <p>St Cecilia Homeowners Association is a self-governing organization in “common-interest” communities where homeowners collectively pay fees to maintain the units or neighborhood.
@@ -47,7 +70,8 @@
                     Properties within an HOA are governed by a collective set of rules and bylaws that are enforced by the association.
                 </p>
             </div>
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+          
+            <div id="carouselExampleFade" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active" data-bs-interval="2000">
                     <img src="Assets/img(1).jpg" class="img" alt="...">
@@ -67,8 +91,26 @@
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Next</span>
                 </button>
-              </div>
-        </div>
+              </div> 
+            </div>
+        </section> 
+        <footer>
+            <div class="box-a">
+                <div class="logo-cecilia">
+                    <img src="Assets/logo1.png" alt="" >
+                    <p style="margin:0;">St. Cecilia Homeowners Associations</p>
+                </div>
+                <div class="logo-marilao">
+                    <img src="Assets/MB-LOGO.png" alt="" >
+                    <p style="margin:0;">Bayan ng Marilao</p>
+                </div>
+                
+                <div class="link">
+                    <a href="https://www.facebook.com/SCPHOA"><i class="fab fa-facebook-square"></i>https://www.facebook.com/SCPHOA</a>
+                    <a href="https://www.facebook.com/MarileNews/"><i class="fab fa-facebook-square"></i>https://www.facebook.com/MarileNews/</a>
+                </div>
+            </div>
+        </footer>
        
     </main>
     <script>

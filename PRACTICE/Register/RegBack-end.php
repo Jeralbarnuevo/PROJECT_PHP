@@ -137,22 +137,22 @@
             
                 else{
                     $Email=$_POST['Email'];
-                    $otp=rand(100000,999999); // RANDOM PARA DAMA
-                    $_SESSION['VerificationCode']=$otp; // OTP PARA SA MAMA MO
+                    $otp=rand(100000,999999); 
+                    $_SESSION['VerificationCode']=$otp; 
                     $_SESSION['mail']=$Email;
                     require("../phpmailer/PHPMailerAutoload.php");
                     $mail = new PHPMailer;
     
                     $mail->isSMTP();
-                    $mail->Host='smtp.hostinger.com';  //HOSTING NATIN MGA MAHAL
+                    $mail->Host='smtp.hostinger.com';  
                     $mail->Port=587;
                     $mail->SMTPAuth=true;
                     $mail->SMTPSecure='tls';
     
-                    $mail->Username='stceciliahoaviolationcomplaint@stceciliahoa.online'; // EMAIL NA GAGAMITIN PARA IPANG SEND SA MGA KUPAL
+                    $mail->Username='stceciliahoaviolationcomplaint@stceciliahoa.online'; 
                     $mail->Password='Capstone_101822';
     
-                    $mail->setFrom('stceciliahoaviolationcomplaint@stceciliahoa.online', 'ST-CECILIA-HOA'); //EMAIL NATIN SAKA TITLE
+                    $mail->setFrom('stceciliahoaviolationcomplaint@stceciliahoa.online', 'ST-CECILIA-HOA'); 
                     $mail->addAddress($_POST['Email']);
     
                     $mail->isHTML(true);

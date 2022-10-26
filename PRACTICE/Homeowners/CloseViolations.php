@@ -143,7 +143,7 @@
                                     <th>Date:</th>
                                     <td><?php echo $row['date_created'] ?></td>
                                     <th>Status:</th>
-                                    <td style="color:green;"><?php echo $row['Status'] ?></td>
+                                    <td class="text-center" style="color:white; background-color:green; font-weight:600"><?php echo $row['Status'] ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" style="height:40px;"></td>
@@ -195,11 +195,11 @@
                    
                 ?>
                 <tr>
-                    <td class="text-center"><?php echo $row['ticketNo'] ?></td>
-                    <td class="text-center"><?php echo $row['First_Name'], "&nbsp&nbsp", $row['Last_Name'] ?></td>
-                    <td class="text-center"><?php echo $row['date_updated'] ?></td>
-                    <td class="text-center" style="color:green;"><?php echo $row['Status'] ?></td>
-                    <td class="text-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paid<?php echo $row['records_iD'] ?>">View Details</button></td>
+                    <td class="text-center align-middle" style="color:blue; font-weight:600"><?php echo $row['ticketNo'] ?></td>
+                    <td class="text-center align-middle"><?php echo $row['First_Name'], "&nbsp&nbsp", $row['Last_Name'] ?></td>
+                    <td class="text-center align-middle"><?php echo $row['date_updated'] ?></td>
+                    <td class="text-center align-middle" style="color:white; background-color:green; font-weight:600"><?php echo $row['Status'] ?></td>
+                    <td class="text-center align-middle"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paid<?php echo $row['records_iD'] ?>">View Details</button></td>
                 </tr>
                 <?php } }?>
             </tbody>

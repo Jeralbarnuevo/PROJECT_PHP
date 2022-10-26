@@ -1,7 +1,4 @@
-<?php
-    session_start();
-    require('../connection.php');
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +28,10 @@
     <title>Violators Record</title>
 </head>
 <body>
+<?php
+    session_start();
+    require('../connection.php');
+?>
 <?php
     
     if(!isset($_SESSION['Admin_ID'])){
@@ -230,11 +231,6 @@
                     $errorconfirm="Please fill the blank*";
                 }else{
                     $confirm=$_POST['Confirm'];
-                }if(!empty($_FILES['img']['name'])){
-                    $img=$_FILES['img']['name'];
-                    $folder = '../Admin/admin-imgs/' .$img;
-                    move_uploaded_file($_FILES['img']['tmp_name'], $folder);
-
                 }
                 if($password!=$confirm){
                     echo "<script>alert('Please Match The Confirm and Password')</script>";
@@ -243,10 +239,11 @@
                     $Encrypt=password_hash($password, PASSWORD_DEFAULT);
                     $confirm1=password_hash($confirm, PASSWORD_DEFAULT);
                     $update="UPDATE admin SET FirstName='$firstname', LastName='$lastname', Gender='$gender', Age='$age', ContactNo='$contact',
-                    Address='$address', Email='$email', Password='$Encrypt', Image_Profile='$img' WHERE Admin_ID='$adminid'";
+                    Address='$address', Email='$email', Password='$Encrypt' WHERE Admin_ID='$adminid'";
                     $runtest=mysqli_query($conn, $update);
                    if($runtest){
                         echo"<script>alert('Update Sucess')</script>";
+                        
                    }else{
                         echo"<script>alert('Update Failed')</script>";
                    }
@@ -256,7 +253,7 @@
             
         
         ?>
-    
+
     <div class="modal fade" id="updated<?php echo $row['Admin_ID'] ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -278,8 +275,8 @@
                         </div>
                         <div class="col-sm-12 mb-2 info">
                             <label for="exampleInputPassword1" class="form-label">Gender</label>
-                            <select name="gender" id="" class="form-select" >
-                                <option value="" disabled selected hidden>Select-</option>
+                            <select name="gender" value="<?php echo $row['Gender'] ?>" id="" class="form-select" >
+                                <option value="<?php ?>" disabled selected hidden>Select-</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
@@ -315,10 +312,6 @@
                             <input type="password" name="Confirm" value="" class="form-control" id="exampleInputPassword1">
                             <div class="error" style="color:red;"><?php echo $errorconfirm ?></div>
                         </div>
-                        <div class="col-sm-12 mb-2 info">
-                            <label for="exampleInputPassword1" class="form-label">Upload New Profile Pic</label>
-                            <input type="file" name="img" id="img" value="<?php echo $row['Image_Profile'] ?>" class="form-control" id="exampleInputPassword1">
-                        </div>
 
                     </form>
       </div>
@@ -330,6 +323,56 @@
 </div>
       
     <!------------------------------------------------------------------------------------------------>
+     <!--------------------------------------------CHANGE-AVATAR------------------------------------------------->
+     <?php
+        $adminpic=$_SESSION['Admin_ID'];
+        $errorupload="";
+        if(isset($_POST['upload'])){
+            if(!empty($_FILES['imgs']['name'])){
+                $img=$_FILES['imgs']['name'];
+                $folder ='../Admin/admin-imgs/' .$img;
+                move_uploaded_file($_FILES['imgs']['tmp_name'], $folder);
+                $upload="UPDATE admin SET Image_Profile='$img' WHERE Admin_ID='$adminpic'";
+                $run=mysqli_query($conn,$upload);
+                if($run==true){
+                echo "<script>alert('Success')</script>";
+            }else{
+                echo"<script>alert('Please Select Avatar')</script>";
+            }
+
+        }
+    }
+      ?>
+      
+    <div class="modal" id="changeavatar<?php echo $row['Admin_ID'] ?>" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Avatar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+        <div class="avatar d-flex justify-content-center">
+            <img src="../Admin/admin-imgs/<?php echo $row['Image_Profile']; ?>" alt="" width="200px">
+        </div>
+        <div class="current"><p style="text-align:center;">Current Avatar</p></div>
+        
+        <div class="col-sm-6 mb-2 w-100">
+            <label sclass="form-label">Change Avatar</label>
+            <input type="file" name="imgs" id="imgs" accept=".jpg, .jpeg, .png" class="form-control">
+            <div class="error" style="color:red;"><?php echo $errorupload ?></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="upload" class="btn btn-primary">Upload</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+     <!-------------------------------------------------------------------------------------------------------------->
         <div class="container4">
             <h3>Personal Info</h3>
             <div class="info1">
@@ -340,12 +383,7 @@
                         <div class="profile-pic">
                             <img src="../Admin/admin-imgs/<?php echo $row['Image_Profile']; ?>" alt="" width="50px">
                         </div>
-                        <div class="upload">
-                        <input type="hidden" name="id" value="<?php echo $row['Admin_ID']; ?>">
-                            <input type="hidden" name="FirstName" value="<?php echo $row['FirstName'] ?>">
-                            <input type="file" name="img" id="img">
-                            <i class="fas fa-camera"></i>
-                        </div>
+                        <button class="btn btn-success" type="button" data-bs-target="#changeavatar<?php echo $row['Admin_ID'] ?>" data-bs-toggle="modal">Change Avatar</button>
                         <div class="name">
                         <p class="text-align"><?php echo $row['FirstName'], "&nbsp;&nbsp;",$row['LastName']; ?></p>
                         <p style="color:red;"><?php echo $row['AdminAccNo']; ?></p>
@@ -382,14 +420,14 @@
                         </div>
 
                        <div class="col-sm-6 mb-2 info">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <label for="exampleInputPassword1" class="form-label">Birthdate</label>
                             <input type="date" value="<?php echo $row['Birthdate']; ?>" class="form-control" id="exampleInputPassword1"disabled>
                         </div>
                         
                         
                         
                         <div class="mt-3">
-                            <button type="button" class="btn btn-primary" data-bs-target="#updated<?php echo $row['Admin_ID'] ?>" data-bs-toggle="modal">Update</button>
+                            <button type="button" class="btn btn-success" data-bs-target="#updated<?php echo $row['Admin_ID'] ?>" data-bs-toggle="modal">Update</button>
                         </div>                   
                         </form>
                 </div>
@@ -398,17 +436,12 @@
         </div>
     </div>
 </div>
-    <?php
-        include('../Admin/loading.php');
-    ?>
+    
 <script type="text/javascript">
     function Dropmenu(){
     const Toggle = document.querySelector('.menu');
     Toggle.classList.toggle('active');    
 }
-    $(window).on("load", function(){
-        $(".rotate").fadeOut(2000);
-    })
     if(window.history.replaceState){
         window.history.replaceState(null,null,window.location.href);
       }
