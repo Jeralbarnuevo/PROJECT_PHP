@@ -247,7 +247,7 @@
                                     <th>Date:</th>
                                     <td><?php echo $row['date_created'] ?></td>
                                     <th>Status:</th>
-                                    <td style="color:green; font-weight:600"><?php echo $row['Status'] ?></td>
+                                    <td style="color:white; background-color:red; font-weight:600"><?php echo $row['Status'] ?></td>
                                     
                                 </tr>   
                                 <tr>
@@ -330,11 +330,11 @@
                    
                 ?>
                     <tr>
-                    <td><?php echo $row['ticketNo']; ?></td>
+                    <td style="color:blue; font-weight:600; "><?php echo $row['ticketNo']; ?></td>
                     <td><?php echo $row['Account_Number']?></td>
                     <td><?php echo $row['First_Name'],"&nbsp&nbsp",$row['Last_Name']?></td>
                     <td><?php echo $row['date_created']?></td>
-                    <td style="color:red; font-weight:600"><?php echo $row['Status']?></td>
+                    <td style="color:white; background-color:red; font-weight:600"><?php echo $row['Status']?></td>
                     <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewdetails<?php echo $row['records_iD']; ?>">View More</button></td>
                     </tr>
                     <?php }

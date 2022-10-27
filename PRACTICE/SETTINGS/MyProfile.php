@@ -336,6 +336,7 @@
                 $run=mysqli_query($conn,$upload);
                 if($run==true){
                 echo "<script>alert('Success')</script>";
+
             }else{
                 echo"<script>alert('Please Select Avatar')</script>";
             }

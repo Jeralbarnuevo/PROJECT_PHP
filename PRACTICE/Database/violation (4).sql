@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2022 at 02:45 AM
+-- Generation Time: Oct 27, 2022 at 06:53 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -52,10 +52,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`Admin_ID`, `AdminAccNo`, `FirstName`, `LastName`, `Gender`, `Age`, `ContactNo`, `Address`, `Birthdate`, `Email`, `Image_Profile`, `Password`, `Confirm_Password`, `VerificationCode`, `Verified`, `date_registered`, `status`) VALUES
-(1, 'ST-CE-3402', 'JERAL', 'BARNUEVO', 'Male', '22', '09512341015', 'MARILAO,BULACAN', '2000-07-13', 'sacatintobarnuevo@gmail.com', '1661171036935.jpg', '$2y$10$SPKKdPllglXEaYhMRpr3JOQxZu/yNpSOEi.UMgk2XDs7d2p8L15aS', '$2y$10$G6Ox71KdHpkfLbeZ4FuK7uwIr5RJFbB.4XnOy3IctRtN/F2NdDnzG', '936303', 1, '2022-10-05 00:02:58', '1665651525'),
+(1, 'ST-CE-3402', 'JERAL', 'BARNUEVO', 'Male', '22', '09512341015', 'MARILAO,BULACAN', '2000-07-13', 'sacatintobarnuevo@gmail.com', '1661171036935.jpg', '$2y$10$jjoPSdy2SVIHG4s8.VUT8e/NAMszk9rFr2MzUYVSCVCj3z5EvXlBq', '$2y$10$G6Ox71KdHpkfLbeZ4FuK7uwIr5RJFbB.4XnOy3IctRtN/F2NdDnzG', '936303', 1, '2022-10-05 00:02:58', '1666834776'),
 (2, 'ST-CE-1032', 'AARON JAY', 'MANALILI ', 'Female', '32', '09512341015', 'CALOOCAN MINDANAO', '2001-07-01', 'aaron@gmail.com', 'index.jpg', '$2y$10$KjD0MQFh9bxpTzQMdjkDseBBDlktFgs/.gWFp0PIQQLQYssMjVex6', '$2y$10$Z16DRweCdk5UPuI70V1dnOEAakkDe7xjdl8CHiGG7JhCxLJ8yvyhG', '', 0, '2022-10-04 21:34:47', 'offline'),
 (3, 'ST-CE-2892', 'MARISSA', 'BARNUEVO', 'Female', '25', '09126427146', 'MARILAO,BULACAN', '1975-03-26', 'barnuevomarissa0@gmail.com', 'mm.jpg', '$2y$10$qYk.xW6eN.mdRlsHXqYu9eG28amvjd8VHxKDfeGlehqkrPoYZFnsa', '$2y$10$FREYbN5Gcj.4IZkiOuMoLu2AJDcs5JSHzKIZUybBIu52g.id8ht6G', '', 0, '2022-09-25 23:54:56', 'offline'),
-(4, 'ST-CE-5408', 'JUAN', 'PANDECO', '', '25', '09512341015', 'MARILAO,BULACAN', '2000-07-23', 'barnuevojeral@gmail.com', '', '$2y$10$q5fWbFKsoK7Tl8Q2qXoou.UaGEZnZrL.zQ1IVp5qIuAslhe5d6qNW', '$2y$10$qmAiMLURGz81simKH9vfae7OdNCwXdNi9cKJssRFHyv74/57b6bvy', '471550', 1, '2022-10-05 00:02:57', '1664900310');
+(4, 'ST-CE-5408', 'JUAN', 'PANDECO', '', '25', '09512341015', 'MARILAO,BULACAN', '2000-07-23', 'barnuevojeral@gmail.com', '', '$2y$10$og73sL4adegpbcpRhrZkTenTEaB1pBXQ/pBG4otyQBDT8GELRUQGO', '$2y$10$qmAiMLURGz81simKH9vfae7OdNCwXdNi9cKJssRFHyv74/57b6bvy', '389406', 1, '2022-10-05 00:02:57', '1666797433');
 
 -- --------------------------------------------------------
 
@@ -76,22 +76,27 @@ CREATE TABLE `complaint` (
   `Date` date NOT NULL DEFAULT current_timestamp(),
   `Status` varchar(255) NOT NULL,
   `Remarks` text NOT NULL,
-  `forward_status` text NOT NULL
+  `forward_status` text NOT NULL,
+  `Forward_To` int(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `complaint`
 --
 
-INSERT INTO `complaint` (`Complaint_ID`, `homeownersID`, `adminID`, `Complaint_No`, `Complainant_Name`, `Complaint_Details`, `Address`, `ContactNo`, `Attachment`, `Date`, `Status`, `Remarks`, `forward_status`) VALUES
-(50, 109, 1, 'COMPLAINT-3388', 'JUAN DELA CRUZ', 'MAy SUNOG PO DITO', 'MARILAO BULACAN', '2147483647', '301172695_382615037342347_3092196706144048870_n.jpg', '2022-09-28', 'Complete', 'OKAY NA PRE BAYAD NA', ''),
-(52, 125, 1, 'COMPLAINT-1726', 'JERAL BARNUEVO', 'MARAMING ASONG GALA DITO PINAPATAKAS NG AMO', 'MARILAO BULACAN', '2147483647', '322868_1100-800x825.jpg', '2022-09-28', 'Complete', 'OK NA PINALAYAS KO NA ', ''),
-(53, 125, 1, 'COMPLAINT-2286', 'JERAL BARNUEVO', 'MARAMI PONG NAGIINUMAN DITO MAINGAY!!!!', 'MARILAO,BULACAN', '09512341015', '300430276_749247759475797_5121822166515839680_n.png', '2022-09-28', 'Complete', 'OKAY NA PINALAYAS KO NA PINATULOG KO NA', ''),
-(54, 125, 1, 'COMPLAINT-8357', 'JERAL BARNUEVO', 'MAY NAG AAWAY NA KAPIT BAHAY DITO', 'MARILAO, BULACAN', '09512341015', 'fkkskss.png', '2022-09-29', 'Complete', 'Okay na po', 'a'),
-(55, 125, 1, 'COMPLAINT-1485', 'JERAL BARNUEVO', 'MAY NAKAHARANG NA KOTSE DITO', 'MARILAO, BULACAN', '09512341015', '298756302_790714669022219_7940598324092621692_n.png', '2022-10-06', 'Complete', 'Done', ''),
-(56, 125, 1, 'COMPLAINT-5125', 'JERAL BARNUEVO', 'May Asong nakagala dito ', 'MARILAO,Bulacan', '09512341015', '322868_1100-800x825.jpg', '2022-10-06', 'Complete', 'OK NA PO', ''),
-(57, 125, 1, 'COMPLAINT-6740', 'JERAL BARNUEVO', 'MAY MAIINGAY DITO SAMIN MADALING ARAW NA', 'MARILAO,BULACAN', '09512341015', '300430276_749247759475797_5121822166515839680_n.png', '2022-10-06', 'Pending', '', 'a'),
-(58, 109, NULL, 'COMPLAINT-4023', 'JUAN DELA CRUZ', 'MAY TUMATAE DITONG ASO', 'MARILAO,BULACAN', '09512341015', 'Axtbh.jpg', '2022-10-09', 'Pending', '', '');
+INSERT INTO `complaint` (`Complaint_ID`, `homeownersID`, `adminID`, `Complaint_No`, `Complainant_Name`, `Complaint_Details`, `Address`, `ContactNo`, `Attachment`, `Date`, `Status`, `Remarks`, `forward_status`, `Forward_To`) VALUES
+(50, 109, 1, 'COMPLAINT-3388', 'JUAN DELA CRUZ', 'MAy SUNOG PO DITO', 'MARILAO BULACAN', '2147483647', '301172695_382615037342347_3092196706144048870_n.jpg', '2022-09-28', 'Complete', 'OKAY NA PRE BAYAD NA', '', NULL),
+(52, 125, 1, 'COMPLAINT-1726', 'JERAL BARNUEVO', 'MARAMING ASONG GALA DITO PINAPATAKAS NG AMO', 'MARILAO BULACAN', '2147483647', '322868_1100-800x825.jpg', '2022-09-28', 'Complete', 'OK NA PINALAYAS KO NA ', '', NULL),
+(53, 125, 1, 'COMPLAINT-2286', 'JERAL BARNUEVO', 'MARAMI PONG NAGIINUMAN DITO MAINGAY!!!!', 'MARILAO,BULACAN', '09512341015', '300430276_749247759475797_5121822166515839680_n.png', '2022-09-28', 'Complete', 'OKAY NA PINALAYAS KO NA PINATULOG KO NA', '', NULL),
+(54, 125, 1, 'COMPLAINT-8357', 'JERAL BARNUEVO', 'MAY NAG AAWAY NA KAPIT BAHAY DITO', 'MARILAO, BULACAN', '09512341015', 'fkkskss.png', '2022-09-29', 'Complete', 'Okay na po', 'a', NULL),
+(55, 125, 1, 'COMPLAINT-1485', 'JERAL BARNUEVO', 'MAY NAKAHARANG NA KOTSE DITO', 'MARILAO, BULACAN', '09512341015', '298756302_790714669022219_7940598324092621692_n.png', '2022-10-06', 'Complete', 'Done', '', NULL),
+(56, 125, 1, 'COMPLAINT-5125', 'JERAL BARNUEVO', 'May Asong nakagala dito ', 'MARILAO,Bulacan', '09512341015', '322868_1100-800x825.jpg', '2022-10-06', 'Complete', 'OK NA PO', '', NULL),
+(57, 125, 1, 'COMPLAINT-6740', 'JERAL BARNUEVO', 'MAY MAIINGAY DITO SAMIN MADALING ARAW NA', 'MARILAO,BULACAN', '09512341015', '300430276_749247759475797_5121822166515839680_n.png', '2022-10-06', '', '', '', NULL),
+(58, 109, 1, 'COMPLAINT-4023', 'JUAN DELA CRUZ', 'MAY TUMATAE DITONG ASO', 'MARILAO,BULACAN', '09512341015', 'Axtbh.jpg', '2022-10-09', '', '', '', NULL),
+(59, 125, 1, 'COMPLAINT-4723', 'JERAL JB', 'MNAYAYA', 'MARILAO,BULACAN', '09512341015', '300430276_749247759475797_5121822166515839680_n.png', '2022-10-20', 'In Process', '', '4', NULL),
+(60, 125, 1, 'COMPLAINT-7708', 'jeasda', 'asdasda', 'adasd', 'asda1231', '2nd Year Schedule (1).png', '2022-10-20', '', '', 'forwarded', NULL),
+(61, 125, 4, 'COMPLAINT-4605', 'JERAL BARNUEVO', 'aso dito', 'Blk 191 Lot 13 St. Cecilia Deca Homes Brgy Loma De Gato Marilao,Bulacan', '09512341015', '322868_1100-800x825.jpg', '2022-10-20', 'Complete', '', 'forwarded', 4),
+(62, 125, NULL, 'COMPLAINT-3255', 'JERAL BARNUEVO', 'Blocking Road', 'ST. Cecilia Deca Homes', '09512341015', 'R.png', '2022-10-26', 'Pending', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -155,7 +160,9 @@ CREATE TABLE `records` (
 
 INSERT INTO `records` (`records_iD`, `admin_ID`, `homeowners_ID`, `violation_ID`, `ticketNo`, `Fine`, `status`, `Comment`, `date_created`, `date_updated`) VALUES
 (25, 1, 125, 42, 'KT8060', '', 'Paid', 'Please Settle Your Violations', '2022-10-06', '2022-10-13 22:07:41'),
-(26, 1, 109, 42, 'IQ9241', '', 'Paid', 'Please Settle The Amount', '2022-10-11', '2022-10-11 00:22:44');
+(26, 1, 109, 42, 'IQ9241', '', 'Paid', 'Please Settle The Amount', '2022-10-11', '2022-10-11 00:22:44'),
+(27, 1, 109, 42, 'LH4235', '', 'Paid', 'Please Settle Your Amount', '2022-01-01', '2022-10-27 07:23:46'),
+(28, 1, 125, 43, 'YN0193', '', 'Pending', 'Please Settle The Amount', '2022-09-06', '2022-10-26 23:19:59');
 
 -- --------------------------------------------------------
 
@@ -177,13 +184,12 @@ CREATE TABLE `violations` (
 --
 
 INSERT INTO `violations` (`ViolationID`, `ViolationNo`, `ViolationName`, `Category`, `Punishment`, `Status`) VALUES
-(36, 'VIOLATION-6742', 'Pet Violation', 'Minor', 'PHP 550.00', 'Active'),
-(41, 'VIOLATION-3460', 'Illegal Vendors', 'Minor', 'PHP 300.00', 'Inactive'),
+(41, 'VIOLATION-3460', 'Illegal Noise', 'Minor', 'PHP 300.00', 'Active'),
 (42, 'VIOLATION-2432', 'Curfew', 'Major', '1 Month Community Service', 'Inactive'),
-(43, 'VIOLATION-8004', 'Illegal Parking', 'Minor', 'PHP 1000.00', 'Active'),
-(44, 'VIOLATION-2590', 'Illegal Noise', 'Minor', 'PHP 3500.00', 'Inactive'),
-(73, 'VIOLATION-1203', 'dasdasd', 'Minor', 'asdada', 'Active'),
-(74, 'VIOLATION-8530', 'Gun Ban', 'Major', 'PHP 500.00', 'Inactive');
+(43, 'VIOLATION-8004', 'Illegal Parking', 'Minor', 'PHP 2000.00', 'Active'),
+(44, 'VIOLATION-2590', '', '', '', 'Inactive'),
+(73, 'VIOLATION-1203', 'asdad', 'Minor', '123', 'Inactive'),
+(74, 'VIOLATION-8530', 'Gun Ban', 'Major', 'PHP 500.00', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -201,7 +207,8 @@ ALTER TABLE `admin`
 ALTER TABLE `complaint`
   ADD PRIMARY KEY (`Complaint_ID`),
   ADD KEY `homeownersID` (`homeownersID`),
-  ADD KEY `adminID` (`adminID`);
+  ADD KEY `adminID` (`adminID`),
+  ADD KEY `Forward_To` (`Forward_To`);
 
 --
 -- Indexes for table `homeowners`
@@ -238,7 +245,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `complaint`
 --
 ALTER TABLE `complaint`
-  MODIFY `Complaint_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `Complaint_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `homeowners`
@@ -250,13 +257,13 @@ ALTER TABLE `homeowners`
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `records_iD` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `records_iD` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `violations`
 --
 ALTER TABLE `violations`
-  MODIFY `ViolationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `ViolationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- Constraints for dumped tables
@@ -267,7 +274,8 @@ ALTER TABLE `violations`
 --
 ALTER TABLE `complaint`
   ADD CONSTRAINT `complaint_ibfk_1` FOREIGN KEY (`homeownersID`) REFERENCES `homeowners` (`Homeowners_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `complaint_ibfk_2` FOREIGN KEY (`adminID`) REFERENCES `admin` (`Admin_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `complaint_ibfk_2` FOREIGN KEY (`adminID`) REFERENCES `admin` (`Admin_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `complaint_ibfk_3` FOREIGN KEY (`Forward_To`) REFERENCES `admin` (`Admin_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `records`
